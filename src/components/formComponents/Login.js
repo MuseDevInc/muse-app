@@ -9,7 +9,7 @@ export function Login() {
   return (
       <Box>
       <FormGroup sx={{alignItems: "center"}}>
-          <TextField id="outlined-basic" label="Email" variant="outlined" />
+          <TextField id="outlined-basic" label="Email" variant="filled" />
           <TextField id="outlined-basic" label="Password" variant="outlined" />  
           <LoginSubmitButton/>
       </FormGroup>

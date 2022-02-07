@@ -1,8 +1,9 @@
 import React from "react";
 import { Typography, Button, Paper, Stack } from "@mui/material";
-import { useTheme } from "@mui/material";
-
+import { useTheme} from "@mui/material";
+import { Login } from "./formComponents/Login";
 export function Landing() {
+  
   /* const theme = useTheme();
   console.log(theme); */
   return (
@@ -15,6 +16,7 @@ export function Landing() {
           </Button>
           <Button variant="outlined">register page</Button>
         </Stack>
+        <Login/>
       </Paper>
     </Paper>
   );
