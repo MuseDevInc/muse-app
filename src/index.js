@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline>
-      <App />
-    </CssBaseline>
+    <ThemeProvider>
+      <CssBaseline>
+        <App />
+      </CssBaseline>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

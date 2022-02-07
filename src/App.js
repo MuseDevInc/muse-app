@@ -5,7 +5,8 @@ import { Main } from './components/Main';
 import { Landing } from './components/Landing';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
+
   return (
     <div>
       {loggedIn? <Main/> : <Landing/>}
