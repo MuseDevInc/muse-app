@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CssBaseline } from '@mui/material';
+import { BrowserRouter as Router } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
+  <Router>
   <React.StrictMode>
     <CssBaseline>
-      <App />
+        <App />
     </CssBaseline>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </Router>,
+
   document.getElementById('root')
 );
 
