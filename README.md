@@ -8,11 +8,17 @@ etc..
 
 ## Dev Readme
 next:
+
+
 cleanup CRA stock files
+
+DONE:
 npm init 
 npm install react-router-dom@6
 npm install @mui/material @emotion/react @emotion/styled
-!!!!CSS BASELINE!!!!
+npm install @mui/icons-material
+cssbaseline
+
 
 
 
@@ -73,6 +79,18 @@ npm install @mui/material @emotion/react @emotion/styled
     └── setupTests.js
 
 ## Resources, Documentation, & Notes
+Example use for IconButton, import individual button by copying import statement from https://mui.com/components/material-icons/ and put component in between IconButton wrapper. The IconButton wrapper is where you will handleclick, hover, etc. 
+<!-- <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton> -->
+
 MUI Install/Getting Started : https://mui.com/getting-started/installation/
 Please refer to the Components list on the sidebar.
 
