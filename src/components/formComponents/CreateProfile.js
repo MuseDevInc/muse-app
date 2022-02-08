@@ -25,6 +25,7 @@ export function CreateProfile({ spotifyCode }) {
   const accessToken = useSpotifyAuth(spotifyCode);
   const [searchTopOne, setSearchTopOne] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [cancelQuery, setCancelQuery] = useState()
   
   // run when access token refreshes
   useEffect(() => {
@@ -39,11 +40,35 @@ export function CreateProfile({ spotifyCode }) {
     //  use spotify web api to get seacrh results
     spotifyApi.searchTracks(searchTopOne).then((res) => {
       console.log(res.body);
-      // setSearchResults(
-        
-      // )
+
+      //  map over the result to just grab specific keys of each item in the search results
+      let cancel = false
+      if (cancel) {
+        return
+      }
+      setSearchResults(
+        res.body.tracks.items.map((track) => {
+          const albumIcon = track.album.images.reduce(
+          // grab smallest image using reduce
+          (smallestImage, image) => {
+            if (image.height < smallestImage.height) {
+              return image
+            }
+            return smallestImage
+          }, track.album.images[0]
+          )
+          return {
+            track_id: track.id,
+            artist: track.artists[0].name,
+            title: track.name,
+            uri: track.uri,
+            albumUrl: albumIcon.url
+          }
+        })
+      )
     })
-  }, [setSearchResults, searchTopOne])
+    return setCancelQuery(true)
+  }, [setSearchResults, searchTopOne, accessToken])
 
 
   return (
