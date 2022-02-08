@@ -1,24 +1,18 @@
 import React from "react";
 import { Box, FormGroup, TextField, Typography, Button, Paper } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { RegisterSubmitButton } from "./RegisterSubmitButton";
-import { useNavigate } from "react-router-dom";
+import { CreateSubmitButton } from "./CreateSubmitButton";
 
-export function Register() {
+export function CreateProfile() {
   const theme = useTheme();
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
-  let navigate = useNavigate();
-
-  let handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    navigate("/createprofile");
-  };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
 
   return (
     <Paper elevation={8} sx={{ minHeight: "100vh", maxHeight: "100vh", background: `${backGrad}` }}>
+
     <Box>
       <Typography
         sx={{
@@ -31,35 +25,44 @@ export function Register() {
       >
         MUSE
       </Typography>
-      <FormGroup
-        onSubmit={handleRegisterSubmit}
-        sx={{ alignItems: "center", margin: "2rem" }}
-      >
+      <FormGroup sx={{ alignItems: "center", margin: "2rem" }}>
         <TextField
           id="outlined-basic"
-          label="Username"
+          label="Location"
           variant="outlined"
           margin="dense"
         />
         <TextField
           id="outlined-basic"
-          label="Email"
+          label="About Me"
           variant="outlined"
           margin="dense"
         />
         <TextField
           id="outlined-basic"
-          label="Password"
+          label="Favorite Genre"
           variant="outlined"
           margin="dense"
         />
         <TextField
           id="outlined-basic"
-          label="Phone Number"
+          label="Top 1 Song"
           variant="outlined"
           margin="dense"
         />
-        <RegisterSubmitButton handleRegisterSubmit={handleRegisterSubmit} />
+        <TextField
+          id="outlined-basic"
+          label="Top 2 Song"
+          variant="outlined"
+          margin="dense"
+        />
+        <TextField
+          id="outlined-basic"
+          label="Top 3 Song"
+          variant="outlined"
+          margin="dense"
+        />
+        <CreateSubmitButton />
       </FormGroup>
     </Box>
     </Paper>
