@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import SpotifyWebApi from "spotify-web-api-node";
+import useSpotifyAuth from '../../hooks/useSpotifyAuth';
 import {
   Box,
   FormGroup,
   TextField,
   Typography,
-  Button,
   Paper,
-  Stack,
   Autocomplete,
 } from "@mui/material";
 import { useTheme } from "@mui/material";
@@ -14,7 +14,12 @@ import { CreateSubmitButton } from "./CreateSubmitButton";
 import { useNavigate } from "react-router-dom";
 
 
-export function CreateProfile() {
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
+});
+
+export function CreateProfile({ spotifyCode }) {
+
   const theme = useTheme();
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
 
@@ -26,6 +31,13 @@ export function CreateProfile() {
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+  const accessToken = useSpotifyAuth(spotifyCode);
+
+  //    run when access token refreshes
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
 
   return (
     <Paper

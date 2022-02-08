@@ -11,8 +11,13 @@ import UserProfile from "./components/user/UserProfile";
 // import { UserProfile } from "./components/user/UserProfile"
 
 
+const spotifyCode = new URLSearchParams(window.location.search).get('code')
+
+console.log(spotifyCode);
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <>
       <Routes>
@@ -23,6 +28,7 @@ function App() {
         <Route path="/main" element={<Main />}></Route>
         <Route path="/userprofile" element={<UserProfile />}></Route>
         {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
+        <Route path="/createprofile" element={spotifyCode ? <CreateProfile spotifyCode={spotifyCode} /> : null}></Route>
 
       </Routes>
 
