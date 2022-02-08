@@ -16,7 +16,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/createprofile" element={<CreateProfile />}></Route>
-
+        <Route path="/main" element={<Main />}></Route>
       </Routes>
 
       {/* {loggedIn ? <Main /> : <Landing />} */}
