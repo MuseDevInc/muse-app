@@ -24,16 +24,24 @@ function DiscoverUserGetter() {
           Christian
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton onClick={() => {console.log('thumbs down')}}>
+          <IconButton
+            onClick={() => {
+              console.log("thumbs down");
+            }}
+          >
             <ThumbDownOffAltRounded sx={{ fontSize: "2.5rem" }} />
           </IconButton>
           <DiscoverPaper />
-          <IconButton onClick={() => {console.log('thumbs up')}}>
+          <IconButton
+            onClick={() => {
+              console.log("thumbs up");
+            }}
+          >
             <ThumbUp sx={{ fontSize: "2.5rem" }} />
           </IconButton>
           <MatchActionButtons />
         </Box>
-       {/*  Replace stack with MUI AvatarGroup, gen NextAvatars from queue */}
+        {/*  Replace stack with MUI AvatarGroup, gen NextAvatars from queue */}
         <Stack flexDirection="row" marginTop="2rem" columnGap="3rem">
           <NextAvatar />
           <NextAvatar />
