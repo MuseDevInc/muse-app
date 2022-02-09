@@ -20,12 +20,10 @@ export function MatchedUserTabs() {
       value={value}
       onChange={handleChange}
       aria-label="options regarding matched user"
-      sx={{ marginBottom: ".25rem", display: "flex", justifyContent: "center", maxWidth: "90%" }}
       variant="fullWidth"
     >
       <Tab icon={<MusicNote />} label="Taste" size="sm" />
       <Tab icon={<ChatBubble />} label="Message" size="sm" />
-
       <Tab icon={<InfoIcon />} label="Info" size="sm" />
     </Tabs>
     /*  </Container> */

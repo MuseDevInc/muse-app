@@ -5,11 +5,12 @@ import { MatchedUserTabs } from "./MatchedUserTabs";
 export const DiscoverPaper = () => {
 
   return (
-    <Card elevation={16} sx={{borderRadius: 5, marginTop:"1.5rem"}} >
-        <Container>
-        <MatchedUserTabs/>
+    <Card elevation={16} sx={{borderRadius: 5, marginTop:"1.5rem", marginX: "1rem", maxWidth: "85%", flexBasis: "auto", }} >
+   
+  {/*       <MatchedUserTabs sx={{flex: "5"}}/> */}
         <AlbumContainer/>
-        </Container>
+{/*         <Typography variant="h3">Christian Staubo</Typography> */}
+    
     </Card>
   );
 };
