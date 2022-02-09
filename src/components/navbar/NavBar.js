@@ -17,10 +17,13 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import ChatIcon from '@mui/icons-material/Chat';
 import { OpenChat } from './OpenChat';
 
+//either above component or within, should only matter if there were multiple instances of the function component in the app. const dropDownPageArray = [ <ProfilePage/> , <LogOutButton/> ] ???
+// Pass UserID as props, store ID in a Ref (useRef hook)--get the page what it needs.
+
 export function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const iconSizeBig = `sx={{ fontSize: "3.5rem" }}`
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -34,8 +37,8 @@ export function NavBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
+    <Box sx={{ flexGrow: 1}}>
+      {/* <FormGroup>
         <FormControlLabel
           control={
             <Switch
@@ -46,26 +49,30 @@ export function NavBar() {
           }
           label={auth ? 'Logout' : 'Login'}
         />
-      </FormGroup>
-      {/*we can do more positioning here, active sx override below right now, change flex property */}
-      <AppBar position="static" sx={{ alignItems: "flex-end"}}>
+      </FormGroup> */}
+      {/*we can do more positioning here, active sx override below right now, change flex property 
+      We should establish breakpoints either in theme or inline*/}
+      <AppBar position="static" sx={{ alignItems: "center"}}>
         <Toolbar variant="regular" >
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
-          </Typography> */}
+          
+         {/* auth condition !! */ }
           {auth && (
             <div>
-                {/* User Dropdown IconButton */}
+              {/*IconButton re: Discover feature...*/}
               <IconButton
+                size="large"
+                aria-label="discover"
+                aria-controls="discover-appbar"
+                aria-haspopup="true"
+                /* onClick={} */
+                color="inherit"
+              >
+                <WhatshotIcon sx={{ fontSize: "2.75rem" }}/>
+              </IconButton>
+              {/*OpenChat is here. Decide if we want a Dialog modal or to use react router*/}
+              <OpenChat />
+               {/* User Dropdown IconButton */}
+               <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -73,26 +80,13 @@ export function NavBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircle sx={{ fontSize: "2.75rem" }} />
               </IconButton>
-              {/*This is the fire icon...*/}
-              <IconButton
-                size="large"
-                aria-label="does the fire thing"
-                aria-controls="fire-appbar"
-                aria-haspopup="true"
-                /* onClick={} */
-                color="inherit"
-              >
-                <WhatshotIcon />
-              </IconButton>
-              {/*OpenChat is here. Decide if we want a Dialog modal or to use react router*/}
-              <OpenChat/>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
+                  vertical: 'bottom',
                   horizontal: 'right',
                 }}
                 keepMounted
@@ -100,11 +94,14 @@ export function NavBar() {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
+                /*blur is below this line */
+                sx={{backdropFilter: "blur(3px)"}}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */ }
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>
           )}

@@ -11,47 +11,50 @@ export function Login() {
 
   return (
     <>
-
-      <Paper elevation={8} sx={{ minHeight: "100vh", maxHeight: "100vh", background: `${backGrad}` }}>
-
-      <Typography
+      <Paper
+        elevation={8}
         sx={{
-          textAlign: "center",
-          padding: "2rem",
-          margin: "1rem",
-          color: "white"
+          minHeight: "100vh",
+          maxHeight: "100vh",
+          background: `${backGrad}`,
         }}
-        variant="h1"
       >
-        MUSE
-      </Typography>
-      <Box>
-        <FormGroup
+        <Typography
           sx={{
-            Justify: "Center",
-            alignItems: "center",
-            padding: "1rem",
-            marginTop: "5rem",
+            textAlign: "center",
+            padding: "2rem",
+            margin: "1rem",
+            color: "white",
           }}
+          variant="h1"
         >
-          <TextField
-            id="outlined-basic"
-            label="Email"
-            variant="outlined"
-            margin="dense"
-          />
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            margin="dense"
-          />
-          <LoginSubmitButton />
-        </FormGroup>
-      </Box>
+          MUSE
+        </Typography>
+        <Box>
+          <FormGroup
+            sx={{
+              Justify: "Center",
+              alignItems: "center",
+              padding: "1rem",
+              marginTop: "5rem",
+            }}
+          >
+            <TextField
+              id="outlined-basic"
+              label="Email"
+              variant="outlined"
+              margin="dense"
+            />
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              margin="dense"
+            />
+            <LoginSubmitButton />
+          </FormGroup>
+        </Box>
       </Paper>
-
-
     </>
   );
 }
