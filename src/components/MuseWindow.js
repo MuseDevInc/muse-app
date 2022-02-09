@@ -7,7 +7,7 @@ export function MuseWindow({gradient}) {
   return (
     <Paper
     /*   elevation={8} */
-      sx={{ minHeight: "90vh", background: `${backgroundGradient}` }}
+      sx={{ minHeight: "93vh", background: `${backgroundGradient}` }}
     >
 {/*       <Stack alignItems="center"> */}
 

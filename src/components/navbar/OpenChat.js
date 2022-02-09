@@ -14,7 +14,7 @@ export function OpenChat() {
                 /* onClick={} */
                 color="inherit"
               >
-                <ChatIcon />
+                <ChatIcon sx={{ fontSize: "2.75rem" }}/>
               </IconButton>
   )
 }
