@@ -82,6 +82,8 @@ export function CreateProfile({ spotifyCode }) {
     return setCancelQuery(true)
   }, [setSearchResults, searchTopOne, accessToken])
 
+  
+
   return (
     <Paper
       elevation={8}
@@ -99,6 +101,7 @@ export function CreateProfile({ spotifyCode }) {
         >
           MUSE
         </Typography>
+        { topSongs.length > 0 ? <img src={topSongs[0].albumUrl} style={{height: "100px", width: "100px"}} alt={topSongs[0].title}></img> : null}
         <FormGroup sx={{ alignItems: "center", margin: "2rem" }}>
           <TextField
             id="location"
