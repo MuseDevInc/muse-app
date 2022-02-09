@@ -2,7 +2,7 @@ import React from 'react';
 import './SongSearchResultContainer.css'
 
 export const SongSearchResultContainer = ({track, chooseTrack}) => {
-    const handleSelectTrack = () => {
+    const handleSelectTrack = (e) => {
             chooseTrack(track)
     }
   return (

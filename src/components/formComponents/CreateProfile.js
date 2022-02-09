@@ -27,10 +27,17 @@ export function CreateProfile({ spotifyCode }) {
   const [searchTopOne, setSearchTopOne] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [cancelQuery, setCancelQuery] = useState()
-  const [hideSearchResults, setHideSearchResults] = useState()
+  const [hideSearchResults, setHideSearchResults] = useState(true)
+  const [topSongs, setTopSongs] = useState([])
 
   const chooseTrack = (track) => {
     setSearchTopOne('')
+    if(topSongs.filter(topSong => topSong.uri === track.uri).length >= 1) {
+      return
+    }
+    if (topSongs.length < 3) {
+      setTopSongs([...topSongs, track])
+    }
   }
   
   // run when access token refreshes
@@ -74,7 +81,6 @@ export function CreateProfile({ spotifyCode }) {
     })
     return setCancelQuery(true)
   }, [setSearchResults, searchTopOne, accessToken])
-
 
   return (
     <Paper
@@ -126,21 +132,35 @@ export function CreateProfile({ spotifyCode }) {
           />
           <TextField
             id="favorite_song1"
-            label="Top 1 Song"
+            label="Your top 3 songs"
             variant="outlined"
             margin="dense"
             value={searchTopOne}
+            disabled={topSongs.length < 3 ? false : true}
             onChange={(e) => setSearchTopOne(e.target.value)}
-            onFocus={() => setHideSearchResults(false)}
-            onBlur={() => setHideSearchResults(true)}
           />
-          { hideSearchResults ? null : <Box>
+          { searchTopOne ? <Box>
             <div style={{height: "20vh", overflow: "scroll", background: "white"}}>
             {searchResults?.map(track => <SongSearchResultContainer track={track} key={track.uri} chooseTrack={chooseTrack} />
             )}
             </div>
-          </Box>
-          }
+          </Box> : null}
+          
+          <div>
+            {topSongs?.map(track => {
+              return (
+                <div className='song-container'>
+                <img src={track.albumUrl} style={{height: "64px", width: "64px"}} alt={track.title}></img>
+                <div className='song-text'>
+                  <div>{track.title}</div>
+                </div>
+                <button onClick={() => setTopSongs(topSongs.filter(topSong => topSong.uri !== track.uri))}>Remove</button>
+              </div>
+              )
+              }
+            )}
+          </div>
+          
           <CreateSubmitButton />
         </FormGroup>
       </Box>
