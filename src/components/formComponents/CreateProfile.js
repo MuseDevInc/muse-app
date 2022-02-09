@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import useSpotifyAuth from '../../hooks/useSpotifyAuth';
+import {SongSearchResultContainer} from "./SongSearchResultContainer";
 import {
   Box,
   FormGroup,
@@ -26,6 +27,11 @@ export function CreateProfile({ spotifyCode }) {
   const [searchTopOne, setSearchTopOne] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [cancelQuery, setCancelQuery] = useState()
+  const [hideSearchResults, setHideSearchResults] = useState()
+
+  const chooseTrack = (track) => {
+    setSearchTopOne('')
+  }
   
   // run when access token refreshes
   useEffect(() => {
@@ -40,7 +46,6 @@ export function CreateProfile({ spotifyCode }) {
     //  use spotify web api to get seacrh results
     spotifyApi.searchTracks(searchTopOne).then((res) => {
       console.log(res.body);
-
       //  map over the result to just grab specific keys of each item in the search results
       let cancel = false
       if (cancel) {
@@ -124,20 +129,18 @@ export function CreateProfile({ spotifyCode }) {
             label="Top 1 Song"
             variant="outlined"
             margin="dense"
+            value={searchTopOne}
             onChange={(e) => setSearchTopOne(e.target.value)}
+            onFocus={() => setHideSearchResults(false)}
+            onBlur={() => setHideSearchResults(true)}
           />
-          <TextField
-            id="favorite_song2"
-            label="Top 2 Song"
-            variant="outlined"
-            margin="dense"
-          />
-          <TextField
-            id="favorite_song3"
-            label="Top 3 Song"
-            variant="outlined"
-            margin="dense"
-          />
+          { hideSearchResults ? null : <Box>
+            <div style={{height: "20vh", overflow: "scroll", background: "white"}}>
+            {searchResults?.map(track => <SongSearchResultContainer track={track} key={track.uri} chooseTrack={chooseTrack} />
+            )}
+            </div>
+          </Box>
+          }
           <CreateSubmitButton />
         </FormGroup>
       </Box>

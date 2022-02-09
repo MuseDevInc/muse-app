@@ -1,0 +1,11 @@
+.song-container {
+    display: flex;
+    padding: 1%;
+    align-items: center;
+}
+
+.song-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+}
