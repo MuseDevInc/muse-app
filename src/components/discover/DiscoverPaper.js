@@ -5,7 +5,7 @@ import { MatchedUserTabs } from "./MatchedUserTabs";
 export const DiscoverPaper = () => {
 
   return (
-    <Card elevation={16} sx={{maxWidth: "70%", borderRadius: 5, marginTop:"1.5rem"}} >
+    <Card elevation={16} sx={{borderRadius: 5, marginTop:"1.5rem"}} >
         <Container>
         <MatchedUserTabs/>
         <AlbumContainer/>
