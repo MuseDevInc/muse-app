@@ -6,77 +6,29 @@
 4: Installation
 etc..
 
-## Dev Readme
-next:
+## Dev Readme: FEATURE-NAVBAR
 
+JW: [feature-navbar] As per conversation with Charm, goal of feature-navbar is to provide branch:dev with updated <NavBar/> (renamed from AppNav.js), without [Discover...] sibling component tree present in dev branch:layout-and-sizing, to be rendered on User login. Other features dependent on NavBar include [show-user-profile], [edit-user-profile], [open-chat-screen], [log-out]. 
 
-cleanup CRA stock files
+Current conception of component tree includes <NavBar/> as sibling of <MuseWindow/>, which will provide a container/wrapper for rendering the component tree related to the [Discover-Feature], as well as be the element that profile view and chat functionality can be rendered within, or rendered "over" (z-index, elevation). <MuseWindow/> and components re: [Discover-Feature] will be provided by JW in upcoming feature branch. KS will be provided
 
-DONE:
-npm init 
-npm install react-router-dom@6
-npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/icons-material
-cssbaseline
+Additional considerations re: <NavBar/>,: 
+- if <App/> is a store of User information in state, whole NavBar may rerender when a) props re: User change from actions performed in siblings, b) CRUD operations re: User are performed in children of NavBar. Be on the lookout for children of NavBar not *immediately* reflecting updated state.
+## JW: Notes
+Don't get sidetracked by this, but considerations and notes as we progress to and past MVP, in no particular order:
+- After testing MVP, it may be beneficial to determine if we should utilize Suspense *experimental* (upcoming in React18)or lazy loading in re: first paint after login, likely LCP. 
+- *quickly* Determine: For [show-user], [edit-user], [open-chat], mui modal vs mui portal vs react-router. Mostly, we want to avoid having to re-perform expensive operations re: user (... or object.assign helps if User info stored in parent state) and ESPECIALLY avoid re-performing expensive operations in <Discover...> sibling component tree. After MVP or if time permits, weigh benefits of memoization or useMemo. 
+- Also, weigh benefits of splitting User object from fetch return. After MVP: is cacheing info re: User, OtherUsers more performant?
+Resource: https://betterprogramming.pub/exploring-caching-techniques-in-react-d30bbb78d54d
+(Not mentioned, useReducer hook, )
+
+to do: cleanup CRA stock files
+
 
 
 
 
 ### Component Tree and File Structure
-.
-├── README.md
-├── README.old.md
-├── package-lock.json
-├── package.json
-├── public
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── logo192.png
-│   ├── logo512.png
-│   ├── manifest.json
-│   └── robots.txt
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── components
-    │   ├── HeaderContainer.js
-    │   ├── Landing.js
-    │   ├── Main.js
-    │   ├── ThemeProvider.js
-    │   ├── discover
-    │   │   ├── AlbumContainer.js
-    │   │   ├── ClipWrapper.js
-    │   │   ├── DiscoverContainer.js
-    │   │   ├── DiscoverPaper.js
-    │   │   ├── NextAvatar.js
-    │   │   ├── PlaybackControls.js
-    │   │   ├── QueueContainer.js
-    │   │   ├── UserGetter.js
-    │   │   └── func
-    │   │       ├── matchChecker.js
-    │   │       └── swipe.js
-    │   ├── feedbackAndNotifs
-    │   │   ├── Alert.Js
-    │   │   ├── MatchNotif.js
-    │   │   └── Snackbar.js
-    │   ├── formComponents
-    │   │   ├── AlbumDropField.js
-    │   │   ├── Login.js
-    │   │   ├── LoginSubmitButton.js
-    │   │   ├── Register.js
-    │   │   └── RegisterSubmitButton.js
-    │   └── navbar
-    │       ├── AppNav.js
-    │       ├── ChatScreen.js
-    │       ├── OpenChat.js
-    │       ├── ShowAccount.js
-    │       └── UserDrop.js
-    ├── index.css
-    ├── index.js
-    ├── logo.svg
-    ├── reportWebVitals.js
-    └── setupTests.js
 
 ## Resources, Documentation, & Notes
 Example use for IconButton, import individual button by copying import statement from https://mui.com/components/material-icons/ and put component in between IconButton wrapper. The IconButton wrapper is where you will handleclick, hover, etc. 
