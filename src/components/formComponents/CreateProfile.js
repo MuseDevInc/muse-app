@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import useSpotifyAuth from '../../hooks/useSpotifyAuth';
-import {SongSearchResultContainer} from "./SongSearchResultContainer";
+import SongResultContainer from "./SongResultContainer";
 import {
   Box,
   FormGroup,
@@ -144,7 +144,7 @@ export function CreateProfile({ spotifyCode }) {
           />
           { searchTopOne ? <Box>
             <div style={{height: "20vh", overflow: "scroll", background: "white"}}>
-            {searchResults?.map(track => <SongSearchResultContainer track={track} key={track.uri} chooseTrack={chooseTrack} />
+            {searchResults?.map(track => <SongResultContainer track={track} key={track.uri} chooseTrack={chooseTrack} />
             )}
             </div>
           </Box> : null}
