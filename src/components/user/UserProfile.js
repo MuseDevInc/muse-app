@@ -73,10 +73,11 @@ const UserProfile = () => {
       <Card
         sx={{
           maxWidth: 500,
-          maxHeight: 920,
+        /*   maxHeight: 920, */
           padding: "2rem",
           margin: "2rem",
-          position: "absolute",
+   /*        position: "absolute", */
+          flexBasis: "auto"
         }}
       >
         <CardHeader
