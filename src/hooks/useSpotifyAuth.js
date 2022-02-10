@@ -8,7 +8,7 @@ const useSpotifyAuth = (code) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3001/spotifyLogin", {
+      .post("http://localhost:4000/spot/spotifyLogin", {
         code,
       })
       .then((res) => {
@@ -29,7 +29,7 @@ const useSpotifyAuth = (code) => {
     if (!refreshToken || !expiresIn) {return};
     const interval = setInterval(() => {
       axios
-        .post("http://localhost:3001/spotifyRefresh", {
+        .post("http://localhost:4000/spot/spotifyRefresh", {
           refreshToken,
         })
         .then((res) => {
