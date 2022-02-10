@@ -1,11 +1,20 @@
 import React from "react";
-import { Box, FormGroup, TextField, Typography, Button, Paper } from "@mui/material";
+import { Box, FormGroup, TextField, Typography, Button, Paper, Card } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { CreateSubmitButton } from "./CreateSubmitButton";
+import { useNavigate } from "react-router-dom";
+
 
 export function CreateProfile() {
   const theme = useTheme();
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
+
+  let navigate = useNavigate();
+
+  let handleCreateSubmit = (e) => {
+    e.preventDefault();
+    navigate("/userprofile");
+  };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
@@ -25,6 +34,7 @@ export function CreateProfile() {
       >
         MUSE
       </Typography>
+
       <FormGroup sx={{ alignItems: "center", margin: "2rem" }}>
         <TextField
           id="outlined-basic"
@@ -62,7 +72,8 @@ export function CreateProfile() {
           variant="outlined"
           margin="dense"
         />
-        <CreateSubmitButton />
+        {/* <CreateSubmitButton /> */}
+        <CreateSubmitButton handleCreateSubmit={handleCreateSubmit} /> 
       </FormGroup>
     </Box>
     </Paper>

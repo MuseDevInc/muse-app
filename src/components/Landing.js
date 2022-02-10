@@ -58,8 +58,3 @@ export function Landing() {
     </>
   );
 }
-
-{/* <Paper
-elevation={8}
-sx={{ minHeight: "80vh", maxHeight: "90vh", background: `${backGrad}` }}
-> */}
