@@ -1,6 +1,7 @@
 
 
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -94,13 +95,13 @@ export function NavBar() {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
-                /*blur is below this line */
-                sx={{backdropFilter: "blur(3px)"}}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
                 {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */ }
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <Link to="/main/userprofile">
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                </Link>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>

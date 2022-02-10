@@ -47,7 +47,7 @@ export function Landing() {
           </Button>
         </Link>
     {/*     route to test navbar / bypass having to handle loggedin state right now  */}
-        <Link to="/main" style={{ textDecoration:"none",padding:"1rem", marginTop: "1rem", Justify: "Center"}}>
+        <Link to="/main/discover" style={{ textDecoration:"none",padding:"1rem", marginTop: "1rem", Justify: "Center"}}>
           <Button size="sm" variant="outlined">
             Go to main
           </Button>
