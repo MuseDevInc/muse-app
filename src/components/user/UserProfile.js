@@ -57,8 +57,6 @@ const UserProfile = () => {
 
   const content2 = <div>{"CLB"}</div>;
 
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-
   return (
     <Stack alignItems="center">
       {/* <Typography

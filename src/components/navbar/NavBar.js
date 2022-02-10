@@ -1,22 +1,20 @@
-
-
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import WhatshotIcon from '@mui/icons-material/Whatshot';
-import ChatIcon from '@mui/icons-material/Chat';
-import { OpenChat } from './OpenChat';
+import * as React from "react";
+import { Link, Navigate } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import ChatIcon from "@mui/icons-material/Chat";
+import { OpenChat } from "./OpenChat";
 
 //either above component or within, should only matter if there were multiple instances of the function component in the app. const dropDownPageArray = [ <ProfilePage/> , <LogOutButton/> ] ???
 // Pass UserID as props, store ID in a Ref (useRef hook)--get the page what it needs.
@@ -24,7 +22,7 @@ import { OpenChat } from './OpenChat';
 export function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const iconSizeBig = `sx={{ fontSize: "3.5rem" }}`
+  const iconSizeBig = `sx={{ fontSize: "3.5rem" }}`;
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -38,7 +36,7 @@ export function NavBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 1 }}>
       {/* <FormGroup>
         <FormControlLabel
           control={
@@ -53,14 +51,16 @@ export function NavBar() {
       </FormGroup> */}
       {/*we can do more positioning here, active sx override below right now, change flex property 
       We should establish breakpoints either in theme or inline*/}
-      <AppBar position="static" sx={{ alignItems: "center"}}>
-        <Toolbar variant="regular" >
-          
-         {/* auth condition !! */ }
+      <AppBar position="static" sx={{ alignItems: "center" }}>
+        <Toolbar variant="regular">
+          {/* auth condition !! */}
           {auth && (
             <div>
-              {/*IconButton re: Discover feature...*/}
+              {/*Link to discover view*/}
+
               <IconButton
+                component={Link}
+                to="/main/discover"
                 size="large"
                 aria-label="discover"
                 aria-controls="discover-appbar"
@@ -68,12 +68,13 @@ export function NavBar() {
                 /* onClick={} */
                 color="inherit"
               >
-                <WhatshotIcon sx={{ fontSize: "2.75rem" }}/>
+                <WhatshotIcon sx={{ fontSize: "2.75rem" }} />
               </IconButton>
+
               {/*OpenChat is here. Decide if we want a Dialog modal or to use react router*/}
               <OpenChat />
-               {/* User Dropdown IconButton */}
-               <IconButton
+              {/* User Dropdown IconButton */}
+              <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -87,21 +88,25 @@ export function NavBar() {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
+                  vertical: "bottom",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */ }
-                <Link to="/main/userprofile">
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                </Link>
+                <MenuItem
+                  component={Link}
+                  to="/main/userprofile"
+                  onClick={handleClose}
+                >
+                  Profile
+                </MenuItem>
+
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>
