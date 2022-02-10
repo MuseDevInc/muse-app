@@ -6,7 +6,11 @@
 4: Installation
 etc..
 
+<<<<<<< HEAD
+## Dev Readme: FEATURE-NAVBAR
+=======
 ## Dev Readme: FEATURE-NAVBAR:
+>>>>>>> dev
 
 JW: [feature-navbar] As per conversation with Charm, goal of feature-navbar is to provide branch:dev with updated <NavBar/> (renamed from AppNav.js), without [Discover...] sibling component tree present in dev branch:layout-and-sizing, to be rendered on User login. Other features dependent on NavBar include [show-user-profile], [edit-user-profile], [open-chat-screen], [log-out]. 
 
@@ -14,7 +18,11 @@ Current conception of component tree includes <NavBar/> as sibling of <MuseWindo
 
 Additional considerations re: <NavBar/>,: 
 - if <App/> is a store of User information in state, whole NavBar may rerender when a) props re: User change from actions performed in siblings, b) CRUD operations re: User are performed in children of NavBar. Be on the lookout for children of NavBar not *immediately* reflecting updated state.
+<<<<<<< HEAD
+## JW: Notes
+=======
 
+>>>>>>> dev
 Don't get sidetracked by this, but considerations and notes as we progress to and past MVP, in no particular order:
 - After testing MVP, it may be beneficial to determine if we should utilize Suspense *experimental* (upcoming in React18)or lazy loading in re: first paint after login, likely LCP. 
 - *quickly* Determine: For [show-user], [edit-user], [open-chat], mui modal vs mui portal vs react-router. Mostly, we want to avoid having to re-perform expensive operations re: user (... or object.assign helps if User info stored in parent state) and ESPECIALLY avoid re-performing expensive operations in <Discover...> sibling component tree. After MVP or if time permits, weigh benefits of memoization or useMemo. 
