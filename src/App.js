@@ -7,7 +7,7 @@ import { Register } from "./components/formComponents/Register";
 import { Login } from "./components/formComponents/Login";
 import CreateProfile  from "./components/formComponents/CreateProfile"
 import UserProfile from "./components/user/UserProfile";
-import Messenger from "./components/messaging/Messenger";
+// import Messenger from "./components/messaging/Messenger";
 // import { EditProfile } from "./components/user/EditProfile"
 // import { UserProfile } from "./components/user/UserProfile"
 import Messenger from "./components/messenger/Messenger";
