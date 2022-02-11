@@ -96,12 +96,12 @@ export default function CreateProfile({ spotifyCode }) {
       setSearchResults(
         res.body.tracks.items.map((track) => {
           const albumIcon = track.album.images.reduce(
-            // grab smallest image using reduce
-            (smallestImage, image) => {
-              if (image.height < smallestImage.height) {
+            // grab biggest image using reduce
+            (biggestImage, image) => {
+              if (image.height > biggestImage.height) {
                 return image;
               }
-              return smallestImage;
+              return biggestImage;
             },
             track.album.images[0]
           );
@@ -142,12 +142,12 @@ export default function CreateProfile({ spotifyCode }) {
           <CardMedia
             component="img"
             height="194"
-            image="https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"
+            image={ topSongs.length > 0 ? topSongs[0].albumUrl : "https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"}
             alt="CLB"
           />
           <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              Create your Profile.
+            <Typography variant="" color="text.secondary">
+              Create your Profile
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
