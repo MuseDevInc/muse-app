@@ -4,19 +4,21 @@ import { useTheme } from "@mui/material";
 import { LoginSubmitButton } from "./LoginSubmitButton";
 import { useState, useEffect } from "react";
 
-export function Login() {
+export function RegisterSession() {
   const theme = useTheme();
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
 
   const handleSubmit = (e) => {
+      console.log('hitting')
     e.preventDefault();
-    const form = { username, password };
+    const form = { username, password, verifyPassword };
 
-    fetch('http://localhost:4000/session/login', {
+    fetch('http://localhost:4000/session/register', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form)
@@ -74,7 +76,7 @@ export function Login() {
    
 
     <div className="login">
-      <h2>Login</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input 
@@ -89,8 +91,14 @@ export function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></textarea>
+        <label>Verify Password</label>
+        <textarea
+          required
+          value={verifyPassword}
+          onChange={(e) => setVerifyPassword(e.target.value)}
+        ></textarea>
         
-        <button>Login</button>
+        <button onClick={handleSubmit}>Register</button>
       </form>
     </div>
     </>
