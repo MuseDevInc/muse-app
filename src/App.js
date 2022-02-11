@@ -5,7 +5,7 @@ import { Landing } from "./components/Landing";
 import { Route, Routes, Link } from "react-router-dom";
 import { Register } from "./components/formComponents/Register";
 import { Login } from "./components/formComponents/Login";
-import { CreateProfile } from "./components/formComponents/CreateProfile"
+import CreateProfile  from "./components/formComponents/CreateProfile"
 import UserProfile from "./components/user/UserProfile";
 // import { EditProfile } from "./components/user/EditProfile"
 // import { UserProfile } from "./components/user/UserProfile"
