@@ -7,6 +7,7 @@ import { Register } from "./components/formComponents/Register";
 import { Login } from "./components/formComponents/Login";
 import { CreateProfile } from "./components/formComponents/CreateProfile"
 import UserProfile from "./components/user/UserProfile";
+import Messenger from "./components/messaging/Messenger";
 // import { EditProfile } from "./components/user/EditProfile"
 // import { UserProfile } from "./components/user/UserProfile"
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/userprofile" element={<UserProfile />}></Route>
         {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
         <Route path="/createprofile" element={spotifyCode ? <CreateProfile spotifyCode={spotifyCode} /> : null}></Route>
+        <Route path="/messenger" element={<Messenger />}></Route>
 
       </Routes>
 
