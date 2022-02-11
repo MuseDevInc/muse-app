@@ -16,6 +16,7 @@ import Menu from '@mui/material/Menu';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import ChatIcon from '@mui/icons-material/Chat';
 import { OpenChat } from './OpenChat';
+import { Link } from 'react-router-dom'
 
 //either above component or within, should only matter if there were multiple instances of the function component in the app. const dropDownPageArray = [ <ProfilePage/> , <LogOutButton/> ] ???
 // Pass UserID as props, store ID in a Ref (useRef hook)--get the page what it needs.
@@ -100,7 +101,9 @@ export function NavBar() {
                 onClose={handleClose}
               >
                 {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */ }
+                <Link to="/userprofile">
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
+                </Link>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>

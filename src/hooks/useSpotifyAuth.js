@@ -12,16 +12,17 @@ const useSpotifyAuth = (code) => {
         code,
       })
       .then((res) => {
-        // console.log(res);
+        console.log(res)
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
         //     remove code from url
         window.history.pushState({}, null, "/");
+
       })
       .catch((err) => {
         console.log(err);
-        window.location = "/";
+        // window.location = "/";
       });
   }, [code]);
 
@@ -37,7 +38,7 @@ const useSpotifyAuth = (code) => {
           setExpiresIn(res.data.expiresIn);
         })
         .catch(() => {
-          window.location = "/";
+          // window.location = "/";
         });
 
     }, (expiresIn - 60) * 1000);
@@ -45,6 +46,7 @@ const useSpotifyAuth = (code) => {
     return () => clearInterval(interval)
   }, [refreshToken, expiresIn]);
 
+  console.log(accessToken, '::::::', refreshToken, '....', expiresIn)
   return accessToken;
 };
 
