@@ -1,6 +1,7 @@
 import React from "react";
 import { Paper, Typography, Stack } from "@mui/material";
 import DiscoverUserGetter from "./discover/DiscoverUserGetter";
+import UserProfile from "./user/UserProfile";
 
 export function MuseWindow({gradient}) {
     let backgroundGradient = gradient
@@ -11,7 +12,7 @@ export function MuseWindow({gradient}) {
     >
 {/*       <Stack alignItems="center"> */}
 
-        <DiscoverUserGetter />
+        {/* <DiscoverUserGetter /> */}
       
     {/*   </Stack> */}
     </Paper>
