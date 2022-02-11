@@ -17,7 +17,7 @@ import { RegisterSession } from "./components/formComponents/RegisterSession";
 const spotifyCode = new URLSearchParams(window.location.search).get('code')
 
 console.log(spotifyCode);
-
+//stuff
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userloggedIn, setUserLoggedIn] = useState('')
