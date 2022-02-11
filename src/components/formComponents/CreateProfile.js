@@ -118,89 +118,6 @@ export default function CreateProfile({ spotifyCode }) {
     return setCancelQuery(true);
   }, [setSearchResults, searchTopOne, accessToken]);
 
-  // return (
-  //   <Paper
-  //     elevation={8}
-  //     sx={{ minHeight: "100vh", maxHeight: "100vh", background: `${backGrad}` }}
-  //   >
-  //     <Box>
-  //       <Typography
-  //         sx={{
-  //           textAlign: "center",
-  //           padding: "1%",
-  //           margin: "1%",
-  //           color: "white",
-  //         }}
-  //         variant="h1"
-  //       >
-  //         MUSE
-  //       </Typography>
-  //       { topSongs.length > 0 ? <img src={topSongs[0].albumUrl} style={{height: "100px", width: "100px"}} alt={topSongs[0].title}></img> : null}
-  //       <FormGroup sx={{ alignItems: "center", margin: "2rem" }}>
-  //         <TextField
-  //           id="location"
-  //           label="Location"
-  //           variant="outlined"
-  //           margin="dense"
-  //         />
-  //         <TextField
-  //           id="about-me"
-  //           label="About Me"
-  //           variant="outlined"
-  //           margin="dense"
-  //           multiline
-  //           rows={4}
-  //         />
-  //         <Autocomplete
-  //           multiple
-  //           id="tags-standard"
-  //           options={["Pop", "Rock", "Jazz"]}
-  //           getOptionLabel={(option) => option}
-  //           filterSelectedOptions
-  //           renderInput={(params) => (
-  //             <TextField
-  //               {...params}
-  //               variant="outlined"
-  //               label="Favorite Genres"
-  //               placeholder="Favorite Genres"
-  //             />
-  //           )}
-  //           margin="dense"
-  //         />
-  //         <TextField
-  //           id="favorite_song1"
-  //           label="Your top 3 songs"
-  //           variant="outlined"
-  //           margin="dense"
-  //           value={searchTopOne}
-  //           disabled={topSongs.length < 3 ? false : true}
-  //           onChange={(e) => setSearchTopOne(e.target.value)}
-  //         />
-  //         { searchTopOne ? <Box>
-  //           <div style={{height: "20vh", overflow: "scroll", background: "white"}}>
-  //           {searchResults?.map(track => <SongResultContainer track={track} key={track.uri} chooseTrack={chooseTrack} />
-  //           )}
-  //           </div>
-  //         </Box> : null}
-
-  //         <div>
-  //           {topSongs?.map(track => {
-  //             return (
-  //               <div className='song-container'>
-  //               <img src={track.albumUrl} style={{height: "64px", width: "64px"}} alt={track.title}></img>
-  //               <div className='song-text'>
-  //                 <div>{track.title}</div>
-  //               </div>
-  //               <button onClick={() => setTopSongs(topSongs.filter(topSong => topSong.uri !== track.uri))}>Remove</button>
-  //             </div>
-  //             )
-  //             }
-  //           )}
-  //         </div>
-
-  //         <CreateSubmitButton />
-  //       </FormGroup>
-  //     </Box>
   return (
     <Paper
       elevation={8}
@@ -211,7 +128,7 @@ export default function CreateProfile({ spotifyCode }) {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+                M
               </Avatar>
             }
             action={
