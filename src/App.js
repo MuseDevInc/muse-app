@@ -21,6 +21,8 @@ console.log(spotifyCode);
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userloggedIn, setUserLoggedIn] = useState('')
+  let userId = JSON.parse(localStorage.getItem("userId"))
+  console.log(userId)
 
   return (
     <>
