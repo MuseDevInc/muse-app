@@ -43,7 +43,7 @@ function App() {
             }
           ></Route>
           <Route path="/main" element={<Main />}></Route>
-          <Route path="/userprofile" element={<UserProfile />}></Route>
+          <Route path="/userprofile" element={<UserProfile currentUser={currentUser}/>}></Route>
           {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
           <Route
             path="/createprofile"

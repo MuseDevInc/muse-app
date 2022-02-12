@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   FormGroup,
@@ -27,18 +27,16 @@ import EditIcon from "@mui/icons-material/Edit";
 
 // 
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
+// import Collapse from '@mui/material/Collapse';
 // 
 
 
 import { useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const UserProfile = () => {
-  const theme = useTheme();
-
+const UserProfile = ({currentUser}) => {
   let navigate = useNavigate();
-
+  const [displayProfile, setDisplayProfile ] = useState(null)
   let handleCreateSubmit = (e) => {
     e.preventDefault();
     navigate("/editprofile");
@@ -59,17 +57,42 @@ const UserProfile = () => {
     },
   }));
 
-
-
-
   const content = <div>{"Pop"}</div>;
-
   const content2 = <div>{"CLB"}</div>;
+
+  let setProfile = (profile) => {
+    console.log(profile)
+    setDisplayProfile({...displayProfile, profile})
+  }
+
+  let getProfile = async () => {
+    let profileToGrab = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
+      }
+    );
+    let profileToDisplay = await profileToGrab.json()
+    if (profileToDisplay) {
+      // setDisplayProfile(profileToDisplay)
+      setProfile(profileToDisplay[0])
+      console.log(displayProfile)
+    };
+  }
+
+  
+  useEffect(() => {
+  getProfile()
+  console.log(displayProfile)
+  },[])
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
   return (
     <div>
+      {displayProfile && displayProfile.aboutMe}
       <Paper
         elevation={8}
         sx={{
@@ -79,7 +102,6 @@ const UserProfile = () => {
         }}
       >
         <Stack alignItems="center" >
-        {" "}
         {/* <Typography
             sx={{
               textAlign: "center",
@@ -103,7 +125,8 @@ const UserProfile = () => {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                C
+                {/* {currentUser.currentUsername[0]} */}
+                H
               </Avatar>
             }
             action={
@@ -111,13 +134,15 @@ const UserProfile = () => {
                 <EditIcon />
               </IconButton>
             }
-            title="Charmille"
+            title="Ugh"
+            // title={currentUser.currentUsername}
             subheader="New York City, New York"
           />
           <CardMedia
             component="img"
             height="360"
-            image="https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"
+            // image={displayProfile.favSong1.albumUrl}
+            // alt={displayProfile.favSong1.title}
           />
           <Accordion>
             <AccordionSummary
@@ -129,9 +154,7 @@ const UserProfile = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+               {content}
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -140,7 +163,6 @@ const UserProfile = () => {
             <Divider sx={{ padding: "1rem" }}>Favorite Genre</Divider>
             {content}
             <Divider>Favorite Album of All Time</Divider>
-            {content2}
           </Root>
 
           <Stack
@@ -149,9 +171,9 @@ const UserProfile = () => {
             spacing={2}
             sx={{ margin: "1rem", alignItems: "space" }}
           >
-            <Item>Music Item 1</Item>
-            <Item>Music Item 2</Item>
-            <Item>Music Item 3</Item>
+            <Item>{content}</Item>
+            <Item>{content}</Item>
+            <Item>{content}</Item>
           </Stack>
         </Card>
         </Stack>
