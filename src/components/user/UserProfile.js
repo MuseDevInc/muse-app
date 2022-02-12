@@ -107,7 +107,7 @@ const UserProfile = () => {
               </Avatar>
             }
             action={
-              <IconButton href>
+              <IconButton>
                 <EditIcon />
               </IconButton>
             }
