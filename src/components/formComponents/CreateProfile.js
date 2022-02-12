@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import useSpotifyAuth from "../../hooks/useSpotifyAuth";
 import SongResultContainer from "./SongResultContainer";
+import SongCardDisplay from "./SongCardDisplay";
 import {
   Box,
   FormGroup,
@@ -18,7 +19,7 @@ import {
   Avatar,
   Stack,
   IconButton,
-  Button
+  Button,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -41,9 +42,8 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 });
 
-export default function CreateProfile({accessToken, currentUser}) {
+export default function CreateProfile({ accessToken, currentUser }) {
   const [expanded, setExpanded] = useState(false);
-
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -54,18 +54,21 @@ export default function CreateProfile({accessToken, currentUser}) {
   let handleCreateSubmit = async (e) => {
     e.preventDefault();
     navigate("/userprofile");
-    let profileToCreate = await fetch(process.env.REACT_APP_BACKEND_SERVER + '/muse/userCreationPage', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        aboutMe: aboutMe,
-        favGenres: favGenres,
-        favAlbum: favAlbum,
-        favSong1: topSongs[0],
-        favSong2: topSongs[1],
-        favSong3: topSongs[2],
-      }),
-    })
+    let profileToCreate = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          aboutMe: aboutMe,
+          favGenres: favGenres,
+          favAlbum: favAlbum,
+          favSong1: topSongs[0],
+          favSong2: topSongs[1],
+          favSong3: topSongs[2],
+        }),
+      }
+    );
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
@@ -73,10 +76,10 @@ export default function CreateProfile({accessToken, currentUser}) {
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [topSongs, setTopSongs] = useState([]);
-  const [aboutMe, setAboutMe] = useState()
-  const [favGenres, setFavGenres] = useState([])
-  const [favAlbum, setFavAlbum] = useState()
-  const genresOptions = ["Pop", "Rock", "Jazz", "Country"]
+  const [aboutMe, setAboutMe] = useState();
+  const [favGenres, setFavGenres] = useState([]);
+  const [favAlbum, setFavAlbum] = useState();
+  const genresOptions = ["Pop", "Rock", "Jazz", "Country"];
 
   //  select a song
   const chooseTrack = (track) => {
@@ -127,23 +130,18 @@ export default function CreateProfile({accessToken, currentUser}) {
           };
         })
       );
-      return cancel = true
+      return (cancel = true);
     });
-  }, [setSearchResults, searchTopOne
-    , accessToken
-  ]);
+  }, [setSearchResults, searchTopOne, accessToken]);
 
   return (
-    <Paper
-      elevation={8}
-      sx={{ minHeight: "92vh", maxHeight: "100vh", background: `${backGrad}` }}
-    >
+    <>
       <Stack alignItems={"center"}>
         <Card sx={{ maxWidth: 345 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                M
+              <Avatar sx={{ bgcolor: red[500] , alignItems: "center"}} aria-label="recipe">
+                {currentUser.currentUsername[0].toUpperCase()}
               </Avatar>
             }
             action={
@@ -157,15 +155,17 @@ export default function CreateProfile({accessToken, currentUser}) {
           <CardMedia
             component="img"
             height="194"
-            image={ topSongs.length > 0 ? topSongs[0].albumUrl : "https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"}
+            image={
+              topSongs.length > 0
+                ? topSongs[0].albumUrl
+                : "https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"
+            }
             alt="CLB"
           />
-          <CardContent>
-            <Typography variant="" color="text.secondary">
-              Create your Profile
-            </Typography>
-          </CardContent>
           <CardActions disableSpacing>
+          <CardContent sx={{ alignItems: "center" }}>
+            <h1>Tell the world what you listen to</h1>
+          </CardContent>
             <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
@@ -187,7 +187,7 @@ export default function CreateProfile({accessToken, currentUser}) {
                 multiline
                 rows={4}
                 onChange={(e) => {
-                  setAboutMe(e.target.value)
+                  setAboutMe(e.target.value);
                 }}
               />
               <Autocomplete
@@ -205,7 +205,9 @@ export default function CreateProfile({accessToken, currentUser}) {
                   />
                 )}
                 margin="dense"
-                onChange={(e) => setFavGenres(...favGenres, genresOptions[e.target.value])}
+                onChange={(e) =>
+                  setFavGenres(...favGenres, genresOptions[e.target.value])
+                }
               />
               <TextField
                 fullWidth
@@ -216,6 +218,38 @@ export default function CreateProfile({accessToken, currentUser}) {
                 size="small"
                 onChange={(e) => setFavAlbum(e.target.value)}
               />
+              <div>
+                {topSongs?.map((track) => {
+                  const handleClick = () => {
+
+                  }
+                  return (
+                    <SongCardDisplay key={track.uri} track={track} handleClick={() => setTopSongs(topSongs.filter((topSong) =>topSong.uri !== track.uri))}/>
+
+                    // <div className="song-container">
+                    //   <img
+                    //     src={track.albumUrl}
+                    //     style={{ height: "64px", width: "64px" }}
+                    //     alt={track.title}
+                    //   ></img>
+                    //   <div className="song-text">
+                    //     <div>{track.title}</div>
+                    //   </div>
+                    //   <button
+                    //     onClick={() =>
+                    //       setTopSongs(
+                    //         topSongs.filter(
+                    //           (topSong) => topSong.uri !== track.uri
+                    //         )
+                    //       )
+                    //     }
+                    //   >
+                    //     Remove
+                    //   </button>
+                    // </div>
+                  );
+                })}
+              </div>
               <TextField
                 fullWidth
                 id="favorite_song1"
@@ -245,41 +279,16 @@ export default function CreateProfile({accessToken, currentUser}) {
                   </div>
                 </Box>
               ) : null}
-
-              <div>
-                {topSongs?.map((track) => {
-                  return (
-                    <div className="song-container">
-                      <img
-                        src={track.albumUrl}
-                        style={{ height: "64px", width: "64px" }}
-                        alt={track.title}
-                      ></img>
-                      <div className="song-text">
-                        <div>{track.title}</div>
-                      </div>
-                      <button
-                        onClick={() =>
-                          setTopSongs(
-                            topSongs.filter(
-                              (topSong) => topSong.uri !== track.uri
-                            )
-                          )
-                        }
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
             </CardContent>
           </Collapse>
+          <div style={{ padding: "1rem", justifyContent: "center" }}>
+            <Button onClick={handleCreateSubmit} variant="outlined">
+              {" "}
+              Create Profile
+            </Button>
+          </div>
         </Card>
-        <div className="" style={{ padding: "1rem" }}>
-          <Button onClick={handleCreateSubmit}> Create Profile</Button>
-        </div>
       </Stack>
-    </Paper>
+    </>
   );
 }

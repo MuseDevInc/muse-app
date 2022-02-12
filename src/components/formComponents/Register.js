@@ -40,13 +40,13 @@ export function Register() {
         <TextField
           id="outlined-basic"
           label="Username"
-          variant="outlined"
+          variant="contained"
           margin="dense"
         />
         <TextField
           id="outlined-basic"
           label="Email"
-          variant="outlined"
+          variant="contained"
           margin="dense"
         />
         <TextField
