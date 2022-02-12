@@ -255,10 +255,9 @@ export default function CreateProfile({ spotifyCode }) {
                         src={track.albumUrl}
                         style={{ height: "64px", width: "64px" }}
                         alt={track.title}
-                        key={track.uri}
                       ></img>
                       <div className="song-text">
-                        <div key={track.uri}>{track.title}</div>
+                        <div>{track.title}</div>
                       </div>
                       <button
                         onClick={() =>
@@ -268,7 +267,6 @@ export default function CreateProfile({ spotifyCode }) {
                             )
                           )
                         }
-                        key={track.uri}
                       >
                         Remove
                       </button>
