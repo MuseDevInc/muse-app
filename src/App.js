@@ -2,7 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { Main } from "./components/Main";
 import { Landing } from "./components/Landing";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import { Login } from "./components/formComponents/Login";
 import CreateProfile from "./components/formComponents/CreateProfile";
 import UserProfile from "./components/user/UserProfile";
