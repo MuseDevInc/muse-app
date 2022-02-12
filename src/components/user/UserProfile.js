@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   FormGroup,
@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Paper,
+  ownerDocument,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -24,21 +25,19 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import EditIcon from "@mui/icons-material/Edit";
+import MusicPlayer from "./MusicPlayer";
 
-// 
+//
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
-// 
-
+// import Collapse from '@mui/material/Collapse';
+//
 
 import { useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const UserProfile = () => {
-  const theme = useTheme();
-
+const UserProfile = ({ currentUser }) => {
   let navigate = useNavigate();
-
+  const [displayProfile, setDisplayProfile] = useState(null);
   let handleCreateSubmit = (e) => {
     e.preventDefault();
     navigate("/editprofile");
@@ -59,15 +58,39 @@ const UserProfile = () => {
     },
   }));
 
-
-
-
   const content = <div>{"Pop"}</div>;
-
   const content2 = <div>{"CLB"}</div>;
+
+  let setProfile = (profile) => {
+    console.log(profile);
+    setDisplayProfile(profile);
+  };
+
+  let getProfile = async () => {
+    let profileToGrab = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
+    let profileToDisplay = await profileToGrab.json();
+    if (profileToDisplay) {
+      // setDisplayProfile(profileToDisplay)
+      setProfile(profileToDisplay);
+    }
+  };
+
+  useEffect(() => {
+    if (!displayProfile) {
+      getProfile();
+    }
+  }, [displayProfile]);
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
+  
   return (
     <div>
       <Paper
@@ -78,9 +101,10 @@ const UserProfile = () => {
           background: `${backGrad}`,
         }}
       >
-        <Stack alignItems="center" >
-        {" "}
-        {/* <Typography
+        <p> {displayProfile && displayProfile.aboutMe}</p>
+        <p>{displayProfile ? displayProfile.favSong1.artist : "false"}</p>
+        <Stack alignItems="center">
+          {/* <Typography
             sx={{
               textAlign: "center",
               padding: "2rem",
@@ -91,77 +115,69 @@ const UserProfile = () => {
           >
             MUSE
         </Typography> */}
-        <Card
-          sx={{
-            maxWidth: 500,
-            maxHeight: 920,
-            padding: "2rem",
-            margin: "2rem",
-            position: "absolute",
-          }}
-        >
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                C
-              </Avatar>
-            }
-            action={
-              <IconButton>
-                <EditIcon />
-              </IconButton>
-            }
-            title="Charmille"
-            subheader="New York City, New York"
-          />
-          <CardMedia
-            component="img"
-            height="360"
-            image="https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"
-          />
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>About Me</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Root>
-            <Divider sx={{ padding: "1rem" }}>Favorite Genre</Divider>
-            {content}
-            <Divider>Favorite Album of All Time</Divider>
-            {content2}
-          </Root>
-
-          <Stack
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-            sx={{ margin: "1rem", alignItems: "space" }}
+          <Card
+            sx={{
+              maxWidth: 500,
+              maxHeight: 920,
+              padding: "2rem",
+              margin: "2rem",
+              position: "absolute",
+            }}
           >
-            <Item>Music Item 1</Item>
-            <Item>Music Item 2</Item>
-            <Item>Music Item 3</Item>
-          </Stack>
-        </Card>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                  {currentUser && currentUser.currentUsername[0].toUpperCase()}
+                </Avatar>
+              }
+              action={
+                <IconButton>
+                  <EditIcon />
+                </IconButton>
+              }
+              title={currentUser && currentUser.currentUsername}
+              subheader="New York City, New York"
+            />
+            <CardMedia
+              component="img"
+              height="360"
+              image={displayProfile && displayProfile.favSong1.albumUrl}
+              alt={displayProfile && displayProfile.favSong1.title}
+            />
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>About Me</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{displayProfile && displayProfile.aboutMe}</Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            <Root>
+              <Divider sx={{ padding: "1rem" }}>Favorite Genre</Divider>
+              {content}
+              <Divider>Favorite Album of All Time</Divider>
+            </Root>
+
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem />}
+              spacing={1}
+              sx={{ margin: "1rem", alignItems: "space" }}
+            >
+              { displayProfile && <MusicPlayer song={displayProfile.favSong1}/>}
+              { displayProfile && <MusicPlayer song={displayProfile.favSong2}/>}
+              { displayProfile && <MusicPlayer song={displayProfile.favSong3}/>}
+            </Stack>
+          </Card>
         </Stack>
       </Paper>
     </div>
   );
 };
-
-
-
-
 
 export default UserProfile;

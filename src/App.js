@@ -32,7 +32,9 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Landing />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<Login currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          />}></Route>
           <Route
             path="/register"
             element={
@@ -43,7 +45,7 @@ function App() {
             }
           ></Route>
           <Route path="/main" element={<Main />}></Route>
-          <Route path="/userprofile" element={<UserProfile />}></Route>
+          <Route path="/userprofile" element={<UserProfile currentUser={currentUser}/>}></Route>
           {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
           <Route
             path="/createprofile"
