@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef} from "react";
 import { DiscoverPaper } from "./DiscoverPaper";
 
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
@@ -6,47 +6,39 @@ import { Box, Typography, Stack, IconButton } from "@mui/material";
 import { PlaybackControls } from "./PlaybackControls";
 import MatchActionButtons from "./MatchActionButtons";
 import NextAvatar from "./NextAvatar";
+import { DiscoverLayout } from "./DiscoverLayout";
+import dummyData from "./dummyData/dummyData.json"
+
 function DiscoverUserGetter() {
+  //array of fetched userdata
+  const [dummyArrayState, setDummyArrayState] = useState()
+  //ref for current index position
+  const counterRef = useRef(0)
+  
+  //init user array, only rerenders when remove from front and add to back
+  useEffect(() => {
+  initDummyArray()
+  },[])
+
+
+  function initDummyArray() { 
+    let dummyArray = Array.from(dummyData)
+    setDummyArrayState(dummyArray)
+  }
+  
   //swipe handler
   //fetch
   //userQueue
   //state management
 
+
+  //pass down userQueue to Layout so that it can provide to children
   return (
     <>
       <Stack alignItems="center">
-        <Typography
-          variant="h3"
-          elevation={24}
-          marginTop="2rem"
-          sx={{ color: "black" }}
-        >
-          Christian
-        </Typography>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            onClick={() => {
-              console.log("thumbs down");
-            }}
-          >
-            <ThumbDownOffAltRounded sx={{ fontSize: "2.5rem" }} />
-          </IconButton>
-          <DiscoverPaper />
-          <IconButton
-            onClick={() => {
-              console.log("thumbs up");
-            }}
-          >
-            <ThumbUp sx={{ fontSize: "2.5rem" }} />
-          </IconButton>
-          <MatchActionButtons />
-        </Box>
-        {/*  Replace stack with MUI AvatarGroup, gen NextAvatars from queue */}
-        <Stack flexDirection="row" marginTop="2rem" columnGap="3rem">
-          <NextAvatar />
-          <NextAvatar />
-          <NextAvatar />
-        </Stack>
+        {dummyArrayState? 
+        <DiscoverLayout userQueue={dummyArrayState} qCounter={counterRef}/>
+        : <Typography variant="h1">Loading</Typography>}
       </Stack>
     </>
   );

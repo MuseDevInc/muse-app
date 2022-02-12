@@ -12,7 +12,7 @@ export function MuseWindow({gradient}) {
     >
 {/*       <Stack alignItems="center"> */}
 
-        {/* <DiscoverUserGetter /> */}
+        <DiscoverUserGetter />
       
     {/*   </Stack> */}
     </Paper>
