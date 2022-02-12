@@ -9,28 +9,41 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
-export function Login() {
-  const theme = useTheme();
+import { useNavigate } from "react-router-dom";
+
+export function Login({currentUser, setCurrentUser}) {
+  let navigate = useNavigate()
+
+  //  navigate the createProfile once currentUser is defined
+  useEffect(() => {
+    if (currentUser) {
+    navigate('/userprofile')
+  }
+}, [currentUser, navigate])
+
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate("/userprofile");
     const form = { username, password };
     console.log(form);
     fetch("http://localhost:4000/session/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
-    }).then((res) => {
+      credentials: "include"
+    }).then((res => res.json()))
+    .then((res) => {
       console.log(res);
-    });
+      if (res.status === 200) {
+      setCurrentUser({...currentUser, currentUsername: res.currentUsername, currentUserId: res.currentUserId })
+    }
+    })
   };
-  useEffect(() => {
-    console.log(username);
-    console.log(password);
-  });
+
   return (
     <Paper
       elevation={8}

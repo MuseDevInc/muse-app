@@ -32,7 +32,8 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Landing />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<Login currentUser={currentUser}
+                setCurrentUser={setCurrentUser}/>}></Route>
           <Route
             path="/register"
             element={
