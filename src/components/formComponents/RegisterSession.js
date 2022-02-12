@@ -10,13 +10,18 @@ import {
 import { useTheme } from "@mui/material";
 import { LoginSubmitButton } from "./LoginSubmitButton";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
+
 export function RegisterSession() {
   const theme = useTheme();
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
+  let navigate = useNavigate()
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password, verifyPassword };
@@ -26,9 +31,14 @@ export function RegisterSession() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     }).then((res) => {
-      console.log(res);
+   if (res.status === 200) {
+     navigate('/createprofile')
+     window.location.href=`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}&scope=${process.env.REACT_APP_SPOTIFY_SCOPE}`
+     console.log(window.location.href)
+    }
     });
   };
+
   useEffect(() => {
     console.log(username);
     console.log(password);
