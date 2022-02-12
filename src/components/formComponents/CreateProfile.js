@@ -41,7 +41,7 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 });
 
-export default function CreateProfile({ spotifyCode }) {
+export default function CreateProfile({accessToken}) {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -69,7 +69,7 @@ export default function CreateProfile({ spotifyCode }) {
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-  const accessToken = useSpotifyAuth(spotifyCode);
+  // const accessToken = useSpotifyAuth();
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [cancelQuery, setCancelQuery] = useState();
@@ -132,7 +132,9 @@ export default function CreateProfile({ spotifyCode }) {
       );
     });
     return setCancelQuery(true);
-  }, [setSearchResults, searchTopOne, accessToken]);
+  }, [setSearchResults, searchTopOne
+    , accessToken
+  ]);
 
   return (
     <Paper

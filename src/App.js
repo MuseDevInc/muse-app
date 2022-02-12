@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Main } from "./components/Main";
 import { Landing } from "./components/Landing";
 import { Route, Routes, Link } from "react-router-dom";
-import { Register } from "./components/formComponents/Register";
 import { Login } from "./components/formComponents/Login";
 import CreateProfile  from "./components/formComponents/CreateProfile"
 import UserProfile from "./components/user/UserProfile";
@@ -12,6 +11,7 @@ import UserProfile from "./components/user/UserProfile";
 // import { UserProfile } from "./components/user/UserProfile"
 import Messenger from "./components/messenger/Messenger";
 import { RegisterSession } from "./components/formComponents/RegisterSession";
+import useSpotifyAuth from "./hooks/useSpotifyAuth";
 
 
 const spotifyCode = new URLSearchParams(window.location.search).get('code')
@@ -23,6 +23,7 @@ function App() {
   const [userloggedIn, setUserLoggedIn] = useState('')
   let userId = JSON.parse(localStorage.getItem("userId"))
   console.log(userId)
+  const accessToken = useSpotifyAuth();
 
   return (
     <>
@@ -33,7 +34,7 @@ function App() {
         <Route path="/main" element={<Main />}></Route>
         <Route path="/userprofile" element={<UserProfile />}></Route>
         {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
-        <Route path="/createprofile" element={spotifyCode ? <CreateProfile spotifyCode={spotifyCode} /> : null}></Route>
+        <Route path="/createprofile" element={spotifyCode ? <CreateProfile accessToken={accessToken} /> : null}></Route>
         <Route path="/messenger" element={<Messenger />}></Route>
 
       </Routes>
