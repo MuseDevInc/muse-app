@@ -12,8 +12,8 @@ export default function SongCardDisplay({ track, handleClick }) {
   const theme = useTheme();
   return (
     <Card sx={{ display: "flex", alignItems: "center" }}>
-      <IconButton aria-label="play/pause">
-        <DeleteIcon sx={{ height: 38, width: 38 }} onClick={handleClick} />
+      <IconButton aria-label="remove" onClick={handleClick} >
+        <DeleteIcon sx={{ height: 38, width: 38 }}/>
       </IconButton>
       <CardMedia
         component="img"

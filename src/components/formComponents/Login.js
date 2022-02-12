@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Box,
+  Card,
   FormGroup,
   TextField,
   Typography,
@@ -8,7 +8,6 @@ import {
   Button,
 } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { LoginSubmitButton } from "./LoginSubmitButton";
 import { useState, useEffect } from "react";
 export function Login() {
   const theme = useTheme();
@@ -39,6 +38,8 @@ export function Login() {
         minHeight: "100vh",
         maxHeight: "100vh",
         background: `${backGrad}`,
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Typography
@@ -52,20 +53,23 @@ export function Login() {
       >
         MUSE
       </Typography>
-      <Box>
+      <Card sx={{ alignSelf: "center"}}>
         <FormGroup
           sx={{
             Justify: "Center",
             alignItems: "center",
             padding: "1rem",
-            marginTop: "5rem",
           }}
         >
+          <Typography variant="h5">
+            Sign into tune into your muse
+          </Typography>          
           <TextField
             id="outlined-basic"
             label="Username"
             variant="outlined"
             margin="dense"
+            sx={{backgroundColor: "white"}}
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
@@ -73,11 +77,12 @@ export function Login() {
             label="Password"
             variant="outlined"
             margin="dense"
+            sx={{backgroundColor: "white"}}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={handleSubmit}> Login </Button>
+          <Button onClick={handleSubmit} variant="contained"> Sign in </Button>
         </FormGroup>
-      </Box>
+      </Card>
     </Paper>
   );
 }
