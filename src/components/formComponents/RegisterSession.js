@@ -7,26 +7,22 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import { useTheme } from "@mui/material";
-import { LoginSubmitButton } from "./LoginSubmitButton";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useNavigate } from 'react-router-dom'
 
 export function RegisterSession() {
-  const theme = useTheme();
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let navigate = useNavigate()
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password, verifyPassword };
     console.log(form);
-    fetch("http://localhost:4000/session/register", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -39,10 +35,6 @@ export function RegisterSession() {
     });
   };
 
-  useEffect(() => {
-    console.log(username);
-    console.log(password);
-  });
   return (
     <Paper
       elevation={8}
