@@ -2,7 +2,7 @@ import { Typography, Paper, Stack } from "@mui/material";
 import React from "react";
 import { NavBar } from "./navbar/NavBar";
 import { Login } from "./formComponents/Login";
-import { Register } from "./formComponents/Register";
+import { RegisterSession } from "./formComponents/RegisterSession";
 import { DiscoverPaper } from "./discover/DiscoverPaper";
 import { DiscoverContainer } from "./discover/DiscoverContainer";
 import { PlaybackControls } from "./discover/PlaybackControls";
