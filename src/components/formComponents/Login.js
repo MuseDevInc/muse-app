@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
-export function Login() {
+import { useNavigate } from "react-router-dom";
+export function Login({ currentUser, setCurrentUser }) {
   const theme = useTheme();
+  let navigate = useNavigate()
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
@@ -23,14 +25,25 @@ export function Login() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
-    }).then((res) => {
-      console.log(res);
-    });
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setCurrentUser({
+            ...currentUser,
+            currentUsername: res.currentUsername,
+            currentUserId: res.currentUserId,
+          });
+        }
+      });
   };
   useEffect(() => {
-    console.log(username);
-    console.log(password);
-  });
+    if (currentUser){
+      navigate('/userprofile')  
+    }
+  },[currentUser, navigate]);
   return (
     <Paper
       elevation={8}
@@ -53,7 +66,7 @@ export function Login() {
       >
         MUSE
       </Typography>
-      <Card sx={{ alignSelf: "center"}}>
+      <Card sx={{ alignSelf: "center" }}>
         <FormGroup
           sx={{
             Justify: "Center",
@@ -61,15 +74,13 @@ export function Login() {
             padding: "1rem",
           }}
         >
-          <Typography variant="h5">
-            Sign into tune into your muse
-          </Typography>          
+          <Typography variant="h5">Sign into tune into your muse</Typography>
           <TextField
             id="outlined-basic"
             label="Username"
             variant="outlined"
             margin="dense"
-            sx={{backgroundColor: "white"}}
+            sx={{ backgroundColor: "white" }}
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
@@ -77,10 +88,13 @@ export function Login() {
             label="Password"
             variant="outlined"
             margin="dense"
-            sx={{backgroundColor: "white"}}
+            sx={{ backgroundColor: "white" }}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={handleSubmit} variant="contained"> Sign in </Button>
+          <Button onClick={handleSubmit} variant="contained">
+            {" "}
+            Sign in{" "}
+          </Button>
         </FormGroup>
       </Card>
     </Paper>
