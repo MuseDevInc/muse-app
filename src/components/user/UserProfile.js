@@ -11,7 +11,6 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import CardContent from "@mui/material/CardContent";
@@ -22,14 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
 import EditIcon from "@mui/icons-material/Edit";
-
-// 
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import Collapse from '@mui/material/Collapse';
-// 
-
 
 import { useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -57,12 +49,12 @@ const UserProfile = ({currentUser}) => {
     },
   }));
 
-  const content = <div>{"Pop"}</div>;
-  const content2 = <div>{"CLB"}</div>;
+  const content = "Pop"
+  const content2 = "CLB"
 
   let setProfile = (profile) => {
     console.log(profile)
-    setDisplayProfile({...displayProfile, profile})
+    setDisplayProfile(profile)
   }
 
   let getProfile = async () => {
@@ -76,23 +68,19 @@ const UserProfile = ({currentUser}) => {
     );
     let profileToDisplay = await profileToGrab.json()
     if (profileToDisplay) {
-      // setDisplayProfile(profileToDisplay)
-      setProfile(profileToDisplay[0])
-      console.log(displayProfile)
+      setProfile(profileToDisplay)
     };
   }
 
   
   useEffect(() => {
   getProfile()
-  console.log(displayProfile)
   },[])
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
   return (
     <div>
-      {displayProfile && displayProfile.aboutMe}
       <Paper
         elevation={8}
         sx={{
@@ -101,18 +89,9 @@ const UserProfile = ({currentUser}) => {
           background: `${backGrad}`,
         }}
       >
+        <p>{ displayProfile ? displayProfile.favSong1.artist : 'false'}</p>
+        <p>{displayProfile && displayProfile.aboutMe} </p>
         <Stack alignItems="center" >
-        {/* <Typography
-            sx={{
-              textAlign: "center",
-              padding: "2rem",
-              margin: "1rem",
-              color: "white",
-            }}
-            variant="h1"
-          >
-            MUSE
-        </Typography> */}
         <Card
           sx={{
             maxWidth: 500,
@@ -125,8 +104,7 @@ const UserProfile = ({currentUser}) => {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {/* {currentUser.currentUsername[0]} */}
-                H
+                {currentUser && currentUser.currentUsername[0].toUpperCase}
               </Avatar>
             }
             action={
@@ -134,8 +112,7 @@ const UserProfile = ({currentUser}) => {
                 <EditIcon />
               </IconButton>
             }
-            title="Ugh"
-            // title={currentUser.currentUsername}
+            title={currentUser.currentUsername}
             subheader="New York City, New York"
           />
           <CardMedia

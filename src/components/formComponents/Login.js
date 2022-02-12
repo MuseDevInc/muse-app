@@ -30,7 +30,7 @@ export function Login({currentUser, setCurrentUser}) {
     navigate("/userprofile");
     const form = { username, password };
     console.log(form);
-    fetch("http://localhost:4000/session/login", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
