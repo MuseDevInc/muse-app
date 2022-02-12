@@ -67,6 +67,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
           favSong2: topSongs[1],
           favSong3: topSongs[2],
         }),
+        credentials: "include"
       }
     );
   };
