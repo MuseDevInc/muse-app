@@ -21,7 +21,6 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import IconButton from "@mui/icons-material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { CreateSubmitButton } from "./CreateSubmitButton";
@@ -51,9 +50,22 @@ export default function CreateProfile({ spotifyCode }) {
 
   let navigate = useNavigate();
 
-  let handleCreateSubmit = (e) => {
+  let handleCreateSubmit = async (e) => {
     e.preventDefault();
     navigate("/userprofile");
+    let profileToCreate = await fetch(process.env.REACT_APP_BACKEND_SERVER + '/muse/userCreationPage', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        aboutMe: aboutMe,
+        favGenres: favGenres,
+        favAlbum: favAlbum,
+        favSong1: topSongs[0],
+        favSong2: topSongs[1],
+        favSong3: topSongs[2],
+      }),
+    })
+    let createdProfile = profileToCreate.json()
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
@@ -63,6 +75,10 @@ export default function CreateProfile({ spotifyCode }) {
   const [cancelQuery, setCancelQuery] = useState();
   const [hideSearchResults, setHideSearchResults] = useState(true);
   const [topSongs, setTopSongs] = useState([]);
+  const [aboutMe, setAboutMe] = useState()
+  const [favGenres, setFavGenres] = useState([])
+  const [favAlbum, setFavAlbum] = useState()
+  const genresOptions = ["Pop", "Rock", "Jazz", "Country"]
 
   //  select a song
   const chooseTrack = (track) => {
@@ -87,7 +103,7 @@ export default function CreateProfile({ spotifyCode }) {
     if (!accessToken) return;
     //  use spotify web api to get seacrh results
     spotifyApi.searchTracks(searchTopOne).then((res) => {
-      console.log(res.body);
+      // console.log(res.body);
       //  map over the result to just grab specific keys of each item in the search results
       let cancel = false;
       if (cancel) {
@@ -96,12 +112,12 @@ export default function CreateProfile({ spotifyCode }) {
       setSearchResults(
         res.body.tracks.items.map((track) => {
           const albumIcon = track.album.images.reduce(
-            // grab smallest image using reduce
-            (smallestImage, image) => {
-              if (image.height < smallestImage.height) {
+            // grab biggest image using reduce
+            (biggestImage, image) => {
+              if (image.height > biggestImage.height) {
                 return image;
               }
-              return smallestImage;
+              return biggestImage;
             },
             track.album.images[0]
           );
@@ -142,12 +158,12 @@ export default function CreateProfile({ spotifyCode }) {
           <CardMedia
             component="img"
             height="194"
-            image="https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"
+            image={ topSongs.length > 0 ? topSongs[0].albumUrl : "https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"}
             alt="CLB"
           />
           <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              Create your Profile.
+            <Typography variant="" color="text.secondary">
+              Create your Profile
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -171,11 +187,14 @@ export default function CreateProfile({ spotifyCode }) {
                 size="small"
                 multiline
                 rows={4}
+                onChange={(e) => {
+                  setAboutMe(e.target.value)
+                }}
               />
               <Autocomplete
                 multiple
-                id="tags-standard"
-                options={["Pop", "Rock", "Jazz"]}
+                id="favGenres"
+                options={genresOptions}
                 getOptionLabel={(option) => option}
                 filterSelectedOptions
                 renderInput={(params) => (
@@ -187,16 +206,17 @@ export default function CreateProfile({ spotifyCode }) {
                   />
                 )}
                 margin="dense"
+                onChange={(e) => setFavGenres(...favGenres, genresOptions[e.target.value])}
               />
-              {/* <TextField
+              <TextField
                 fullWidth
                 id="favAlbum"
                 label="Favorite Album of All Time"
                 variant="outlined"
                 margin="dense"
                 size="small"
-              />{" "} */}
-
+                onChange={(e) => setFavAlbum(e.target.value)}
+              />
               <TextField
                 fullWidth
                 id="favorite_song1"
@@ -207,7 +227,6 @@ export default function CreateProfile({ spotifyCode }) {
                 disabled={topSongs.length < 3 ? false : true}
                 onChange={(e) => setSearchTopOne(e.target.value)}
               />
-              {console.log(searchResults)}
               {searchTopOne ? (
                 <Box>
                   <div
@@ -236,9 +255,10 @@ export default function CreateProfile({ spotifyCode }) {
                         src={track.albumUrl}
                         style={{ height: "64px", width: "64px" }}
                         alt={track.title}
+                        key={track.uri}
                       ></img>
                       <div className="song-text">
-                        <div>{track.title}</div>
+                        <div key={track.uri}>{track.title}</div>
                       </div>
                       <button
                         onClick={() =>
@@ -248,6 +268,7 @@ export default function CreateProfile({ spotifyCode }) {
                             )
                           )
                         }
+                        key={track.uri}
                       >
                         Remove
                       </button>
