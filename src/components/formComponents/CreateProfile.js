@@ -18,12 +18,12 @@ import {
   Avatar,
   Stack,
   IconButton,
+  Button
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import { CreateSubmitButton } from "./CreateSubmitButton";
 import { styled } from "@mui/material/styles";
 
 const ExpandMore = styled((props) => {
@@ -278,7 +278,7 @@ export default function CreateProfile({ spotifyCode }) {
           </Collapse>
         </Card>
         <div className="" style={{ padding: "1rem" }}>
-          <CreateSubmitButton handleCreateSubmit={handleCreateSubmit} />
+          <Button onClick={handleCreateSubmit}> Login </Button>
         </div>
       </Stack>
     </Paper>
