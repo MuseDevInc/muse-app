@@ -8,21 +8,15 @@ import CreateProfile  from "./components/formComponents/CreateProfile"
 import UserProfile from "./components/user/UserProfile";
 // import Messenger from "./components/messaging/Messenger";
 // import { EditProfile } from "./components/user/EditProfile"
-// import { UserProfile } from "./components/user/UserProfile"
 import Messenger from "./components/messenger/Messenger";
 import { RegisterSession } from "./components/formComponents/RegisterSession";
 import useSpotifyAuth from "./hooks/useSpotifyAuth";
 
 
-const spotifyCode = new URLSearchParams(window.location.search).get('code')
-
-console.log(spotifyCode);
+// const spotifyCode = new URLSearchParams(window.location.search).get('code')
 //stuff
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userloggedIn, setUserLoggedIn] = useState('')
-  let userId = JSON.parse(localStorage.getItem("userId"))
-  console.log(userId)
+  const [currentUser, setCurrentUser] = useState(null)
   const accessToken = useSpotifyAuth();
 
   return (
@@ -30,11 +24,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<RegisterSession />}></Route>
+        <Route path="/register" element={<RegisterSession currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         <Route path="/main" element={<Main />}></Route>
         <Route path="/userprofile" element={<UserProfile />}></Route>
         {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
-        <Route path="/createprofile" element={spotifyCode ? <CreateProfile accessToken={accessToken} /> : null}></Route>
+        <Route path="/createprofile" element={<CreateProfile accessToken={accessToken} currentUser={currentUser}/>}></Route>
         <Route path="/messenger" element={<Messenger />}></Route>
 
       </Routes>

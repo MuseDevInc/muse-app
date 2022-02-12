@@ -41,8 +41,9 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 });
 
-export default function CreateProfile({accessToken}) {
+export default function CreateProfile({accessToken, currentUser}) {
   const [expanded, setExpanded] = useState(false);
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -65,15 +66,12 @@ export default function CreateProfile({accessToken}) {
         favSong3: topSongs[2],
       }),
     })
-    let createdProfile = profileToCreate.json()
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   // const accessToken = useSpotifyAuth();
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [cancelQuery, setCancelQuery] = useState();
-  const [hideSearchResults, setHideSearchResults] = useState(true);
   const [topSongs, setTopSongs] = useState([]);
   const [aboutMe, setAboutMe] = useState()
   const [favGenres, setFavGenres] = useState([])
@@ -103,7 +101,6 @@ export default function CreateProfile({accessToken}) {
     if (!accessToken) return;
     //  use spotify web api to get seacrh results
     spotifyApi.searchTracks(searchTopOne).then((res) => {
-      // console.log(res.body);
       //  map over the result to just grab specific keys of each item in the search results
       let cancel = false;
       if (cancel) {
@@ -130,8 +127,8 @@ export default function CreateProfile({accessToken}) {
           };
         })
       );
+      return cancel = true
     });
-    return setCancelQuery(true);
   }, [setSearchResults, searchTopOne
     , accessToken
   ]);
@@ -154,7 +151,7 @@ export default function CreateProfile({accessToken}) {
                 <MoreVertIcon />
               </IconButton>
             }
-            title="Username"
+            title={currentUser.currentUsername}
             subheader="New York City, NY"
           />
           <CardMedia
@@ -280,7 +277,7 @@ export default function CreateProfile({accessToken}) {
           </Collapse>
         </Card>
         <div className="" style={{ padding: "1rem" }}>
-          <Button onClick={handleCreateSubmit}> Login </Button>
+          <Button onClick={handleCreateSubmit}> Create Profile</Button>
         </div>
       </Stack>
     </Paper>

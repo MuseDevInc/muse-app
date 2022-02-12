@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   FormGroup,
@@ -10,13 +10,20 @@ import {
 import { useState} from "react";
 import { useNavigate } from 'react-router-dom'
 
-export function RegisterSession() {
+export function RegisterSession({currentUser, setCurrentUser}) {
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let navigate = useNavigate()
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
+
+  //  navigate the createProfile once currentUser is defined
+  useEffect(() => {
+      if (currentUser) {
+      navigate('/createprofile')
+    }
+  }, [currentUser, navigate])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,11 +33,12 @@ export function RegisterSession() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
-    }).then((res) => {
-   if (res.status === 200) {
-     navigate('/createprofile')
-     window.location.href=`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}&scope=${process.env.REACT_APP_SPOTIFY_SCOPE}`
-     console.log(window.location.href)
+    })
+    .then((res => res.json()))
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+      setCurrentUser({...currentUser, currentUsername: res.currentUsername, currentUserId: res.currentUserId })
     }
     });
   };
