@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
-  FormGroup,
-  TextField,
   Typography,
-  Button,
   Paper,
-  ownerDocument,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
-import CardContent from "@mui/material/CardContent";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -23,14 +16,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
 import EditIcon from "@mui/icons-material/Edit";
 import MusicPlayer from "./MusicPlayer";
-
-//
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import Collapse from '@mui/material/Collapse';
-//
 
 import { useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -59,11 +46,17 @@ const UserProfile = ({ currentUser }) => {
   }));
 
   const content = <div>{"Pop"}</div>;
-  const content2 = <div>{"CLB"}</div>;
 
   let setProfile = (profile) => {
     console.log(profile);
-    setDisplayProfile(profile);
+    setDisplayProfile({...profile,
+      aboutMe: profile.aboutMe,
+      favGenres: profile.favGenres,
+      favAlbum: profile.favAlbum,
+      favSong1: profile.favSong1,
+      favSong2: profile.favSong2,
+      favSong3: profile.favSong3,
+    });
   };
 
   let getProfile = async () => {
@@ -104,17 +97,6 @@ const UserProfile = ({ currentUser }) => {
         <p> {displayProfile && displayProfile.aboutMe}</p>
         <p>{displayProfile ? displayProfile.favSong1.artist : "false"}</p>
         <Stack alignItems="center">
-          {/* <Typography
-            sx={{
-              textAlign: "center",
-              padding: "2rem",
-              margin: "1rem",
-              color: "white",
-            }}
-            variant="h1"
-          >
-            MUSE
-        </Typography> */}
           <Card
             sx={{
               maxWidth: 500,

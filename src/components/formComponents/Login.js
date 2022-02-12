@@ -10,13 +10,22 @@ import {
 import { useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 export function Login({ currentUser, setCurrentUser }) {
-  const theme = useTheme();
+  
   let navigate = useNavigate()
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  
+  useEffect(() => {
+    if (currentUser){
+      navigate('/userprofile')  
+    }
+  },[currentUser, navigate]);
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password };
@@ -39,11 +48,7 @@ export function Login({ currentUser, setCurrentUser }) {
         }
       });
   };
-  useEffect(() => {
-    if (currentUser){
-      navigate('/userprofile')  
-    }
-  },[currentUser, navigate]);
+
   return (
     <Paper
       elevation={8}
