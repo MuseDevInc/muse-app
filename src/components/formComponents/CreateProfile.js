@@ -63,9 +63,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
           aboutMe: aboutMe,
           favGenres: favGenres,
           favAlbum: favAlbum,
-          favSong1: topSongs[0],
-          favSong2: topSongs[1],
-          favSong3: topSongs[2],
+          favSongs: topSongs,
         }),
         credentials: "include"
       }
@@ -226,28 +224,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
                   }
                   return (
                     <SongCardDisplay key={track.uri} track={track} handleClick={() => setTopSongs(topSongs.filter((topSong) =>topSong.uri !== track.uri))}/>
-
-                    // <div className="song-container">
-                    //   <img
-                    //     src={track.albumUrl}
-                    //     style={{ height: "64px", width: "64px" }}
-                    //     alt={track.title}
-                    //   ></img>
-                    //   <div className="song-text">
-                    //     <div>{track.title}</div>
-                    //   </div>
-                    //   <button
-                    //     onClick={() =>
-                    //       setTopSongs(
-                    //         topSongs.filter(
-                    //           (topSong) => topSong.uri !== track.uri
-                    //         )
-                    //       )
-                    //     }
-                    //   >
-                    //     Remove
-                    //   </button>
-                    // </div>
                   );
                 })}
               </div>
