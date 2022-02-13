@@ -60,7 +60,6 @@ function DiscoverUserGetter() {
   return (
     <>
       <Stack alignItems="center">
-        {userQueue? <Typography variant="h5">{userQueue[counterRef.current].aboutMe}</Typography> : null}
       {userQueue?
        <DiscoverLayout userQueue={userQueue}  qCounter={counterRef}/>
         : <Typography variant="h1">Loading</Typography>}
