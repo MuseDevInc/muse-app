@@ -30,13 +30,6 @@ const UserProfile = ({ currentUser }) => {
     navigate("/editprofile");
   };
 
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
-
   const Root = styled("div")(({ theme }) => ({
     width: "100%",
     ...theme.typography.body2,
@@ -45,7 +38,7 @@ const UserProfile = ({ currentUser }) => {
     },
   }));
 
-  const content = <div>{"Pop"}</div>;
+  const content = "Pop"
 
   let setProfile = (profile) => {
     console.log(profile);
@@ -53,9 +46,7 @@ const UserProfile = ({ currentUser }) => {
       aboutMe: profile.aboutMe,
       favGenres: profile.favGenres,
       favAlbum: profile.favAlbum,
-      favSong1: profile.favSong1,
-      favSong2: profile.favSong2,
-      favSong3: profile.favSong3,
+      favSongs: profile.favSongs,
     });
   };
 
@@ -69,6 +60,7 @@ const UserProfile = ({ currentUser }) => {
       }
     );
     let profileToDisplay = await profileToGrab.json();
+    console.log();
     if (profileToDisplay) {
       // setDisplayProfile(profileToDisplay)
       setProfile(profileToDisplay);
@@ -79,13 +71,16 @@ const UserProfile = ({ currentUser }) => {
     if (!displayProfile) {
       getProfile();
     }
-  }, [displayProfile]);
+  }, []);
+
+  useEffect(() => {
+    console.log(displayProfile);
+  }, [displayProfile])
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
   
   return (
-    <div>
       <Paper
         elevation={8}
         sx={{
@@ -94,8 +89,6 @@ const UserProfile = ({ currentUser }) => {
           background: `${backGrad}`,
         }}
       >
-        <p> {displayProfile && displayProfile.aboutMe}</p>
-        <p>{displayProfile ? displayProfile.favSong1.artist : "false"}</p>
         <Stack alignItems="center">
           <Card
             sx={{
@@ -120,12 +113,13 @@ const UserProfile = ({ currentUser }) => {
               title={currentUser && currentUser.currentUsername}
               subheader="New York City, New York"
             />
-            <CardMedia
-              component="img"
-              height="360"
-              image={displayProfile && displayProfile.favSong1.albumUrl}
-              alt={displayProfile && displayProfile.favSong1.title}
-            />
+            { displayProfile &&
+          <CardMedia
+          component="img"
+          height="360"
+          image={(displayProfile.favSongs).length > 0 ? (displayProfile.favSongs)[0].albumUrl : null}
+          alt={(displayProfile.favSongs).length > 0 ? (displayProfile.favSongs)[0].title: null}
+        /> }
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -144,21 +138,21 @@ const UserProfile = ({ currentUser }) => {
               {content}
               <Divider>Favorite Album of All Time</Divider>
             </Root>
-
-            <Stack
+              <Stack
               direction="row"
               divider={<Divider orientation="vertical" flexItem />}
               spacing={1}
               sx={{ margin: "1rem", alignItems: "space" }}
             >
-              { displayProfile && <MusicPlayer song={displayProfile.favSong1}/>}
-              { displayProfile && <MusicPlayer song={displayProfile.favSong2}/>}
-              { displayProfile && <MusicPlayer song={displayProfile.favSong3}/>}
+              { displayProfile && (displayProfile.favSongs).map((song) => {
+                return <MusicPlayer song={song} />
+              })
+              }
             </Stack>
+
           </Card>
         </Stack>
       </Paper>
-    </div>
   );
 };
 
