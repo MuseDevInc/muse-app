@@ -5,6 +5,7 @@ import { Box, Typography, Stack, IconButton } from "@mui/material";
 import { PlaybackControls } from "./PlaybackControls";
 import MatchActionButtons from "./MatchActionButtons";
 import NextAvatar from "./NextAvatar";
+import MusicPlayer from "../user/MusicPlayer";
 
 export function DiscoverLayout({ userQueue, qCounter }) {
   //seeing if state update triggers render in a consistent way
@@ -65,7 +66,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
         marginTop="2rem"
         sx={{ color: "black" }}
       >
-        {userQueue[qCounter.current].username}
+        {userQueue[qCounter.current].aboutMe}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <IconButton
@@ -88,6 +89,8 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           userQueue={userQueue}
         />
       </Box>
+      
+
      {/*  <Stack flexDirection="row" marginTop="2rem" columnGap="3rem">
         <NextAvatar />
         <NextAvatar />
