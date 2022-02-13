@@ -13,16 +13,17 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   console.log(qCounter);
 
   //handle user action
+
   function handleSwipe(swipe) {
     if (swipe === "right") {
       //add id to current user's swiperight array
-      console.log("swipe right on" + userQueue[qCounter.current].username);
+      console.log("swipe right on" + userQueue[qCounter.current]._id);
       //we will check for current User's  UserId in other user's swiperight array
       checkMatch();
     }
     if (swipe === "left") {
       //add id to current user's swipeleft array
-      console.log("swipe left on" + userQueue[qCounter.current].username);
+      console.log("swipe left on" + userQueue[qCounter.current]._id);
       //if swipe === left, advance through the queue
       advanceQ();
     }
@@ -74,7 +75,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
         >
           <ThumbDownOffAltRounded sx={{ fontSize: "2.5rem" }} />
         </IconButton>
-        <DiscoverPaper currentUser={qCounter.current} userQueue={userQueue} />
+        <DiscoverPaper currentPosition={qCounter.current} userQueue={userQueue} />
         <IconButton
           onClick={() => {
             handleSwipe("right");
@@ -87,11 +88,11 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           userQueue={userQueue}
         />
       </Box>
-      <Stack flexDirection="row" marginTop="2rem" columnGap="3rem">
+     {/*  <Stack flexDirection="row" marginTop="2rem" columnGap="3rem">
         <NextAvatar />
         <NextAvatar />
         <NextAvatar />
-      </Stack>
+      </Stack> */}
     </>
   );
 }

@@ -12,20 +12,44 @@ import dummyData from "./dummyData/dummyData.json"
 function DiscoverUserGetter() {
   //array of fetched userdata
   const [dummyArrayState, setDummyArrayState] = useState()
+  const [userQueue, setUserQueue] = useState()
   //ref for current index position
   const counterRef = useRef(0)
   
   //init user array, only rerenders when remove from front and add to back
   useEffect(() => {
-  initDummyArray()
+  return userQueue? null : getUsers()
   },[])
 
-
+ /*  useEffect(() => {
+    console.log(Object.entries(userQueue[0]))
+  }, [userQueue])
+ */
   function initDummyArray() { 
     let dummyArray = Array.from(dummyData)
     setDummyArrayState(dummyArray)
   }
   
+
+
+  const getUsers = async() => { 
+    let users = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/discover",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
+    let returnedUsers = await users.json();
+    if (returnedUsers) {
+      console.log(returnedUsers)
+      // setDisplayProfile(profileToDisplay)
+      setUserQueue(returnedUsers);
+    }
+  };
+  
+
   //swipe handler
   //fetch
   //userQueue
@@ -36,8 +60,9 @@ function DiscoverUserGetter() {
   return (
     <>
       <Stack alignItems="center">
-        {dummyArrayState? 
-        <DiscoverLayout userQueue={dummyArrayState} qCounter={counterRef}/>
+        {userQueue? <Typography variant="h5">{userQueue[counterRef.current].username}</Typography> : null}
+      {userQueue?
+       <DiscoverLayout userQueue={userQueue}  qCounter={counterRef}/>
         : <Typography variant="h1">Loading</Typography>}
       </Stack>
     </>
