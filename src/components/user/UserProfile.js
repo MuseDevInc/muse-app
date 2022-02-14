@@ -71,11 +71,13 @@ const UserProfile = ({ currentUser }) => {
     if (!displayProfile) {
       getProfile();
     }
-  }, []);
+  }, [displayProfile]);
 
   useEffect(() => {
     console.log(displayProfile);
   }, [displayProfile])
+
+ 
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
@@ -102,15 +104,20 @@ const UserProfile = ({ currentUser }) => {
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                  
                   {currentUser && currentUser.currentUsername[0].toUpperCase()}
                 </Avatar>
               }
-              action={
-                <IconButton>
+              action={   
+              // <Button onClick={handleCreateSubmit} variant="outlined">
+               <IconButton onClick={handleCreateSubmit} aria-label="upload picture" component="span">
                   <EditIcon />
                 </IconButton>
+            // </Button>
+              
               }
               title={currentUser && currentUser.currentUsername}
+
               subheader="New York City, New York"
             />
             { displayProfile &&
@@ -134,8 +141,8 @@ const UserProfile = ({ currentUser }) => {
             </Accordion>
 
             <Root>
-              <Divider sx={{ padding: "1rem" }}>Favorite Genre</Divider>
-              {content}
+              <Divider sx={{ padding: "1rem", textAlign: "center" }}>Favorite Genre</Divider>
+              {displayProfile && displayProfile.favGenres}
               <Divider>Favorite Album of All Time</Divider>
             </Root>
               <Stack
