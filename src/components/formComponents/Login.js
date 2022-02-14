@@ -79,7 +79,7 @@ export function Login({ currentUser, setCurrentUser }) {
             padding: "1rem",
           }}
         >
-          <Typography variant="h5">Sign into tune into your muse</Typography>
+          <Typography variant="h5">Sign in to tune into your muse</Typography>
           <TextField
             id="outlined-basic"
             label="Username"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, Stack, IconButton } from "@mui/material";
@@ -9,10 +10,14 @@ import MusicPlayer from "../user/MusicPlayer";
 
 export function DiscoverLayout({ userQueue, qCounter }) {
   //seeing if state update triggers render in a consistent way
+  const navigate = useNavigate()
   const [count, setCount] = useState();
   const [match, setMatch] = useState();
 
   console.log(qCounter);
+  useEffect(()=>{
+    console.log(userQueue.length + "is user queue length and counter is at " + qCounter)
+  })
 
   //handle user action
 
@@ -77,6 +82,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function advanceQ() {
+    qCounter.current === userQueue.length? navigate("/userprofile") : 
     //update ref
     qCounter.current = qCounter.current + 1;
     //update state to trigger and sync rerender w/ change of ref.current value
@@ -94,6 +100,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
      */
 
   return (
+  
     <>
       <Typography
         variant="h3"
@@ -127,7 +134,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           userQueue={userQueue}
         />
       </Box>
-
+     
       {/*  <Stack flexDirection="row" marginTop="2rem" columnGap="3rem">
         <NextAvatar />
         <NextAvatar />

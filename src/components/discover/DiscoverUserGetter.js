@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext} from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { DiscoverPaper } from "./DiscoverPaper";
 
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
@@ -7,27 +7,25 @@ import { PlaybackControls } from "./PlaybackControls";
 import MatchActionButtons from "./MatchActionButtons";
 import NextAvatar from "./NextAvatar";
 import { DiscoverLayout } from "./DiscoverLayout";
-import dummyData from "./dummyData/dummyData.json"
+import dummyData from "./dummyData/dummyData.json";
 import { UserContext } from "../../App";
 
 function DiscoverUserGetter() {
   //return from fetch, array from profile docs
-  const [userQueue, setUserQueue] = useState()
+  const [userQueue, setUserQueue] = useState();
   //consume context and declare variables
-  const currentUser = useContext(UserContext)
-  const currentId = currentUser.currentUserId
-  
+  const currentUser = useContext(UserContext);
+  const currentId = currentUser.currentUserId;
+
   //ref for current index position, incremented by "swipe"
-  const counterRef = useRef(0)
+  const counterRef = useRef(0);
 
   //init user array, only rerenders when remove from front and add to back
   useEffect(() => {
-  return currentId && userQueue? null : getUsers()
-  },[])
+    return currentId && userQueue ? null : getUsers();
+  }, []);
 
-
-  const getUsers = async() => { 
-    console.log(currentId)
+  const getUsers = async () => {
     let users = await fetch(
       process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/getQueue",
       {
@@ -36,28 +34,29 @@ function DiscoverUserGetter() {
         credentials: "include",
       }
     );
+
     let returnedUsers = await users.json();
     if (returnedUsers) {
-      console.log(returnedUsers)
+      console.log(returnedUsers);
       // setDisplayProfile(profileToDisplay)
       setUserQueue(returnedUsers);
     }
   };
-  
 
   //swipe handler
   //fetch
   //userQueue
   //state management
 
-
   //pass down userQueue to Layout so that it can provide to children
   return (
     <>
       <Stack alignItems="center">
-      {userQueue?
-       <DiscoverLayout userQueue={userQueue}  qCounter={counterRef}/>
-        : <Typography variant="h1">Loading</Typography>}
+        {userQueue ? (
+          <DiscoverLayout userQueue={userQueue} qCounter={counterRef} />
+        ) : (
+          <Typography variant="h1">Loading</Typography>
+        )}
       </Stack>
     </>
   );
