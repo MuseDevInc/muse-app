@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef, useContext} from "react";
 import { DiscoverPaper } from "./DiscoverPaper";
 
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
@@ -8,33 +8,28 @@ import MatchActionButtons from "./MatchActionButtons";
 import NextAvatar from "./NextAvatar";
 import { DiscoverLayout } from "./DiscoverLayout";
 import dummyData from "./dummyData/dummyData.json"
+import { UserContext } from "../../App";
 
 function DiscoverUserGetter() {
-  //array of fetched userdata
-  const [dummyArrayState, setDummyArrayState] = useState()
+  //return from fetch, array from profile docs
   const [userQueue, setUserQueue] = useState()
-  //ref for current index position
-  const counterRef = useRef(0)
+  //consume context and declare variables
+  const currentUser = useContext(UserContext)
+  const currentId = currentUser.currentUserId
   
+  //ref for current index position, incremented by "swipe"
+  const counterRef = useRef(0)
+
   //init user array, only rerenders when remove from front and add to back
   useEffect(() => {
-  return userQueue? null : getUsers()
+  return currentId && userQueue? null : getUsers()
   },[])
-
- /*  useEffect(() => {
-    console.log(Object.entries(userQueue[0]))
-  }, [userQueue])
- */
-  function initDummyArray() { 
-    let dummyArray = Array.from(dummyData)
-    setDummyArrayState(dummyArray)
-  }
-  
 
 
   const getUsers = async() => { 
+    console.log(currentId)
     let users = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/discover",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/getQueue",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },

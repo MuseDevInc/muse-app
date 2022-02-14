@@ -21,7 +21,7 @@ export function Login({ currentUser, setCurrentUser }) {
   
   useEffect(() => {
     if (currentUser){
-      navigate('/userprofile')  
+      navigate('/main')  
     }
   },[currentUser, navigate]);
 

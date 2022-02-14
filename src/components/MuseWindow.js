@@ -1,9 +1,11 @@
 import React from "react";
+import { useContext } from "react";
 import { Paper, Typography, Stack } from "@mui/material";
 import DiscoverUserGetter from "./discover/DiscoverUserGetter";
 import UserProfile from "./user/UserProfile";
 
 export function MuseWindow({gradient}) {
+
     let backgroundGradient = gradient
   return (
     <Paper

@@ -13,7 +13,7 @@ export const AlbumContainer = ({currentPosition, userQueue}) => {
   return (
 
     <Card elevation={0} sx={{ maxWidth: "100%", borderRadius: "13" }}>
-      <CardMedia component="img" alt="favorite album" image={userQueue[currentPosition].favSong1.albumUrl} />
+      <CardMedia component="img" alt="favorite album" image={userQueue[currentPosition].favSongs[0].albumUrl} />
     </Card>
   );
 };

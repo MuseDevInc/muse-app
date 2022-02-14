@@ -1,5 +1,5 @@
 import { Typography, Paper, Stack } from "@mui/material";
-import React from "react";
+import React, {useEffect, useContext} from "react";
 import { NavBar } from "./navbar/NavBar";
 import { Login } from "./formComponents/Login";
 import { RegisterSession } from "./formComponents/RegisterSession";
@@ -9,8 +9,9 @@ import { PlaybackControls } from "./discover/PlaybackControls";
 import { MuseWindow } from "./MuseWindow";
 
 export function Main() {
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
+
+  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   return (
     <div>
       <NavBar />
