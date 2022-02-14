@@ -62,7 +62,6 @@ const UserProfile = ({ currentUser }) => {
     let profileToDisplay = await profileToGrab.json();
     console.log();
     if (profileToDisplay) {
-      // setDisplayProfile(profileToDisplay)
       setProfile(profileToDisplay);
     }
   };
@@ -71,11 +70,8 @@ const UserProfile = ({ currentUser }) => {
     if (!displayProfile) {
       getProfile();
     }
-  }, []);
+  }, [displayProfile]);
 
-  useEffect(() => {
-    console.log(displayProfile);
-  }, [displayProfile])
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
