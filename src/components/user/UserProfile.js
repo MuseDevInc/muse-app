@@ -68,10 +68,10 @@ const UserProfile = ({ currentUser }) => {
   };
 
   useEffect(() => {
-    if (!displayProfile) {
+    // if (!displayProfile) {
       getProfile();
-    }
-  }, [displayProfile]);
+    // }
+  }, []);
 
   useEffect(() => {
     console.log(displayProfile);

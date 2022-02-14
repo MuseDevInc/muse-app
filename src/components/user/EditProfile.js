@@ -139,10 +139,10 @@ export default function EditProfile({ accessToken, currentUser }) {
   };
 
   // run when access token refreshes
-  // useEffect(() => {
-  //   if (!accessToken) return;
-  //   spotifyApi.setAccessToken(accessToken);
-  // }, [accessToken]);
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
 
   // run everytime search params from users and spotify access token change
   useEffect(() => {
@@ -237,7 +237,7 @@ export default function EditProfile({ accessToken, currentUser }) {
                 size="small"
                 multiline
                 rows={4}
-                helperText="Write something about yourself."
+                defaultValue={displayProfile && displayProfile.aboutMe}
                 onChange={(e) => {
                   setAboutMe(e.target.value);
                 }}
@@ -268,11 +268,11 @@ export default function EditProfile({ accessToken, currentUser }) {
                 variant="outlined"
                 margin="dense"
                 size="small"
+                defaultValue={displayProfile && displayProfile.favAlbum}
                 onChange={(e) => setFavAlbum(e.target.value)}
               />
               <div>
                 {topSongs?.map((track) => {
-                  const handleClick = () => {};
                   return (
                     <SongCardDisplay
                       key={track.uri}
