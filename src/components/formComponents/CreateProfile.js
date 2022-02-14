@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
-import useSpotifyAuth from "../../hooks/useSpotifyAuth";
 import SongResultContainer from "./SongResultContainer";
 import SongCardDisplay from "./SongCardDisplay";
 import {
@@ -43,6 +42,7 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 export default function CreateProfile({ accessToken, currentUser }) {
+  spotifyApi.setAccessToken(accessToken);
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -71,7 +71,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-  // const accessToken = useSpotifyAuth();
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [topSongs, setTopSongs] = useState([]);
@@ -92,10 +91,10 @@ export default function CreateProfile({ accessToken, currentUser }) {
   };
 
   // run when access token refreshes
-  useEffect(() => {
-    if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (!accessToken) return;
+  //   spotifyApi.setAccessToken(accessToken);
+  // }, [accessToken]);
 
   // run everytime search params from users and spotify access token change
   useEffect(() => {
