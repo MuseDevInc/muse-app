@@ -1,61 +1,106 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import SpotifyWebApi from "spotify-web-api-node";
+import useSpotifyAuth from "../../hooks/useSpotifyAuth";
+import SongResultContainer from "../formComponents/SongResultContainer";
 import {
   Box,
   FormGroup,
   TextField,
   Typography,
-  Button,
   Paper,
+  Autocomplete,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  CardMedia,
+  Collapse,
+  Avatar,
+  Stack,
+  IconButton,
+  Button,
 } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
+import DeleteIcon from '@mui/icons-material/Delete'
 import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
-import CardContent from "@mui/material/CardContent";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
-import EditIcon from "@mui/icons-material/Edit";
-import MusicPlayer from "./MusicPlayer";
-
-//
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import Collapse from '@mui/material/Collapse';
-//
-
-import { useTheme } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import SongCardDisplay from "../formComponents/SongCardDisplay";
+import MusicPlayer from "./MusicPlayer";
+import Divider from "@mui/material/Divider";
 
-const UserProfile = ({ currentUser }) => {
-  let navigate = useNavigate();
-  const [displayProfile, setDisplayProfile] = useState(null);
-  let handleCreateSubmit = (e) => {
-    e.preventDefault();
-    navigate("/editprofile");
+
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
+});
+
+export default function CreateProfile({ accessToken, currentUser }) {
+  const [expanded, setExpanded] = useState(false);
+
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
 
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+  let navigate = useNavigate();
 
-  const Root = styled("div")(({ theme }) => ({
-    width: "100%",
-    ...theme.typography.body2,
-    "& > :not(style) + :not(style)": {
-      marginTop: theme.spacing(2),
-    },
-  }));
+  let handleCreateSubmit = async (e) => {
+    e.preventDefault();
+    navigate("/userprofile");
+    let profileToCreate = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          aboutMe: aboutMe,
+          favGenres: favGenres,
+          favAlbum: favAlbum,
+          favSong1: topSongs[0],
+          favSong2: topSongs[1],
+          favSong3: topSongs[2],
+        }),
+        credentials: "include",
+      }
+    );
+  };
+
+  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+  // const accessToken = useSpotifyAuth();
+  const [searchTopOne, setSearchTopOne] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [topSongs, setTopSongs] = useState([]);
+  const [aboutMe, setAboutMe] = useState();
+  const [favGenres, setFavGenres] = useState([]);
+  const [favAlbum, setFavAlbum] = useState();
+  const genresOptions = ["Pop", "Rock", "Jazz", "Country"];
+
+  //  select a song
+  const chooseTrack = (track) => {
+    setSearchTopOne("");
+    if (topSongs.filter((topSong) => topSong.uri === track.uri).length >= 1) {
+      return;
+    }
+    if (topSongs.length < 3) {
+      setTopSongs([...topSongs, track]);
+    }
+  };
+
+
+  const [displayProfile, setDisplayProfile] = useState(null);
 
   let setProfile = (profile) => {
     console.log(profile);
@@ -84,98 +129,239 @@ const UserProfile = ({ currentUser }) => {
     }
   }, [displayProfile]);
 
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+  // run when access token refreshes
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
 
-  
+  // run everytime search params from users and spotify access token change
+  useEffect(() => {
+    if (!searchTopOne) return setSearchResults([]);
+    if (!accessToken) return;
+    //  use spotify web api to get seacrh results
+    spotifyApi.searchTracks(searchTopOne).then((res) => {
+      //  map over the result to just grab specific keys of each item in the search results
+      let cancel = false;
+      if (cancel) {
+        return;
+      }
+      setSearchResults(
+        res.body.tracks.items.map((track) => {
+          const albumIcon = track.album.images.reduce(
+            // grab biggest image using reduce
+            (biggestImage, image) => {
+              if (image.height > biggestImage.height) {
+                return image;
+              }
+              return biggestImage;
+            },
+            track.album.images[0]
+          );
+          return {
+            track_id: track.id,
+            artist: track.artists[0].name,
+            title: track.name,
+            uri: track.uri,
+            albumUrl: albumIcon.url,
+          };
+        })
+      );
+      return (cancel = true);
+    });
+  }, [setSearchResults, searchTopOne, accessToken]);
+
   return (
-    <div>
-      <Paper
-        elevation={8}
-        sx={{
-          minHeight: "100vh",
-          maxHeight: "100vh",
-          background: `${backGrad}`,
-        }}
-      >
-        {/* <p> {displayProfile && displayProfile.aboutMe}</p> */}
-        {/* <p>{displayProfile ? displayProfile.favSong1.artist : "false"}</p> */}
-        <Stack alignItems="center">
-          {/* <Typography
-            sx={{
-              textAlign: "center",
-              padding: "2rem",
-              margin: "1rem",
-              color: "white",
-            }}
-            variant="h1"
-          >
-            MUSE
-        </Typography> */}
-          <Card
-            sx={{
-              maxWidth: 500,
-              maxHeight: 920,
-              padding: "2rem",
-              margin: "2rem",
-              position: "absolute",
-            }}
-          >
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  
-                  {displayProfile && currentUser.currentUsername[0].toUpperCase()}
-                </Avatar>
-              }
-              action={
-                <IconButton>
-                  <EditIcon />
-                </IconButton>
-              }
-              title={displayProfile && currentUser.currentUsername}
+    <>
+      {/* console.log(displayProfile) */}
 
-              subheader="New York City, New York"
-            />
-            <CardMedia
-              component="img"
-              height="360"
-              image={displayProfile && displayProfile.favSong1.albumUrl}
-              alt={displayProfile && displayProfile.favSong1.title}
-            />
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+      <Stack alignItems={"center"}>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardHeader
+            avatar={
+              <Avatar
+                sx={{ bgcolor: red[500], alignItems: "center" }}
+                aria-label="recipe"
               >
-                <Typography>About Me</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{displayProfile && displayProfile.aboutMe}</Typography>
-              </AccordionDetails>
-            </Accordion>
-
-            <Root>
-              <Divider sx={{ padding: "1rem", textAlign: "center" }}>Favorite Genre</Divider>
-              {displayProfile && displayProfile.favGenres}
-              <Divider>Favorite Album of All Time</Divider>
-            </Root>
-
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={1}
-              sx={{ margin: "1rem", alignItems: "space" }}
+                {displayProfile && displayProfile.currentUsername}
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={displayProfile && displayProfile.currentUsername}
+            subheader="New York City, NY"
+          />
+          <CardMedia
+            component="img"
+            height="194"
+            image={
+              topSongs.length > 0
+                ? topSongs[0].albumUrl
+                : "https://i.cbc.ca/1.6163000.1630614872!/fileImage/httpImage/drake-certified-lover-boy-album-art.jpeg"
+            }
+            alt="CLB"
+          />
+          <CardActions disableSpacing>
+            <CardContent sx={{ alignItems: "center" }}>
+              <h1>Tell the world what you listen to</h1>
+            </CardContent>
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
             >
-              { displayProfile && <MusicPlayer song={displayProfile.favSong1}/>}
-              { displayProfile && <MusicPlayer song={displayProfile.favSong2}/>}
-              { displayProfile && <MusicPlayer song={displayProfile.favSong3}/>}
-            </Stack>
-          </Card>
-        </Stack>
-      </Paper>
-    </div>
-  );
-};
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <TextField
+                fullWidth
+                id="aboutMe"
+                label="About Me"
+                variant="outlined"
+                margin="dense"
+                size="small"
+                multiline
+                rows={4}
+                helperText="Write something about yourself."
+                onChange={(e) => {
+                  setAboutMe(e.target.value);
+                }}
+              />
+              <Autocomplete
+                multiple
+                id="favGenres"
+                options={genresOptions}
+                getOptionLabel={(option) => option}
+                filterSelectedOptions
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Favorite Genres"
+                    placeholder="Favorite Genres"
+                  />
+                )}
+                margin="dense"
+                onChange={(e) =>
+                  setFavGenres(...favGenres, genresOptions[e.target.value])
+                }
+              />
+              <TextField
+                fullWidth
+                id="favAlbum"
+                label="Favorite Album of All Time"
+                variant="outlined"
+                margin="dense"
+                size="small"
+                onChange={(e) => setFavAlbum(e.target.value)}
+              />
+              <div>
+                {topSongs?.map((track) => {
+                  const handleClick = () => {};
+                  return (
+                    <SongCardDisplay
+                      key={track.uri}
+                      track={track}
+                      handleClick={() =>
+                        setTopSongs(
+                          topSongs.filter(
+                            (topSong) => topSong.uri !== track.uri
+                          )
+                        )
+                      }
+                    />
 
-export default UserProfile;
+                    // <div className="song-container">
+                    //   <img
+                    //     src={track.albumUrl}
+                    //     style={{ height: "64px", width: "64px" }}
+                    //     alt={track.title}
+                    //   ></img>
+                    //   <div className="song-text">
+                    //     <div>{track.title}</div>
+                    //   </div>
+                    //   <button
+                    //     onClick={() =>
+                    //       setTopSongs(
+                    //         topSongs.filter(
+                    //           (topSong) => topSong.uri !== track.uri
+                    //         )
+                    //       )
+                    //     }
+                    //   >
+                    //     Remove
+                    //   </button>
+                    // </div>
+                  );
+                })}
+              </div>
+              <TextField
+                fullWidth
+                id="favorite_song1"
+                label="Your top 3 songs"
+                variant="outlined"
+                margin="dense"
+                value={searchTopOne}
+                disabled={topSongs.length < 3 ? false : true}
+                onChange={(e) => setSearchTopOne(e.target.value)}
+              />
+
+              {/* <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={1}
+                sx={{ margin: "1rem", alignItems: "space" }}
+              >
+                {displayProfile && (
+                  <MusicPlayer song={displayProfile.favSong1} />
+                )}
+                {displayProfile && (
+                  <MusicPlayer song={displayProfile.favSong2} />
+                )}
+                {displayProfile && (
+                  <MusicPlayer song={displayProfile.favSong3} />
+                )}
+              </Stack> */}
+              {searchTopOne ? (
+                <Box>
+                  <div
+                    style={{
+                      height: "20vh",
+                      overflow: "scroll",
+                      background: "white",
+                    }}
+                  >
+                    {searchResults?.map((track) => (
+                      <SongResultContainer
+                        track={track}
+                        key={track.uri}
+                        chooseTrack={chooseTrack}
+                      />
+                    ))}
+                  </div>
+                </Box>
+              ) : null}
+            </CardContent>
+          </Collapse>
+          <div style={{ padding: "1rem", justifyContent: "center" }}>
+            <Button onClick={handleCreateSubmit} variant="outlined" size="small">
+              {" "}
+              Submit Changes
+            </Button>
+            <Button onClick={handleCreateSubmit} variant="outlined" color="error" size="small">
+              {" "}
+              Delete Account
+            </Button>
+
+            </div> 
+        </Card>
+      </Stack>
+    </>
+  );
+}

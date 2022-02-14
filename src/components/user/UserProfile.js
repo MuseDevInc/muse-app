@@ -77,6 +77,8 @@ const UserProfile = ({ currentUser }) => {
     console.log(displayProfile);
   }, [displayProfile])
 
+ 
+
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
   
@@ -103,7 +105,7 @@ const UserProfile = ({ currentUser }) => {
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                   
-                  {displayProfile && currentUser.currentUsername[0].toUpperCase()}
+                  {displayProfile && displayProfile.currentUsername[0].toUpperCase()}
                 </Avatar>
               }
               action={   
