@@ -7,7 +7,7 @@ import { Login } from "./components/formComponents/Login";
 import CreateProfile from "./components/formComponents/CreateProfile";
 import UserProfile from "./components/user/UserProfile";
 // import Messenger from "./components/messaging/Messenger";
-// import { EditProfile } from "./components/user/EditProfile"
+import  EditProfile  from "./components/user/EditProfile"
 import { Paper } from "@mui/material";
 import Messenger from "./components/messenger/Messenger";
 import { RegisterSession } from "./components/formComponents/RegisterSession";
@@ -46,7 +46,7 @@ function App() {
           ></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/userprofile" element={<UserProfile currentUser={currentUser}/>}></Route>
-          {/* <Route path='/editprofile' element={<EditProfile/>}></Route> */}
+          <Route path="/editprofile" element={<EditProfile currentUser={currentUser}/>}></Route>
           <Route
             path="/createprofile"
             element={
