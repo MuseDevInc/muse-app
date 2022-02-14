@@ -49,25 +49,25 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   let navigate = useNavigate();
 
-  let handleCreateSubmit = async (e) => {
+  let handleEditSubmit = async (e) => {
     e.preventDefault();
     navigate("/userprofile");
-    let profileToCreate = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage",
+    let profileToEdit = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile",
       {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           aboutMe: aboutMe,
           favGenres: favGenres,
           favAlbum: favAlbum,
-          favSong1: topSongs[0],
-          favSong2: topSongs[1],
-          favSong3: topSongs[2],
+          favSongs: topSongs 
         }),
         credentials: "include",
       }
     );
+      let updatedProfile = profileToEdit.json()
+      console.log(updatedProfile);
   };
 
   // let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
@@ -313,7 +313,7 @@ export default function EditProfile({ accessToken, currentUser }) {
           </Collapse>
           <div style={{ padding: "1rem", justifyContent: "center" }}>
             <Button
-              onClick={handleCreateSubmit}
+              onClick={handleEditSubmit}
               variant="outlined"
               size="small"
             >
@@ -321,7 +321,7 @@ export default function EditProfile({ accessToken, currentUser }) {
               Submit Changes
             </Button>
             <Button
-              onClick={handleCreateSubmit}
+              onClick={handleEditSubmit}
               variant="outlined"
               color="error"
               size="small"
