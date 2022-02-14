@@ -5,17 +5,17 @@ import Conversation from '../conversations/Conversation'
 // {format(message.createdAt)}
 import './messenger.css'
 import { io } from 'socket.io-client'
-const Messenger = () => {
+const Messenger = ({currentUser}) => {
   const [conversations, setConversations] = useState([])
   const [currentChat, setCurrentChat] = useState(null)
   const [messages, setMessages] = useState([])
   const [socket, setSocket] = useState(null)
   const [newMessage, setNewMessage] = useState("")
-let userId = '6206e85dad4b62bf69b66099'
+// let userId = '6206e85dad4b62bf69b66099'
 //get the conversations our userId is a part of.
 const getConversations = async () => {
   try{
-  const res = await axios.get(process.env.REACT_APP_BACKEND_SERVER+"/conversation/6206e85dad4b62bf69b66099")
+  const res = await axios.get(process.env.REACT_APP_BACKEND_SERVER+"/conversation/"+currentUser.currentUserId)
   console.log(res)
   setConversations(res.data)
   }
@@ -64,7 +64,7 @@ const getConversations = async () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const message = {
-      sender: userId,
+      sender: currentUser.currentUserId,
       text:newMessage,
       conversationId: currentChat.id
     }
@@ -93,7 +93,7 @@ const getConversations = async () => {
       {/* When a conversation is clicked, set the current chat to be that conversation. */}
          {conversations.map((convo) => {
         <div onClick={() => setCurrentChat(convo)}>
-          <Conversation conversation={convo}  currentUser={userId}/>
+          <Conversation conversation={convo}  currentUser={currentUser}/>
         </div>
          })}
     </div>

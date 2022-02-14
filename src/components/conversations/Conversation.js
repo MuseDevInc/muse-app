@@ -9,11 +9,11 @@ const Conversation = ({conversation, currentUser}) => {
 
   useEffect(() => {
       //Two members in a conversation, the one that is not currentUser is the other member.
-    const friendId = conversation.members.find((m) => m !== currentUser);
+    const friendId = conversation.members.find((m) => m !== currentUser.currentUserId);
     //get user profile, will add friend profiel as well later.
     const getUserProfile = async () => {
       try {
-        const res = await axios(process.env.REACT_APP_BACKEND_SERVER+"/muse/"+currentUser);
+        const res = await axios(process.env.REACT_APP_BACKEND_SERVER+"/muse/"+currentUser.currentUserId);
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -24,7 +24,7 @@ const Conversation = ({conversation, currentUser}) => {
   return (
     <div>
         <img src="https://m.media-amazon.com/images/I/51fyG9o+1lL._AC_SL1000_.jpg" alt='ProfilePic'></img>
-        <p>{user?.username}</p>
+        <p>{currentUser?.currentUsername}</p>
     </div>
   )
 }

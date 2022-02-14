@@ -70,7 +70,7 @@ export default function App() {
               />
             }
           ></Route>
-          <Route path="/messenger" element={<Messenger />}></Route>
+          <Route path="/messenger" element={<Messenger currentUser={currentUser} />}></Route>
         </Routes>
       </Paper>
     </UserContext.Provider>
