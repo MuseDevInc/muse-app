@@ -46,7 +46,8 @@ function App() {
           ></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/userprofile" element={<UserProfile currentUser={currentUser}/>}></Route>
-          <Route path="/editprofile" element={<EditProfile currentUser={currentUser}/>}></Route>
+          <Route path="/editprofile" element={<EditProfile currentUser={currentUser} accessToken={accessToken}
+/>}></Route>
           <Route
             path="/createprofile"
             element={

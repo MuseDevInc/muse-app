@@ -71,7 +71,7 @@ const UserProfile = ({ currentUser }) => {
     if (!displayProfile) {
       getProfile();
     }
-  }, []);
+  }, [displayProfile]);
 
   useEffect(() => {
     console.log(displayProfile);
@@ -105,7 +105,7 @@ const UserProfile = ({ currentUser }) => {
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                   
-                  {displayProfile && displayProfile.currentUsername[0].toUpperCase()}
+                  {currentUser && currentUser.currentUsername[0].toUpperCase()}
                 </Avatar>
               }
               action={   
@@ -116,7 +116,7 @@ const UserProfile = ({ currentUser }) => {
             // </Button>
               
               }
-              title={displayProfile && currentUser.currentUsername}
+              title={currentUser && currentUser.currentUsername}
 
               subheader="New York City, New York"
             />

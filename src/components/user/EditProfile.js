@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
-import useSpotifyAuth from "../../hooks/useSpotifyAuth";
 import SongResultContainer from "../formComponents/SongResultContainer";
 import {
   Box,
-  FormGroup,
   TextField,
-  Typography,
-  Paper,
   Autocomplete,
   Card,
   CardHeader,
@@ -20,16 +16,12 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete'
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import SongCardDisplay from "../formComponents/SongCardDisplay";
-import MusicPlayer from "./MusicPlayer";
-import Divider from "@mui/material/Divider";
-
 
 
 const ExpandMore = styled((props) => {
@@ -47,9 +39,9 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 });
 
-export default function CreateProfile({ accessToken, currentUser }) {
+export default function EditProfile({ accessToken, currentUser }) {
+  spotifyApi.setAccessToken(accessToken);
   const [expanded, setExpanded] = useState(false);
-
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -78,7 +70,8 @@ export default function CreateProfile({ accessToken, currentUser }) {
     );
   };
 
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+  // let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+
   // const accessToken = useSpotifyAuth();
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -87,19 +80,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
   const [favGenres, setFavGenres] = useState([]);
   const [favAlbum, setFavAlbum] = useState();
   const genresOptions = ["Pop", "Rock", "Jazz", "Country"];
-
-  //  select a song
-  const chooseTrack = (track) => {
-    setSearchTopOne("");
-    if (topSongs.filter((topSong) => topSong.uri === track.uri).length >= 1) {
-      return;
-    }
-    if (topSongs.length < 3) {
-      setTopSongs([...topSongs, track]);
-    }
-  };
-
-
   const [displayProfile, setDisplayProfile] = useState(null);
 
   let setProfile = (profile) => {
@@ -120,6 +100,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
     if (profileToDisplay) {
       // setDisplayProfile(profileToDisplay)
       setProfile(profileToDisplay);
+      setTopSongs(profileToDisplay.favSongs);
     }
   };
 
@@ -129,11 +110,22 @@ export default function CreateProfile({ accessToken, currentUser }) {
     }
   }, [displayProfile]);
 
+  //  select a song
+  const chooseTrack = (track) => {
+    setSearchTopOne("");
+    if (topSongs.filter((topSong) => topSong.uri === track.uri).length >= 1) {
+      return;
+    }
+    if (topSongs.length < 3) {
+      setTopSongs([...topSongs, track]);
+    }
+  };
+
   // run when access token refreshes
-  useEffect(() => {
-    if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (!accessToken) return;
+  //   spotifyApi.setAccessToken(accessToken);
+  // }, [accessToken]);
 
   // run everytime search params from users and spotify access token change
   useEffect(() => {
@@ -183,7 +175,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
                 sx={{ bgcolor: red[500], alignItems: "center" }}
                 aria-label="recipe"
               >
-                {displayProfile && displayProfile.currentUsername}
+                {currentUser && currentUser.currentUsername[0].toUpperCase()}
               </Avatar>
             }
             action={
@@ -191,7 +183,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={displayProfile && displayProfile.currentUsername}
+            title={currentUser && currentUser.currentUsername.toUpperCase()}
             subheader="New York City, NY"
           />
           <CardMedia
@@ -276,28 +268,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
                         )
                       }
                     />
-
-                    // <div className="song-container">
-                    //   <img
-                    //     src={track.albumUrl}
-                    //     style={{ height: "64px", width: "64px" }}
-                    //     alt={track.title}
-                    //   ></img>
-                    //   <div className="song-text">
-                    //     <div>{track.title}</div>
-                    //   </div>
-                    //   <button
-                    //     onClick={() =>
-                    //       setTopSongs(
-                    //         topSongs.filter(
-                    //           (topSong) => topSong.uri !== track.uri
-                    //         )
-                    //       )
-                    //     }
-                    //   >
-                    //     Remove
-                    //   </button>
-                    // </div>
                   );
                 })}
               </div>
@@ -312,22 +282,14 @@ export default function CreateProfile({ accessToken, currentUser }) {
                 onChange={(e) => setSearchTopOne(e.target.value)}
               />
 
-              {/* <Stack
-                direction="row"
-                divider={<Divider orientation="vertical" flexItem />}
-                spacing={1}
-                sx={{ margin: "1rem", alignItems: "space" }}
-              >
-                {displayProfile && (
-                  <MusicPlayer song={displayProfile.favSong1} />
-                )}
-                {displayProfile && (
-                  <MusicPlayer song={displayProfile.favSong2} />
-                )}
-                {displayProfile && (
-                  <MusicPlayer song={displayProfile.favSong3} />
-                )}
-              </Stack> */}
+              {/* {searchResults?.map((track) => (
+                <SongResultContainer
+                  track={track}
+                  key={track.uri}
+                  chooseTrack={chooseTrack}
+                />
+              ))} */}
+
               {searchTopOne ? (
                 <Box>
                   <div
@@ -350,16 +312,24 @@ export default function CreateProfile({ accessToken, currentUser }) {
             </CardContent>
           </Collapse>
           <div style={{ padding: "1rem", justifyContent: "center" }}>
-            <Button onClick={handleCreateSubmit} variant="outlined" size="small">
+            <Button
+              onClick={handleCreateSubmit}
+              variant="outlined"
+              size="small"
+            >
               {" "}
               Submit Changes
             </Button>
-            <Button onClick={handleCreateSubmit} variant="outlined" color="error" size="small">
+            <Button
+              onClick={handleCreateSubmit}
+              variant="outlined"
+              color="error"
+              size="small"
+            >
               {" "}
               Delete Account
             </Button>
-
-            </div> 
+          </div>
         </Card>
       </Stack>
     </>
