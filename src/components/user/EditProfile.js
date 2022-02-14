@@ -49,6 +49,7 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   let navigate = useNavigate();
 
+  // Edit handler
   let handleEditSubmit = async (e) => {
     e.preventDefault();
     navigate("/userprofile");
@@ -68,6 +69,22 @@ export default function EditProfile({ accessToken, currentUser }) {
     );
       let updatedProfile = profileToEdit.json()
       console.log(updatedProfile);
+  };
+
+// Delete handler
+  let handleDeleteSubmit = async (e) => {
+    e.preventDefault();
+    navigate("/");
+    let profileToDelete = await fetch(
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/" + currentUser.currentUserId,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
+      let deletedProfile = profileToDelete.json()
+      console.log(deletedProfile);
   };
 
   // let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
@@ -122,10 +139,10 @@ export default function EditProfile({ accessToken, currentUser }) {
   };
 
   // run when access token refreshes
-  // useEffect(() => {
-  //   if (!accessToken) return;
-  //   spotifyApi.setAccessToken(accessToken);
-  // }, [accessToken]);
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
 
   // run everytime search params from users and spotify access token change
   useEffect(() => {
@@ -220,7 +237,7 @@ export default function EditProfile({ accessToken, currentUser }) {
                 size="small"
                 multiline
                 rows={4}
-                helperText="Write something about yourself."
+                defaultValue={displayProfile && displayProfile.aboutMe}
                 onChange={(e) => {
                   setAboutMe(e.target.value);
                 }}
@@ -251,11 +268,11 @@ export default function EditProfile({ accessToken, currentUser }) {
                 variant="outlined"
                 margin="dense"
                 size="small"
+                defaultValue={displayProfile && displayProfile.favAlbum}
                 onChange={(e) => setFavAlbum(e.target.value)}
               />
               <div>
                 {topSongs?.map((track) => {
-                  const handleClick = () => {};
                   return (
                     <SongCardDisplay
                       key={track.uri}
@@ -317,16 +334,15 @@ export default function EditProfile({ accessToken, currentUser }) {
               variant="outlined"
               size="small"
             >
-              {" "}
+              
               Submit Changes
             </Button>
             <Button
-              onClick={handleEditSubmit}
+              onClick={handleDeleteSubmit}
               variant="outlined"
               color="error"
               size="small"
             >
-              {" "}
               Delete Account
             </Button>
           </div>
