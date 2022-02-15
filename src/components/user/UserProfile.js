@@ -19,7 +19,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import MusicPlayer from "./MusicPlayer";
 import { NavBar } from "../navbar/NavBar";
-
+import SignedInUserCard from "./SignedInUserCard";
 import { useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -62,19 +62,16 @@ const UserProfile = ({ currentUser }) => {
     let profileToDisplay = await profileToGrab.json();
 
     if (profileToDisplay) {
-      // setDisplayProfile(profileToDisplay)
       setProfile(profileToDisplay);
     }
   };
 
   useEffect(() => {
     getProfile();
-
   }, []);
 
-  
-
   useEffect(() => {
+    console.log(localStorage.getItem("currentUsername").toUpperCase());
     console.log(displayProfile);
   }, [displayProfile]);
 
@@ -82,99 +79,8 @@ const UserProfile = ({ currentUser }) => {
 
   return (
     <>
-      <NavBar/>
-      {displayProfile && (
-        <Paper
-          elevation={8}
-          sx={{
-            minHeight: "100vh",
-            maxHeight: "100vh",
-            background: `${backGrad}`,
-          }}
-        >
-          <Stack sx={{alignItems:"center", overflow: "scroll", paddingBottom: "1rem"}}>
-            <Card
-              sx={{
-                maxWidth: 500,
-                padding: "2rem",
-                margin: "2rem",
-                position: "absolute",
-              }}
-            >
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    {currentUser &&
-                      currentUser.currentUsername[0].toUpperCase()}
-                  </Avatar>
-                }
-                action={
-                  // <Button onClick={handleCreateSubmit} variant="outlined">
-                  <IconButton
-                    onClick={handleCreateSubmit}
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  // </Button>
-                }
-                title={currentUser && currentUser.currentUsername}
-                subheader="New York City, New York"
-              />
-              {displayProfile && (
-                <CardMedia
-                  component="img"
-                  height="360"
-                  image={
-                    displayProfile.favSongs.length > 0
-                      ? displayProfile.favSongs[0].albumUrl
-                      : null
-                  }
-                  alt={
-                    displayProfile.favSongs.length > 0
-                      ? displayProfile.favSongs[0].title
-                      : null
-                  }
-                />
-              )}
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>About Me</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    {displayProfile && displayProfile.aboutMe}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-
-              <Root>
-                <Divider sx={{ padding: "1rem", textAlign: "center" }}>
-                  Favorite Genre
-                </Divider>
-                {displayProfile && displayProfile.favGenres}
-                <Divider>Favorite Album of All Time</Divider>
-              </Root>
-              <Stack
-                direction="row"
-                divider={<Divider orientation="vertical" flexItem />}
-                spacing={1}
-                sx={{ margin: "1rem", alignItems: "space" }}
-              >
-                {displayProfile &&
-                  displayProfile.favSongs.map((song) => {
-                    return <MusicPlayer song={song} />;
-                  })}
-              </Stack>
-            </Card>
-          </Stack>
-        </Paper>
-      )}
+      <NavBar />
+      { displayProfile && <SignedInUserCard username={localStorage.getItem('currentUsername')} displayProfile={displayProfile} handleNavToEdit={handleCreateSubmit}/>}
     </>
   );
 };
