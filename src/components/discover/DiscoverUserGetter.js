@@ -22,7 +22,7 @@ function DiscoverUserGetter() {
 
   //init user array, only rerenders when remove from front and add to back
   useEffect(() => {
-    return currentId && userQueue ? null : getUsers();
+    return getUsers();
   }, []);
 
   const getUsers = async () => {
