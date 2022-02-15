@@ -19,7 +19,6 @@ const useSpotifyAuth = () => {
         // window.location = "/";
       });
   }, []);
-  console.log(accessToken, '::::::')
   return accessToken;
 };
 

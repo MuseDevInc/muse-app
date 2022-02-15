@@ -18,6 +18,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import MusicPlayer from "./MusicPlayer";
+import { NavBar } from "../navbar/NavBar";
 
 import { useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -81,6 +82,7 @@ const UserProfile = ({ currentUser }) => {
 
   return (
     <>
+      <NavBar/>
       {displayProfile && (
         <Paper
           elevation={8}
