@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import {
   Typography,
   Paper,
@@ -119,7 +119,7 @@ const SignedInUserCard = ({username, displayProfile, handleNavToEdit}) => {
                 sx={{ margin: "1rem", alignItems: "space" }}
               >
                 {displayProfile.favSongs.map((song) => {
-                  return <MusicPlayer song={song} />;
+                  return <MusicPlayer key={song.uri} song={song} />;
                 })}
               </Stack>
             </Card>

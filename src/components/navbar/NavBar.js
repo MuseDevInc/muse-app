@@ -61,6 +61,7 @@ export function NavBar() {
             <div>
               {/*IconButton re: Discover feature...*/}
               <IconButton
+                href="/main"
                 size="large"
                 aria-label="discover"
                 aria-controls="discover-appbar"
