@@ -70,10 +70,6 @@ const UserProfile = ({ currentUser }) => {
     getProfile();
   }, []);
 
-  useEffect(() => {
-    console.log(localStorage.getItem("currentUsername").toUpperCase());
-    console.log(displayProfile);
-  }, [displayProfile]);
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
