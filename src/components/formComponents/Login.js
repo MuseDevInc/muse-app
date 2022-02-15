@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 export function Login({ currentUser, setCurrentUser }) {
   
   let navigate = useNavigate()
-  //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +39,8 @@ export function Login({ currentUser, setCurrentUser }) {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          localStorage.setItem('currentUsername', res.currentUsername)
+          localStorage.setItem('currentUserId', res.currentUserId)
           setCurrentUser({
             ...currentUser,
             currentUsername: res.currentUsername,

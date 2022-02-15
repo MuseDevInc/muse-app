@@ -53,7 +53,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
 
   let handleCreateSubmit = async (e) => {
     e.preventDefault();
-    navigate("/userprofile");
     let profileToCreate = await fetch(
       process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage",
       {
@@ -68,6 +67,8 @@ export default function CreateProfile({ accessToken, currentUser }) {
         credentials: "include"
       }
     );
+    navigate("/userprofile");
+
   };
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";

@@ -52,7 +52,6 @@ export default function EditProfile({ accessToken, currentUser }) {
   // Edit handler
   let handleEditSubmit = async (e) => {
     e.preventDefault();
-    navigate("/userprofile");
     let profileToEdit = await fetch(
       process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile",
       {
@@ -69,6 +68,8 @@ export default function EditProfile({ accessToken, currentUser }) {
     );
       let updatedProfile = profileToEdit.json()
       console.log(updatedProfile);
+
+      navigate("/userprofile");
   };
 
 // Delete handler
