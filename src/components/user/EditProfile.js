@@ -77,7 +77,7 @@ export default function EditProfile({ accessToken, currentUser }) {
     e.preventDefault();
     navigate("/");
     let profileToDelete = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/" + currentUser.currentUserId,
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount",
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
