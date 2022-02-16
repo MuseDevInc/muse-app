@@ -13,6 +13,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   const navigate = useNavigate()
   const [count, setCount] = useState();
   const [match, setMatch] = useState();
+  const titleRef = useRef(null)
 
   console.log(qCounter);
   useEffect(()=>{
@@ -119,11 +120,12 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     
       <Typography
         variant="h3"
+        ref={titleRef}
         elevation={24}
         marginTop="2rem"
         sx={{ color: "black" }}
       >
-        {userQueue[qCounter.current].aboutMe}
+        {userQueue[qCounter.current].owner.username}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <IconButton
@@ -136,6 +138,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
         <DiscoverPaper
           currentPosition={qCounter.current}
           userQueue={userQueue}
+          titleRef={titleRef}
         />
         <IconButton
           onClick={() => {
