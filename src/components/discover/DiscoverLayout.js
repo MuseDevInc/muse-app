@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
-import { Box, Typography, Stack, IconButton } from "@mui/material";
+import { Box, Typography, Stack, IconButton, Paper } from "@mui/material";
 import { PlaybackControls } from "./PlaybackControls";
 import MatchActionButtons from "./MatchActionButtons";
 import NextAvatar from "./NextAvatar";
@@ -16,7 +16,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
 
   console.log(qCounter);
   useEffect(()=>{
-    console.log(userQueue.length + "is user queue length and counter is at " + qCounter)
+    console.log(userQueue.length + "is user queue length and counter is at " + qCounter.current)
   })
 
   //handle user action
@@ -67,7 +67,9 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           if (res.status === 400) {
             console.log("error");
           }
-       if (res === true) {
+       if (res.matchBoolean === true) {
+         console.log(res.matchBoolean)
+         console.log("is response")
          alert("match!")
          console.log("match")
          advanceQ()
@@ -82,10 +84,10 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function advanceQ() {
-    qCounter.current === userQueue.length? navigate("/userprofile") : 
     //update ref
     qCounter.current = qCounter.current + 1;
     //update state to trigger and sync rerender w/ change of ref.current value
+    //tested: the below is absolutely necessary!
     count !== qCounter.current
       ? setCount(qCounter.current)
       : console.log(count);
@@ -100,8 +102,21 @@ export function DiscoverLayout({ userQueue, qCounter }) {
      */
 
   return (
-  
     <>
+    {qCounter.current === userQueue.length ? (
+      <Box maxWidth="100vw" minHeight={"80vh"} flexBasis="auto">
+        <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
+          <Typography
+            variant="h6"
+            sx={{ textAlign: "center", marginTop: "30vh", padding: "1rem" }}
+          >
+            There is no one new to display.
+          </Typography>
+        </Paper>
+      </Box>
+    ) : (
+    <>
+    
       <Typography
         variant="h3"
         elevation={24}
@@ -140,6 +155,8 @@ export function DiscoverLayout({ userQueue, qCounter }) {
         <NextAvatar />
         <NextAvatar />
       </Stack> */}
+    </>
+    )}
     </>
   );
 }
