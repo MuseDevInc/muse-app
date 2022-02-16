@@ -7,7 +7,7 @@ import { Box, Typography, IconButton, Paper } from "@mui/material";
 import MatchActionButtons from "./MatchActionButtons";
 
 import MatchSnackbar from "../feedbackAndNotifs/MatchSnackbar";
-import MuiAlert from '@mui/material/Alert'
+import MuiAlert from "@mui/material/Alert";
 export function DiscoverLayout({ userQueue, qCounter }) {
   const [count, setCount] = useState();
   const [match, setMatch] = useState();
@@ -65,7 +65,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           console.log("error");
         }
         if (res === true) {
-         return setMatch(true)
+          return setMatch(true);
         }
         if (res === false) console.log("not a match");
         return advanceQ();
@@ -83,8 +83,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     //reset match state
     setMatch(false);
   }
-
-
 
   return (
     <>
@@ -133,7 +131,11 @@ export function DiscoverLayout({ userQueue, qCounter }) {
               userQueue={userQueue}
             />
           </Box>
-              <MatchSnackbar match={match} setMatch={setMatch} advanceQ={advanceQ}/>
+          <MatchSnackbar
+            match={match}
+            setMatch={setMatch}
+            advanceQ={advanceQ}
+          />
         </>
       )}
     </>
