@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
-
+import "./conversation.css"
 //THIS PAGE IS TO GET THE USER PROFILE PIC AND USERNAME TO DISPLAY IN THE CONVERSATIONS.
 const Conversation = ({conversation, currentUser}) => {
     const [user, setUser] = useState(null);
@@ -9,11 +9,13 @@ const Conversation = ({conversation, currentUser}) => {
 
   useEffect(() => {
       //Two members in a conversation, the one that is not currentUser is the other member.
-    const friendId = conversation.members.find((m) => m !== currentUser);
+    const friendId = conversation.members.find((m) => m !== currentUser.currentUserId);
     //get user profile, will add friend profiel as well later.
     const getUserProfile = async () => {
       try {
-        const res = await axios(process.env.REACT_APP_BACKEND_SERVER+"/muse/"+currentUser);
+        console.log(friendId)
+        const res = await axios.get(process.env.REACT_APP_BACKEND_SERVER+"/muse/getUsers/"+friendId);
+        console.log(res.data)
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -22,9 +24,9 @@ const Conversation = ({conversation, currentUser}) => {
     getUserProfile();
   }, [currentUser, conversation]);
   return (
-    <div>
-        <img src="https://m.media-amazon.com/images/I/51fyG9o+1lL._AC_SL1000_.jpg" alt='ProfilePic'></img>
-        <p>{user?.username}</p>
+    <div className="conversation">
+        <img className="conversationImg" src="https://m.media-amazon.com/images/I/51fyG9o+1lL._AC_SL1000_.jpg" alt='ProfilePic'></img>
+        <p className="conversationName">{user?.username}</p>
     </div>
   )
 }

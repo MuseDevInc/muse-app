@@ -18,6 +18,7 @@
     "react-spotify-web-playback": "^0.9.1",
     "socket.io-client": "^4.4.1",
     "spotify-web-api-node": "^5.0.2",
+    "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
