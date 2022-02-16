@@ -67,8 +67,8 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           if (res.status === 400) {
             console.log("error");
           }
-       if (res.matchBoolean === true) {
-         console.log(res.matchBoolean)
+       if (res === true) {
+         console.log(res)
          console.log("is response")
          alert("match!")
          console.log("match")
