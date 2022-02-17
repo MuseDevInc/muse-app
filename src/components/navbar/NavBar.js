@@ -72,7 +72,12 @@ export function NavBar() {
                 <WhatshotIcon sx={{ fontSize: "2.75rem" }}/>
               </IconButton>
               {/*OpenChat is here. Decide if we want a Dialog modal or to use react router*/}
+              <IconButton
+              href="/messenger"
+              color="inherit"
+              >
               <OpenChat />
+               </IconButton>
                {/* User Dropdown IconButton */}
                <IconButton
                 size="large"
