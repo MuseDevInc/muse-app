@@ -39,6 +39,8 @@ export function RegisterSession({currentUser, setCurrentUser}) {
     .then((res) => {
       console.log(res);
       if (res.status === 200) {
+        localStorage.setItem('currentUsername', res.currentUsername)
+        localStorage.setItem('currentUserId', res.currentUserId)
       setCurrentUser({...currentUser, currentUsername: res.currentUsername, currentUserId: res.currentUserId })
     }
     });
