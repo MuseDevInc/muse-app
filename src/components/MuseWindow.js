@@ -1,22 +1,13 @@
 import React from "react";
-import { useContext } from "react";
-import { Paper, Typography, Stack } from "@mui/material";
-import DiscoverUserGetter from "./discover/DiscoverUserGetter";
-import UserProfile from "./user/UserProfile";
+import { Paper } from "@mui/material";
+import { DiscoverUserGetter } from "./discover/DiscoverUserGetter";
 
-export function MuseWindow({gradient}) {
+export function MuseWindow({ gradient }) {
+  let backgroundGradient = gradient;
 
-    let backgroundGradient = gradient
   return (
-    <Paper
-    /*   elevation={8} */
-      sx={{ minHeight: "93vh", background: `${backgroundGradient}` }}
-    >
-{/*       <Stack alignItems="center"> */}
-
-        <DiscoverUserGetter />
-      
-    {/*   </Stack> */}
+    <Paper sx={{ minHeight: "93vh", background: `${backgroundGradient}` }}>
+      <DiscoverUserGetter />
     </Paper>
   );
 }

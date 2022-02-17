@@ -1,18 +1,13 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
-import { DiscoverPaper } from "./DiscoverPaper";
-
-import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
-import { Box, Typography, Stack, IconButton } from "@mui/material";
-import { PlaybackControls } from "./PlaybackControls";
-import MatchActionButtons from "./MatchActionButtons";
-import NextAvatar from "./NextAvatar";
+import React, { useEffect, useState, useRef } from "react";
+import { Typography, Stack } from "@mui/material";
 import { DiscoverLayout } from "./DiscoverLayout";
-import dummyData from "./dummyData/dummyData.json";
 
-function DiscoverUserGetter() {
+
+export function DiscoverUserGetter() {
   //return from fetch, array from profile docs
   const [userQueue, setUserQueue] = useState();
   //consume context and declare variables
+
 
   //ref for current index position, incremented by "swipe"
   const counterRef = useRef(0);
@@ -34,18 +29,11 @@ function DiscoverUserGetter() {
 
     let returnedUsers = await users.json();
     if (returnedUsers) {
-      console.log(returnedUsers);
-      // setDisplayProfile(profileToDisplay)
       setUserQueue(returnedUsers);
     }
   };
 
-  //swipe handler
-  //fetch
-  //userQueue
-  //state management
 
-  //pass down userQueue to Layout so that it can provide to children
   return (
     <>
       <Stack alignItems="center">
@@ -59,4 +47,3 @@ function DiscoverUserGetter() {
   );
 }
 
-export default DiscoverUserGetter;
