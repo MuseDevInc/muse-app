@@ -1,33 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-
+import React, { useState, useEffect } from "react";
 import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, IconButton, Paper } from "@mui/material";
-
-
-import MatchDialog from "./MatchDialog";
+import { MatchDialog } from "./MatchDialog";
 
 export function DiscoverLayout({ userQueue, qCounter }) {
   const [count, setCount] = useState();
   const [match, setMatch] = useState();
 
-  console.log(qCounter);
-  useEffect(() => {
-    console.log(
-      userQueue.length +
-        "is user queue length and counter is at " +
-        qCounter.current
-    );
-  });
-
   function handleSwipe(swipe) {
     pushId(swipe);
     if (swipe === "Right") {
-      console.log("swipe right on" + userQueue[qCounter.current]._id);
       checkMatch();
     }
     if (swipe === "Left") {
-      console.log("swipe left on" + userQueue[qCounter.current]._id);
       advanceQ();
     }
   }
@@ -45,13 +31,13 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     });
   }
 
-  function createConversation (otherUserId) {
+  function createConversation(otherUserId) {
     fetch(process.env.REACT_APP_BACKEND_SERVER + "/conversation", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({otherUserId: otherUserId}),
-    })
+      body: JSON.stringify({ otherUserId: otherUserId }),
+    });
   }
   function checkMatch() {
     //this will be to check other user's swiperight array for currentUser's id.
@@ -67,17 +53,16 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (res.status === 400) {
           console.log("error");
         }
         if (res === true) {
-          //call matchFunction
-          createConversation(userQueue[qCounter.current].owner._id)
+          createConversation(userQueue[qCounter.current].owner._id);
           return setMatch(true);
         }
-        if (res === false) console.log("not a match");
-        return advanceQ();
+        if (res === false) {
+          return advanceQ();
+        }
       });
   }
 
@@ -116,7 +101,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           >
             {userQueue[qCounter.current].owner.username}
           </Typography>
-          <MatchDialog 
+          <MatchDialog
             match={match}
             setMatch={setMatch}
             advanceQ={advanceQ}
@@ -141,12 +126,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
             >
               <ThumbUp sx={{ fontSize: "2.5rem" }} />
             </IconButton>
-      {/*       <MatchActionButtons
-              currentUser={qCounter.current}
-              userQueue={userQueue}
-            /> */}
           </Box>
-    
         </>
       )}
     </>
