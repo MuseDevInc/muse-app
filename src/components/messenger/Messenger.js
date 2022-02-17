@@ -5,6 +5,8 @@ import Conversation from '../conversations/Conversation'
 // {format(message.createdAt)}
 import './messenger.css'
 import { io } from 'socket.io-client'
+import { IconButton, TextField } from '@mui/material'
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 import Message from './Message'
 const Messenger = ({currentUser}) => {
@@ -18,6 +20,7 @@ const Messenger = ({currentUser}) => {
   const [onlineUsers, setOnlineUsers] = useState([])
   const scrollRef = useRef()
 // let userId = '6206e85dad4b62bf69b66099'
+
 
 
 //get the conversations our userId is a part of.
@@ -145,11 +148,11 @@ const getMessages = async () => {
       console.log(err)
     }
   }
+
   return (
     // <div className={own ? "message own" : "message"}>
     //If no currentChat is selected, send a p tag, else show the currentConversation selected
     <div>
-     
     <div>
       {/* <img
         className="messageImg"
@@ -164,10 +167,6 @@ const getMessages = async () => {
          })}
     </div>
     {/* <div>Created at this time: Vamoss</div> */}
-      
-
-
-
     {/* When someone writes a message, run handleSubmit to submit that message */}
     {currentChat ?
       <>
@@ -179,16 +178,27 @@ const getMessages = async () => {
                   ))}
                 </div>
                 </> : <p>Open a conversation to start chatting!</p>}
-    <textarea
+    {currentChat?
+    <>
+    
+    <TextField 
+     color="secondary"    
+    sx={{borderRadius: 5, borderColor: 'white'}}
     placeholder='Write a message'
     value={newMessage}
-    onChange={(e) => setNewMessage(e.target.value)}
-    >
     
-    </textarea>
-    <button onClick={handleSubmit}>Send</button>
-  </div>
-  
+    onChange={(e) => setNewMessage(e.target.value)}>
+    </TextField >
+    <IconButton onClick={handleSubmit}>
+
+    <SendRoundedIcon />
+
+   
+    </IconButton>
+    </>: null}
+    
+
+  </div> 
 )
 }
 
