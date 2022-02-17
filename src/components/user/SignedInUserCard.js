@@ -30,6 +30,8 @@ const Root = styled("div")(({ theme }) => ({
 }));
 
 const SignedInUserCard = ({username, displayProfile, handleNavToEdit}) => {
+  const [currentPlayback, setCurrentPlayback] = useState();
+
   useEffect(() => {
     console.log(username);
     // console.log(displayProfile);
@@ -119,8 +121,20 @@ const SignedInUserCard = ({username, displayProfile, handleNavToEdit}) => {
                 sx={{ margin: "1rem", alignItems: "space" }}
               >
                 {displayProfile.favSongs.map((song) => {
-                  return <MusicPlayer key={song.uri} song={song} />;
+                  return <MusicPlayer key={song.uri} song={song} setCurrentPlayback={setCurrentPlayback}
+                  />;
                 })}
+              </Stack>
+              <Stack>
+              {currentPlayback && (
+            <iframe
+              title="Spotify"
+              src={`https://embed.spotify.com/?uri=${currentPlayback}&theme=black`}
+              height="90"
+              frameBorder="0"
+              allowtransparency="true"
+            />
+          )}
               </Stack>
             </Card>
           </Stack>
