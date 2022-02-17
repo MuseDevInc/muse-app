@@ -4,10 +4,7 @@ import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, IconButton, Paper } from "@mui/material";
 
-import MatchActionButtons from "./MatchActionButtons";
 
-import MatchSnackbar from "../feedbackAndNotifs/MatchSnackbar";
-import MuiAlert from "@mui/material/Alert";
 import MatchDialog from "./MatchDialog";
 
 export function DiscoverLayout({ userQueue, qCounter }) {
