@@ -47,12 +47,12 @@ export default function MatchActionButtons({ currentUser, userQueue }) {
     <span>
       <SpeedDial
         ariaLabel="User actions"
-        sx={{ position: "absolute", bottom: 30, right: 30 }}
+        sx={{ position: "absolute", bottom: 9 }}
         icon={<SpeedDialIcon />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
-        direction="left"
+        direction="right"
       >
         {actions.map((action) => (
           <SpeedDialAction

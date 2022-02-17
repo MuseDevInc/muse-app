@@ -8,6 +8,8 @@ import MatchActionButtons from "./MatchActionButtons";
 
 import MatchSnackbar from "../feedbackAndNotifs/MatchSnackbar";
 import MuiAlert from "@mui/material/Alert";
+import MatchDialog from "./MatchDialog";
+
 export function DiscoverLayout({ userQueue, qCounter }) {
   const [count, setCount] = useState();
   const [match, setMatch] = useState();
@@ -46,6 +48,14 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     });
   }
 
+  function createConversation (otherUserId) {
+    fetch(process.env.REACT_APP_BACKEND_SERVER + "/conversation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({otherUserId: otherUserId}),
+    })
+  }
   function checkMatch() {
     //this will be to check other user's swiperight array for currentUser's id.
     //if match, set match to true --> alert --> render FAB or change styling or open FAB
@@ -65,6 +75,8 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           console.log("error");
         }
         if (res === true) {
+          //call matchFunction
+          createConversation(userQueue[qCounter.current].owner._id)
           return setMatch(true);
         }
         if (res === false) console.log("not a match");
@@ -107,6 +119,12 @@ export function DiscoverLayout({ userQueue, qCounter }) {
           >
             {userQueue[qCounter.current].owner.username}
           </Typography>
+          <MatchDialog 
+            match={match}
+            setMatch={setMatch}
+            advanceQ={advanceQ}
+            userToMessage={userQueue[qCounter.current]}
+          />
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
               onClick={() => {
@@ -126,16 +144,12 @@ export function DiscoverLayout({ userQueue, qCounter }) {
             >
               <ThumbUp sx={{ fontSize: "2.5rem" }} />
             </IconButton>
-            <MatchActionButtons
+      {/*       <MatchActionButtons
               currentUser={qCounter.current}
               userQueue={userQueue}
-            />
+            /> */}
           </Box>
-          <MatchSnackbar
-            match={match}
-            setMatch={setMatch}
-            advanceQ={advanceQ}
-          />
+    
         </>
       )}
     </>
