@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, IconButton } from "@mui/material";
 
 
-function NextAvatar() {
+export function NextAvatar() {
   return (
     <>
       <IconButton
@@ -20,4 +20,4 @@ function NextAvatar() {
   );
 }
 
-export default NextAvatar;
+
