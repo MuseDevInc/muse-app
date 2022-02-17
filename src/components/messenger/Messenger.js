@@ -5,6 +5,7 @@ import Conversation from '../conversations/Conversation'
 // {format(message.createdAt)}
 import './messenger.css'
 import { io } from 'socket.io-client'
+import { NavBar } from '../navbar/NavBar'
 
 import Message from './Message'
 const Messenger = ({currentUser}) => {
@@ -149,13 +150,10 @@ const getMessages = async () => {
     // <div className={own ? "message own" : "message"}>
     //If no currentChat is selected, send a p tag, else show the currentConversation selected
     <div>
+    <NavBar />
      
-    <div>
-      {/* <img
-        className="messageImg"
-        src="https://m.media-amazon.com/images/I/51fyG9o+1lL._AC_SL1000_.jpg"
-        alt=""
-      /> */}
+    <div className='chatBox'>
+      <div className='chatBoxWrapper'>
       {/* When a conversation is clicked, set the current chat to be that conversation. */}
          {conversations?.map((convo) => {
        return <div onClick={() => setCurrentChat(convo)}>
@@ -163,7 +161,7 @@ const getMessages = async () => {
         </div>
          })}
     </div>
-    {/* <div>Created at this time: Vamoss</div> */}
+    </div>
       
 
 
@@ -178,8 +176,7 @@ const getMessages = async () => {
                     </div>
                   ))}
                 </div>
-                </> : <p>Open a conversation to start chatting!</p>}
-    <textarea
+                <textarea
     placeholder='Write a message'
     value={newMessage}
     onChange={(e) => setNewMessage(e.target.value)}
@@ -187,7 +184,11 @@ const getMessages = async () => {
     
     </textarea>
     <button onClick={handleSubmit}>Send</button>
+                </> : <p className='noConvoOpened'>Open a conversation to start chatting!</p>}
+    
+    
   </div>
+  //Needed to do this to push?
   
 )
 }
