@@ -10,13 +10,11 @@ const useSpotifyAuth = () => {
       .then((res) => {
         console.log(res)
         setAccessToken(res.data.accessToken);
-        //  remove code from url
         window.history.pushState({}, null, "/");
 
       })
       .catch((err) => {
         console.log(err);
-        // window.location = "/";
       });
   }, []);
   return accessToken;
