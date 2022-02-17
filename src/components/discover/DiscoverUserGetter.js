@@ -8,14 +8,11 @@ import MatchActionButtons from "./MatchActionButtons";
 import NextAvatar from "./NextAvatar";
 import { DiscoverLayout } from "./DiscoverLayout";
 import dummyData from "./dummyData/dummyData.json";
-import { UserContext } from "../../App";
 
 function DiscoverUserGetter() {
   //return from fetch, array from profile docs
   const [userQueue, setUserQueue] = useState();
   //consume context and declare variables
-  const currentUser = useContext(UserContext);
-  const currentId = currentUser.currentUserId;
 
   //ref for current index position, incremented by "swipe"
   const counterRef = useRef(0);

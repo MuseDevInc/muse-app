@@ -22,12 +22,16 @@ export const UserContext = React.createContext();
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
+  let localUser = {
+    currentUsername: localStorage.getItem('currentUsername'),
+    currentUserId: localStorage.getItem('currentUserId'),
+
+  }
   const accessToken = useSpotifyAuth();
 
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
 
   return (
-    <UserContext.Provider value={{ currentUser }}>
       <Paper
         elevation={8}
         sx={{
@@ -58,22 +62,21 @@ export default function App() {
           ></Route>
 
           <Route path="/main" element={<Main />}></Route>
-          <Route path="/userprofile" element={<UserProfile currentUser={currentUser}/>}></Route>
-          <Route path="/editprofile" element={<EditProfile currentUser={currentUser} accessToken={accessToken}
+          <Route path="/userprofile" element={<UserProfile currentUser={localUser}/>}></Route>
+          <Route path="/editprofile" element={<EditProfile currentUser={localUser} accessToken={accessToken}
 />}></Route>
           <Route
             path="/createprofile"
             element={
               <CreateProfile
                 accessToken={accessToken}
-                currentUser={currentUser}
+                currentUser={localUser}
               />
             }
           ></Route>
-          <Route path="/messenger" element={<Messenger currentUser={currentUser} />}></Route>
+          <Route path="/messenger" element={<Messenger currentUser={localUser} />}></Route>
         </Routes>
       </Paper>
-    </UserContext.Provider>
   );
 }
 
