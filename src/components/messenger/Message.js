@@ -2,8 +2,7 @@ import React from 'react'
 import './message.css'
 const Message = ({message, own}) => {
   return (
-    // <p>I return</p>
-    <div className={own ? "message own" : "message"}>
+    <div className={own ? "message own" : "message otherPerson"}>
     <div className="messageTop">
       <img
         className="messageImg"
