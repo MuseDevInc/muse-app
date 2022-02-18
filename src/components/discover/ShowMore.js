@@ -6,7 +6,7 @@ import {} from "@mui/material/colors";
 import { IconButton, Stack } from "@mui/material";
 import { Box, Card, CardHeader } from "@mui/material";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-import { Divider } from "@mui/material";
+import { Divider, Chip } from "@mui/material";
 import MusicPlayer from "../user/MusicPlayer";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { red } from "@mui/material/colors";
@@ -72,7 +72,9 @@ export default function ShowMore({
         <Divider >
           <Typography variant="h6">Top Genres</Typography>
         </Divider>
-        {userQueue[currentPosition].favGenres}
+        {userQueue[currentPosition].favGenres.map((genre) => {
+                return <>{<Chip key={genre} label={genre} />}</>;
+              })}
         <Divider>
           <Typography variant="h6">Top Tracks</Typography>
         </Divider>
