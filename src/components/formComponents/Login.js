@@ -6,11 +6,14 @@ import {
   Typography,
   Paper,
   Button,
+  Link
 } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { color } from "@mui/system";
+import Footer from "../footer/Footer";
+import '../../pictures/wave.png'
 export function Login({ currentUser, setCurrentUser }) {
   
   let navigate = useNavigate()
@@ -51,6 +54,7 @@ export function Login({ currentUser, setCurrentUser }) {
   };
 
   return (
+    <>
     <Paper
       elevation={8}
       sx={{
@@ -61,6 +65,16 @@ export function Login({ currentUser, setCurrentUser }) {
         flexDirection: "column",
       }}
     >
+      <div style={{display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center', marginTop:"10%"}}>
+      <img src="../../../public/alphabet.png" alt="logo"/>
+      </div>
+      <div style={{display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',}}>
       <Typography
         sx={{
           textAlign: "center",
@@ -72,7 +86,20 @@ export function Login({ currentUser, setCurrentUser }) {
       >
         MUSE
       </Typography>
-      <Card sx={{ alignSelf: "center" }}>
+      </div>
+      <div>
+        <h3 style={{display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center', marginTop:'10%', color:'whitesmoke'}}>Connect with people who share the same taste in music as you do</h3>
+      </div>
+      <div style={{
+        position: 'absolute', 
+        left: '50%', 
+        top: '70%',
+        transform: 'translate(-50%, -50%)'
+    }}>
+      <Card sx={{ alignSelf: "center",  }}>
         <FormGroup
           sx={{
             Justify: "Center",
@@ -80,7 +107,7 @@ export function Login({ currentUser, setCurrentUser }) {
             padding: "1rem",
           }}
         >
-          <Typography variant="h5">Sign in to tune into your muse</Typography>
+          <Typography variant="h5">Sign in</Typography>
           <TextField
             id="outlined-basic"
             label="Username"
@@ -99,10 +126,16 @@ export function Login({ currentUser, setCurrentUser }) {
           />
           <Button onClick={handleSubmit} variant="contained">
             {" "}
-            Sign in{" "}
+            Log in{" "}
           </Button>
+          <p >Don't have an account? <Link href="/register">Click here to register</Link></p>
+
         </FormGroup>
       </Card>
+      </div>
+      
     </Paper>
+    <Footer img={'../../pictures/wave.png'}/>
+    </>
   );
 }
