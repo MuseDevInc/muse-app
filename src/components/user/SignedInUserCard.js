@@ -35,18 +35,10 @@ const SignedInUserCard = ({ username, displayProfile, handleNavToEdit }) => {
 
   return (
     <>
-      <Paper
-        elevation={8}
-        sx={{
-          minHeight: "100vh",
-          maxHeight: "100vh",
-          background: `${backGrad}`,
-        }}
-      >
+  
         <Stack
           sx={{
             alignItems: "center",
-            overflow: "scroll",
             paddingBottom: "1rem",
           }}
         >
@@ -55,7 +47,7 @@ const SignedInUserCard = ({ username, displayProfile, handleNavToEdit }) => {
               maxWidth: 500,
               padding: "2rem",
               margin: "2rem",
-              position: "absolute",
+              position: "relative"
             }}
           >
             <CardHeader
@@ -141,7 +133,7 @@ const SignedInUserCard = ({ username, displayProfile, handleNavToEdit }) => {
             </Stack>
           </Card>
         </Stack>
-      </Paper>
+     
     </>
   );
 };
