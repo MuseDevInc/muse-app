@@ -44,7 +44,14 @@ const spotifyApi = new SpotifyWebApi({
 export default function CreateProfile({ accessToken, currentUser }) {
   spotifyApi.setAccessToken(accessToken);
   const [expanded, setExpanded] = useState(false);
-
+  const [searchTopOne, setSearchTopOne] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [topSongs, setTopSongs] = useState([]);
+  const [aboutMe, setAboutMe] = useState();
+  const [favGenres, setFavGenres] = useState([]);
+  const [favAlbum, setFavAlbum] = useState();
+  const genresOptions = ["Pop", "Rock", "Jazz", "Country", "Lo-fi Hip-hop", "Sludge", "Drone", "Post-Punk", "Grime", "Grindcore", "Emo", "R&B", "Soul", "Folk", "Blues", "Classical", "Hardcore", "Thrash", "Oldies", "IDM", "EDM", "House", "Techno", "Detroit Techno", "Gabber"];
+  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -71,14 +78,8 @@ export default function CreateProfile({ accessToken, currentUser }) {
 
   };
 
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-  const [searchTopOne, setSearchTopOne] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [topSongs, setTopSongs] = useState([]);
-  const [aboutMe, setAboutMe] = useState();
-  const [favGenres, setFavGenres] = useState([]);
-  const [favAlbum, setFavAlbum] = useState();
-  const genresOptions = ["Pop", "Rock", "Jazz", "Country"];
+
+
 
   //  select a song
   const chooseTrack = (track) => {
@@ -191,7 +192,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
               />
               <Autocomplete
                 multiple
-                id="favGenres"
+                id="faveGenres"
                 options={genresOptions}
                 getOptionLabel={(option) => option}
                 filterSelectedOptions
@@ -204,8 +205,9 @@ export default function CreateProfile({ accessToken, currentUser }) {
                   />
                 )}
                 margin="dense"
-                onChange={(e) =>
-                  setFavGenres(...favGenres, genresOptions[e.target.value])
+                onChange={(e, value) => {
+                  setFavGenres(value)
+              }
                 }
               />
               <TextField
@@ -219,9 +221,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
               />
               <div>
                 {topSongs?.map((track) => {
-                  const handleClick = () => {
-
-                  }
                   return (
                     <SongCardDisplay key={track.uri} track={track} handleClick={() => setTopSongs(topSongs.filter((topSong) =>topSong.uri !== track.uri))}/>
                   );
