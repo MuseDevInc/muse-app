@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { color } from "@mui/system";
 import Footer from "../footer/Footer";
-import '../../pictures/wave.png'
+import logo from '../alphabet.png'
 export function Login({ currentUser, setCurrentUser }) {
   
   let navigate = useNavigate()
@@ -69,9 +69,9 @@ export function Login({ currentUser, setCurrentUser }) {
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center', marginTop:"10%"}}>
-      <img src="../../../public/alphabet.png" alt="logo"/>
+      <img src={logo} style={{maxHeight:'100px'}} alt="logo"/> <span style={{fontSize:'5rem', color:"white"}}>use</span>
       </div>
-      <div style={{display: 'flex',
+      {/* <div style={{display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',}}>
@@ -84,22 +84,22 @@ export function Login({ currentUser, setCurrentUser }) {
         }}
         variant="h1"
       >
-        MUSE
+        Muse
       </Typography>
-      </div>
+      </div> */}
       <div>
         <h3 style={{display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  textAlign: 'center', marginTop:'10%', color:'whitesmoke'}}>Connect with people who share the same taste in music as you do</h3>
+  textAlign: 'center', marginTop:'10%',color:'whitesmoke'}}>Connect with people who share the same taste in music as you do</h3>
       </div>
       <div style={{
-        position: 'absolute', 
+        position: "absolute",
         left: '50%', 
-        top: '70%',
+        top: '50%',
         transform: 'translate(-50%, -50%)'
     }}>
-      <Card sx={{ alignSelf: "center",  }}>
+      <Card sx={{ alignSelf: "center", maxWidth: '40'  }}>
         <FormGroup
           sx={{
             Justify: "Center",
