@@ -72,7 +72,7 @@ export default function ShowMore({
         <Divider >
           <Typography variant="h6">Top Genres</Typography>
         </Divider>
-        {userQueue[currentPosition].favGenres.map((genre) => {
+        {userQueue[currentPosition].favGenres?.map((genre) => {
                 return <>{<Chip key={genre} label={genre} />}</>;
               })}
         <Divider>
