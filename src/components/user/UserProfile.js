@@ -71,7 +71,7 @@ const UserProfile = ({ currentUser }) => {
   }, []);
 
 
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+
 
   return (
     <>

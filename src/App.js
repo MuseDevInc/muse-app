@@ -32,9 +32,11 @@ export default function App() {
     <Paper
       elevation={8}
       sx={{
-        minHeight: "92vh",
-        maxHeight: "100vh",
+        minHeight: "100vh",
+        maxHeight: "200vh",
         background: `${backGrad}`,
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover"
       }}
     >
       <Routes>

@@ -38,7 +38,7 @@ export function NavBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 1}} >
       {/* <FormGroup>
         <FormControlLabel
           control={
@@ -53,7 +53,7 @@ export function NavBar() {
       </FormGroup> */}
       {/*we can do more positioning here, active sx override below right now, change flex property 
       We should establish breakpoints either in theme or inline*/}
-      <AppBar position="static" sx={{ alignItems: "center"}}>
+      <AppBar position="sticky" sx={{ alignItems: "center"}}>
         <Toolbar variant="regular" >
           
          {/* auth condition !! */ }
