@@ -32,7 +32,7 @@ const Conversation = ({ conversation, currentUser }) => {
       }
     };
     getUserProfile();
-  }, []);
+  }, [conversation, currentUser]);
   return (
     <div className="conversation">
       <ListItem>

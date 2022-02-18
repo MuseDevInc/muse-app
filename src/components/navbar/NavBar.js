@@ -16,12 +16,14 @@ import Menu from '@mui/material/Menu';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import ChatIcon from '@mui/icons-material/Chat';
 import { OpenChat } from './OpenChat';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 //either above component or within, should only matter if there were multiple instances of the function component in the app. const dropDownPageArray = [ <ProfilePage/> , <LogOutButton/> ] ???
 // Pass UserID as props, store ID in a Ref (useRef hook)--get the page what it needs.
 
 export function NavBar() {
+  let navigate = useNavigate()
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const iconSizeBig = `sx={{ fontSize: "3.5rem" }}`
@@ -36,6 +38,16 @@ export function NavBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut = async () => {
+    let destroySession = await axios.delete(process.env.REACT_APP_BACKEND_SERVER +
+      "/session/logout")
+      console.log(destroySession.data);
+      localStorage.removeItem('currentUsername')
+      localStorage.removeItem('currentUserId')
+      navigate('/')
+    
+  }
 
   return (
     <Box sx={{ flexGrow: 1}} >
@@ -110,7 +122,7 @@ export function NavBar() {
                 <Link to="/userprofile">
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 </Link>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>
             </div>
           )}

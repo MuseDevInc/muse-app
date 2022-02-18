@@ -17,12 +17,7 @@ export function Login({ currentUser, setCurrentUser }) {
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
-  useEffect(() => {
-    if (currentUser){
-      navigate('/main')  
-    }
-  },[currentUser, navigate]);
+
 
   
   const handleSubmit = (e) => {
@@ -46,6 +41,7 @@ export function Login({ currentUser, setCurrentUser }) {
             currentUsername: res.currentUsername,
             currentUserId: res.currentUserId,
           });
+          navigate('/main')  
         }
       });
   };
