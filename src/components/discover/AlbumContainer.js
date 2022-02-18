@@ -19,6 +19,7 @@ export const AlbumContainer = ({ currentPosition, userQueue }) => {
       />
       <IconButton onClick={handleShowMore}>
         <MoreVertIcon />
+        More about {userQueue[currentPosition].owner.username}
       </IconButton>
       <ShowMore
         currentPosition={currentPosition}

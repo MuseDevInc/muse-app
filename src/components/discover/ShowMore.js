@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import Typography from "@mui/material/Typography";
 import {} from "@mui/material/colors";
 import { IconButton, Stack } from "@mui/material";
-import { Card, CardHeader } from "@mui/material";
+import { Box, Card, CardHeader } from "@mui/material";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { Divider } from "@mui/material";
 import MusicPlayer from "../user/MusicPlayer";
@@ -26,7 +26,11 @@ export default function ShowMore({
   };
 
   return (
-    <Dialog open={showMore}>
+    <Dialog open={showMore}
+      sx={
+        {padding: "2rem",
+        margin: "2rem",}}
+    >
       <IconButton
         aria-label="User actions"
         sx={{ top: 0, right: 0 }}
@@ -35,9 +39,10 @@ export default function ShowMore({
         <CloseIcon />
       </IconButton>
 
-      <Card
+      <Box
         sx={{
           position: "relative",
+          margin: "2rem"
         }}
       >
         <CardHeader
@@ -45,7 +50,7 @@ export default function ShowMore({
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
               <Typography variant="h6">
                 {" "}
-                {userQueue[currentPosition].owner.username}
+                {userQueue[currentPosition].owner.username[0]}
               </Typography>
             </Avatar>
           }
@@ -57,21 +62,23 @@ export default function ShowMore({
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>About Me</Typography>
+            <Typography>About {userQueue[currentPosition].owner.username}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>{userQueue[currentPosition].aboutMe}</Typography>
           </AccordionDetails>
         </Accordion>
 
-        <Divider sx={{ padding: "1rem", textAlign: "center" }}>
-          <Typography variant="body">Top Genres</Typography>
+        <Divider >
+          <Typography variant="h6">Top Genres</Typography>
         </Divider>
         {userQueue[currentPosition].favGenres}
         <Divider>
           <Typography variant="h6">Top Tracks</Typography>
         </Divider>
-
+        <Box sx={{textAlign:"center"}}>
+          <Typography variant="body"> Click on the covers to listen!</Typography>
+        </Box>
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" flexItem />}
@@ -99,7 +106,7 @@ export default function ShowMore({
             />
           )}
         </Stack>
-      </Card>
+      </Box>
     </Dialog>
   );
 }
