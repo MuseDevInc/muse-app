@@ -1,9 +1,7 @@
 import * as React from "react";
+import { useRef } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,7 +14,7 @@ import Message from "./Message";
 import { Avatar } from "@mui/material";
 import { Box } from "@mui/system";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
-
+import { Paper } from "@mui/material";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -36,65 +34,92 @@ export default function Thread({
     setOpenThread(false);
   };
 
-  return (
-    <div>
-      <Dialog
-        fullScreen
-        open={openThread}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: "sticky" }}>
-          <Toolbar>
-            <Avatar>
-              <img
-                height="175%"
-                src={currentFriend?.favSongs[0].albumUrl}
-                alt={currentFriend?.favSongs[0].title}
-              />
-            </Avatar>
+  React.useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {currentFriend?.owner.username}
-            </Typography>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
+  return (
+    <Dialog
+      key={currentUser.currentUserId}
+      fullScreen
+      open={openThread}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
+      <AppBar sx={{ position: "sticky", height: "8vh" }}>
+        <Toolbar>
+          <Avatar>
+            <img
+              height="175%"
+              src={currentFriend ? currentFriend.favSongs[0].albumUrl : null}
+              alt={currentFriend ? currentFriend.favSongs[0].title : null}
+            />
+          </Avatar>
+
+          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+            {currentFriend?.owner.username}
+          </Typography>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <Box sx={{ height: "80vh", overflow: "scroll" }}>
         {messages?.map((m) => (
-          <div ref={scrollRef}>
+          <div key={`${m._id}1`} ref={scrollRef}>
             <Message
               message={m}
               own={m.sender === currentUser.currentUserId}
               currentFriend={currentFriend}
+              key={m._id}
             />
           </div>
         ))}
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems:"stretch", padding: "1rem" }}>
-          <TextField
-            // renderInput
-            fullWidth
-            placeholder="Write a message"
-            value={newMessage}
-            onChange={(e) => {
-              console.log(e.target.value);
-              setNewMessage(e.target.value);
-            }}
-            position="sticky"
-          ></TextField>
+      </Box>
+     
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "stretch",
+          padding: "1rem",
+          position: "fixed",
+          bottom: "0",
+          height: "12vh",
+          width: "100vw",
+        }}
+      >
+        <TextField
+          // renderInput
+          fullWidth
+          color="primary"
+          variant="outlined"
+          label="Message"
+          autoComplete="off"
+          value={newMessage}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setNewMessage(e.target.value);
+          }}
+        ></TextField>
 
-          <Button onClick={handleSubmit} variant="contained" sx={{marginLeft: "3%"}} >
-            <ArrowCircleUpOutlinedIcon size='large'/>
-            Send
-          </Button>
-        </Box>
-      </Dialog>
-    </div>
+        <Button
+          onClick={handleSubmit}
+          variant="contained"
+          sx={{ marginLeft: "1rem", height: "3.5rem", width: "6.8rem" }}
+        >
+          <ArrowCircleUpOutlinedIcon size="large" />
+          Send
+        </Button>
+      
+      </Box>
+     
+    </Dialog>
   );
 }
