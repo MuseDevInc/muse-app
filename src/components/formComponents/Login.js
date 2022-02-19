@@ -71,7 +71,7 @@ export function Login({ currentUser, setCurrentUser }) {
   return (
     <Box>
       {largeView ? (
-        <LandingXL />
+        <LandingXL currentUser={currentUser} setCurrentUser={setCurrentUser} />
       ) : (
         <Grid
           container
