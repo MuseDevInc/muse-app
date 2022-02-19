@@ -6,8 +6,9 @@ const Message = ({message, own, currentFriend}) => {
     <div className="messageTop">
       <img
         className="messageImg"
-        src={!own && currentFriend.favSongs[0].albumUrl}
+        src={!own && currentFriend? currentFriend.favSongs[0].albumUrl : null}
         alt={own ? "me" : currentFriend.favSongs[0].title}
+        key={`${message._id}${message.createdAt}`}
       />
       <p className="messageText">{message.text}</p>
     </div>
