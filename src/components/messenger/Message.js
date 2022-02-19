@@ -1,4 +1,5 @@
 import React from 'react'
+import TimeAgo from 'react-timeago'
 import './Message.css'
 const Message = ({message, own, currentFriend}) => {
   return (
@@ -12,7 +13,7 @@ const Message = ({message, own, currentFriend}) => {
       />
       <p className="messageText">{message.text}</p>
     </div>
-    <div className="messageBottom">{message.createdAt}</div>
+    <TimeAgo date={message.createdAt} live={true} maxPeriod="30s"/>
   </div>
 )
 }

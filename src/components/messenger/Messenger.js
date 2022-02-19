@@ -6,8 +6,9 @@ import Conversation from "../conversations/Conversation";
 import "./Messenger.css";
 import { io } from "socket.io-client";
 import { NavBar } from "../navbar/NavBar";
-import { Typography, Box , Paper} from "@mui/material";
+import { Typography, Box, Stack, Paper, Card } from "@mui/material";
 import Thread from "./Thread";
+import { GifBox } from "@mui/icons-material";
 
 const Messenger = ({ currentUser }) => {
   const [conversations, setConversations] = useState([]);
@@ -163,34 +164,51 @@ const Messenger = ({ currentUser }) => {
   };
 
   return (
-    // <div className={own ? "message own" : "message"}>
-    //If no currentChat is selected, send a p tag, else show the currentConversation selected
-    <div>
-      {/* <MessengingContainer></MessengingContainer> */}
+    <>
       <NavBar />
-      <div className="chatBox">
-        <Box className="titleContainer">
-          <Typography variant="h3">MuseBox</Typography>
-        </Box>
-        <div className="chatBoxWrapper">
-          {/* When a conversation is clicked, set the current chat to be that conversation. */}
-          {/* This is the list component of ui */}
-          {conversations?.map((convo) => {
-            return (
-              // This is the current chat that it tied to the avatar.
-              <div
-              key={`${convo._id}div`}
-                onClick={() => {
-                  setOpenThread(true);
-                  setCurrentChat(convo);
-                }}
-              >
-                <Conversation key={`${convo._id}conversation`} conversation={convo} currentUser={currentUser} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <Box
+        sx={{
+          paddingBottom: "1rem",
+          width: "100vw",
+          justifyContent: "center"
+        }}
+      >
+          <Box className="titleContainer">
+            <Typography variant="h3">MuseBox</Typography>
+          </Box>
+          <Box
+            className="chatBoxWrapper"
+            sx={{
+              padding: "1rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "stretch",
+              maxWidth: 500,
+              margin: "0 auto"
+            }}
+          >
+            {/* When a conversation is clicked, set the current chat to be that conversation. */}
+            {/* This is the list component of ui */}
+            {conversations?.map((convo) => {
+              return (
+                // This is the current chat that it tied to the avatar.
+                <Box
+                  key={`${convo._id}div`}
+                  onClick={() => {
+                    setOpenThread(true);
+                    setCurrentChat(convo);
+                  }}
+                >
+                  <Conversation
+                    key={`${convo._id}conversation`}
+                    conversation={convo}
+                    currentUser={currentUser}
+                  />
+                </Box>
+              );
+            })}
+          </Box>
+      </Box>
 
       {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
       {currentChat ? (
@@ -205,9 +223,16 @@ const Messenger = ({ currentUser }) => {
           scrollRef={scrollRef}
           currentUser={currentUser}
           currentFriend={currentFriend}
+
+          sx={{maxWidth: 500}}
         />
       ) : (
-        <Box maxWidth="100vw" minHeight={"80vh"} flexBasis="auto" paddingLeft={"2%"} paddingRight={"2%"}>
+        <Box
+          minHeight="80vh"
+          flexBasis="auto"
+          paddingLeft="2%"
+          paddingRight="2%"
+        >
           <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
             <Typography
               variant="h6"
@@ -218,7 +243,7 @@ const Messenger = ({ currentUser }) => {
           </Paper>
         </Box>
       )}
-    </div>
+    </>
   );
 };
 
