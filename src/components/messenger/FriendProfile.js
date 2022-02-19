@@ -52,7 +52,7 @@ export const FriendProfile = ({showFriendProfile, setShowFriendProfile, currentF
           <Typography variant="h6">Top Genres</Typography>
         </Divider >
         {currentFriend.favGenres?.map((genre) => {
-                return <>{<Chip key={genre} label={genre} />}</>;
+                return <>{<Chip key={`${genre}key`} label={genre} />}</>;
               })}
         <Divider sx={{padding: "5% 0"}}>
           <Typography variant="h6">Top Tracks</Typography>
@@ -69,7 +69,7 @@ export const FriendProfile = ({showFriendProfile, setShowFriendProfile, currentF
           {currentFriend.favSongs.map((song) => {
             return (
               <MusicPlayer
-                key={song.uri}
+                key={`${song.uri}link`}
                 song={song}
                 setCurrentPlayback={setCurrentPlayback}
               />
