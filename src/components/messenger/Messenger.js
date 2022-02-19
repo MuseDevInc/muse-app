@@ -21,7 +21,7 @@ const Messenger = ({ currentUser }) => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [openThread, setOpenThread] = useState(null);
   const [currentFriend, setCurrentFriend] = useState();
-  const [showFriendProfile, setShowFriendProfile] = useState();
+  const [showFriendProfile, setShowFriendProfile] = useState(false);
   const scrollRef = useRef();
   // let userId = '6206e85dad4b62bf69b66099'
 
