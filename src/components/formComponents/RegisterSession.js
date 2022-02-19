@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import {
-  Box,
+  Card,
   FormGroup,
   TextField,
   Typography,
   Paper,
   Button,
+  Link,
+  FormControl,
+  Stack,
 } from "@mui/material";
-import { useState} from "react";
-import { useNavigate } from 'react-router-dom'
+import { useTheme } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, color } from "@mui/system";
+import Footer from "../footer/Footer";
+import logo from "../alphabet.png";
+import { Grid } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { LandingXL } from "./LandingXL";
 
 export function RegisterSession({currentUser, setCurrentUser}) {
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
@@ -17,6 +27,7 @@ export function RegisterSession({currentUser, setCurrentUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
+  const [largeView, setLargeView] = useState(null)
 
   //  navigate the createProfile once currentUser is defined
   useEffect(() => {
@@ -47,58 +58,97 @@ export function RegisterSession({currentUser, setCurrentUser}) {
   };
 
   return (
-    <Paper
-      elevation={8}
-      sx={{
-        minHeight: "100vh",
-        maxHeight: "100vh",
-        background: `${backGrad}`,
-      }}
-    >
-      <Typography
-        sx={{
-          textAlign: "center",
-          padding: "2rem",
-          margin: "1rem",
-          color: "white",
-        }}
-        variant="h1"
-      >
-        MUSE
-      </Typography>
-      <Box>
-        <FormGroup
-          sx={{
-            Justify: "Center",
-            alignItems: "center",
-            padding: "1rem",
-            marginTop: "5rem",
-          }}
+    <Box>
+      {largeView ? (
+        <LandingXL currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      ) : (
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          columns={3}
+          rowGap={{ xs: 3 }}
+          alignContent="center"
+          alignItems="center"
+          textAlign="center"
+          justifyContent="space-between"
         >
-          <TextField
-            id="outlined-basic"
-            label="Username"
-            variant="outlined"
-            margin="dense"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            margin="dense"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-           <TextField
-            id="outlined-basic"
-            label="VerifyPassword"
-            variant="outlined"
-            margin="dense"
-            onChange={(e) => setVerifyPassword(e.target.value)}
-          />
-          <Button onClick={handleSubmit}> Register </Button>
-        </FormGroup>
-      </Box>
-    </Paper>
+          <Grid item sx={{ marginTop: "2.5rem" }}>
+            <img src={logo} style={{ maxHeight: "6.25rem" }} alt="logo" />
+            <span style={{ fontSize: "5rem", color: "white" }}>use</span>
+            <Typography variant="h5" sx={{ color: "whitesmoke" }}>
+              Connect with people who share the same taste in music as you.
+            </Typography>
+          </Grid>
+
+          <Grid item sx={{zIndex: 'tooltip'}}>
+            <Paper elevation={4} sx={{ flexShrink: 1}}>
+              <Box sx={{zIndex: 'tooltip'}}>
+              <FormGroup>
+                <Stack
+                  spacing={1}
+                  sx={{
+                    alignItems: "center",
+                    alignContent: "center",
+                    justifyContent: "space-around",
+                    padding: ".8rem",
+                  }}
+                >
+                  <Typography variant="h5">Sign up</Typography>
+                  <FormControl>
+                    <TextField
+                      id="username"
+                      label="Username"
+                      variant="outlined"
+                      margin="dense"
+                      sx={{ minWidth: "16rem", maxWidth: "90%" }}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <TextField
+                      id="password"
+                      label="Password"
+                      variant="outlined"
+                      margin="dense"
+                      type="password"
+                      sx={{ minWidth: "16rem", maxWidth: "90%" }}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <TextField
+                      id="password"
+                      label="Verify Password"
+                      variant="outlined"
+                      margin="dense"
+                      type="password"
+                      sx={{ minWidth: "16rem", maxWidth: "90%" }}
+                      onChange={(e) => setVerifyPassword(e.target.value)}
+                    />
+                    
+                  </FormControl>
+                  <Button
+                    onClick={handleSubmit}
+                    variant="contained"
+                    sx={{ maxWidth: "50%",
+        
+                  borderRadius: ".3rem" }}
+                  >
+                    {" "}
+                    Register{" "}
+                  </Button>
+                  <p>
+                    Have an account already?{" "}
+                    <Link href="/login">Click here to login</Link>
+                  </p>
+                </Stack>
+              </FormGroup>
+              </Box>
+            </Paper>
+          </Grid>
+
+          <Footer img={"../../pictures/wave.png"} />
+        </Grid>
+      )}
+    </Box>
   );
 }
