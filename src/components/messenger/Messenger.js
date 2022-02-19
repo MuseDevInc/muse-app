@@ -18,7 +18,7 @@ const Messenger = ({ currentUser }) => {
   const socket = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [openThread, setOpenThread] = useState(null);
-  const [currentFriend, setCurrentFriend] = useState()
+  const [currentFriend, setCurrentFriend] = useState();
   const scrollRef = useRef();
   // let userId = '6206e85dad4b62bf69b66099'
 
@@ -50,16 +50,22 @@ const Messenger = ({ currentUser }) => {
   };
 
   const getFriendProfile = async () => {
-    let friendId = currentChat?.members.find((member) => member !== currentUser.currentUserId)
+    let friendId = currentChat?.members.find(
+      (member) => member !== currentUser.currentUserId
+    );
     console.log(friendId);
-    try {
-      const res = await axios.get(
-        process.env.REACT_APP_BACKEND_SERVER + "/muse/getUsers/" + friendId
-      );
-      console.log(res.data);
-      setCurrentFriend(res.data);
-    } catch (err) {
-      console.log(err);
+    if (friendId) {
+      try {
+        const res = await axios.get(
+          process.env.REACT_APP_BACKEND_SERVER + "/muse/getUsers/" + friendId
+        );
+        console.log(res.data);
+        setCurrentFriend(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("there aint no stinking friend id");
     }
   };
 
@@ -79,21 +85,16 @@ const Messenger = ({ currentUser }) => {
   //Whenever currentChat changes, get the messages from the new conversation clicked and set messages to be those messages
   useEffect(() => {
     console.log(currentChat);
-    getFriendProfile()
+    getFriendProfile();
     getMessages();
   }, [currentChat]);
-
-  useEffect(() => {
-    console.log(currentFriend)
-  })
-
 
   //SOCKET STUFF
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
 
-    //Syntax looks a bit different here because we're hitting database, which taktes sender and text instead of senderId and text
+    //Syntax looks a bit different here because we're hitting database, which takes sender and text instead of senderId and text
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -180,13 +181,13 @@ const Messenger = ({ currentUser }) => {
             return (
               // This is the current chat that it tied to the avatar.
               <div
+              key={`${convo._id}div`}
                 onClick={() => {
                   setOpenThread(true);
                   setCurrentChat(convo);
-
                 }}
               >
-                <Conversation conversation={convo} currentUser={currentUser} />
+                <Conversation key={`${convo._id}conversation`} conversation={convo} currentUser={currentUser} />
               </div>
             );
           })}
@@ -196,7 +197,18 @@ const Messenger = ({ currentUser }) => {
       {/* This is the thread that is displaying between two users in the window. */}
       {/* When someone writes a message, run handleSubmit to submit that message */}
       {currentChat ? (
-        <Thread openThread={openThread} setOpenThread={setOpenThread} newMessage={newMessage} setNewMessage={setNewMessage} handleSubmit={handleSubmit} messages={messages} scrollRef={scrollRef} currentUser={currentUser} currentFriend={currentFriend}/>
+        <Thread
+          key={`${currentChat._id}+${currentUser.currentUserId}`}
+          openThread={openThread}
+          setOpenThread={setOpenThread}
+          newMessage={newMessage}
+          setNewMessage={setNewMessage}
+          handleSubmit={handleSubmit}
+          messages={messages}
+          scrollRef={scrollRef}
+          currentUser={currentUser}
+          currentFriend={currentFriend}
+        />
       ) : (
         <p className="noConvoOpened">Open a conversation to start chatting!</p>
       )}

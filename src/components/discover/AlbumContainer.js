@@ -15,10 +15,11 @@ export const AlbumContainer = ({ currentPosition, userQueue }) => {
       <CardMedia
         component="img"
         alt="favorite album"
-        image={userQueue[currentPosition].favSongs[0].albumUrl}
+        image={userQueue[currentPosition].favSongs[0]?.albumUrl}
       />
       <IconButton onClick={handleShowMore}>
         <MoreVertIcon />
+        More about {userQueue[currentPosition].owner.username}
       </IconButton>
       <ShowMore
         currentPosition={currentPosition}
