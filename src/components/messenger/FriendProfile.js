@@ -25,7 +25,9 @@ export const FriendProfile = ({showFriendProfile, setShowFriendProfile, currentF
         {padding: "2rem",
         margin: "0 auto",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        alignItems: "stretch",
+        justifyContent: "stretch"
     }}
     >
       <IconButton
@@ -39,29 +41,20 @@ export const FriendProfile = ({showFriendProfile, setShowFriendProfile, currentF
       <Box
         sx={{
           position: "relative",
-          margin: "2rem"
+          margin: "1rem"
         }}
       >
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              <Typography variant="h6">
-                {currentFriend.owner.username[0]}
-              </Typography>
-            </Avatar>
-          }
-          title={currentFriend.owner.username}
-        />
-            <Typography>About {currentFriend.owner.username}:</Typography>
-            <Typography>{currentFriend.aboutMe}</Typography>
-
-        <Divider >
-          <Typography variant="h6">Top Genres</Typography>
+        <Divider sx={{padding: "5% 0"}} >
+          <Typography variant="h6">About {currentFriend.owner.username}</Typography>
         </Divider>
+            <Typography>{currentFriend.aboutMe}</Typography>
+        <Divider sx={{padding: "5% 0"}}>
+          <Typography variant="h6">Top Genres</Typography>
+        </Divider >
         {currentFriend.favGenres?.map((genre) => {
                 return <>{<Chip key={genre} label={genre} />}</>;
               })}
-        <Divider>
+        <Divider sx={{padding: "5% 0"}}>
           <Typography variant="h6">Top Tracks</Typography>
         </Divider>
         <Box sx={{textAlign:"center"}}>
