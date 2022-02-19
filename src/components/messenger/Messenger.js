@@ -172,26 +172,27 @@ const Messenger = ({ currentUser }) => {
         sx={{
           paddingBottom: "1rem",
           width: "100vw",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
-          <Box className="titleContainer">
-            <Typography variant="h3">MuseBox</Typography>
-          </Box>
-          <Box
-            className="chatBoxWrapper"
-            sx={{
-              padding: "1rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "stretch",
-              maxWidth: 500,
-              margin: "0 auto"
-            }}
-          >
-            {/* When a conversation is clicked, set the current chat to be that conversation. */}
-            {/* This is the list component of ui */}
-            {conversations?.map((convo) => {
+        <Box className="titleContainer">
+          <Typography variant="h3">MuseBox</Typography>
+        </Box>
+        <Box
+          className="chatBoxWrapper"
+          sx={{
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            maxWidth: 500,
+            margin: "0 auto",
+          }}
+        >
+          {/* When a conversation is clicked, set the current chat to be that conversation. */}
+          {/* This is the inbox*/}
+          {conversations.length > 0 ? (
+            conversations?.map((convo) => {
               return (
                 // This is the current chat that it tied to the avatar.
                 <Box
@@ -208,45 +209,56 @@ const Messenger = ({ currentUser }) => {
                   />
                 </Box>
               );
-            })}
-          </Box>
+            })
+          ) : (
+            <Box
+              minHeight="80vh"
+              flexBasis="auto"
+              paddingLeft="2%"
+              paddingRight="2%"
+            >
+              <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    textAlign: "center",
+                    marginTop: "30vh",
+                    padding: "1rem",
+                  }}
+                >
+                  Explore and discover to meet your Muse!
+                </Typography>
+              </Paper>
+            </Box>
+          )}
+        </Box>
       </Box>
 
       {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
-      {currentChat ? (
+      {currentChat && (
         <>
-        <Thread
-          key={`${currentChat._id}+${currentUser.currentUserId}`}
-          openThread={openThread}
-          setOpenThread={setOpenThread}
-          newMessage={newMessage}
-          setNewMessage={setNewMessage}
-          handleSubmit={handleSubmit}
-          messages={messages}
-          scrollRef={scrollRef}
-          currentUser={currentUser}
-          currentFriend={currentFriend}
-          setShowFriendProfile={setShowFriendProfile}
-          sx={{maxWidth: 500}}
-        />
-        <FriendProfile showFriendProfile={showFriendProfile} setShowFriendProfile={setShowFriendProfile} currentFriend={currentFriend}/>
+          <Thread
+            key={`${currentChat._id}+${currentUser.currentUserId}`}
+            openThread={openThread}
+            setOpenThread={setOpenThread}
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            handleSubmit={handleSubmit}
+            messages={messages}
+            scrollRef={scrollRef}
+            currentUser={currentUser}
+            currentFriend={currentFriend}
+            setShowFriendProfile={setShowFriendProfile}
+            sx={{ maxWidth: 500 }}
+          />
+          {currentFriend && (
+            <FriendProfile
+              showFriendProfile={showFriendProfile}
+              setShowFriendProfile={setShowFriendProfile}
+              currentFriend={currentFriend}
+            />
+          )}
         </>
-      ) : (
-        <Box
-          minHeight="80vh"
-          flexBasis="auto"
-          paddingLeft="2%"
-          paddingRight="2%"
-        >
-          <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
-            <Typography
-              variant="h6"
-              sx={{ textAlign: "center", marginTop: "30vh", padding: "1rem" }}
-            >
-              Explore and discover to meet your Muse!
-            </Typography>
-          </Paper>
-        </Box>
       )}
     </>
   );

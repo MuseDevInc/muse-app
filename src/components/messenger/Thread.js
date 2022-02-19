@@ -45,7 +45,7 @@ export default function Thread({
       onClose={handleClose}
       TransitionComponent={Transition}
     >
-      <AppBar sx={{ position: "sticky", height: "7vh", background:"#00377C"}}>
+      <AppBar sx={{ position: "sticky", height: "7vh", background:"#00377C", display:"flex", justifyContent: "center"}}>
         <Toolbar>
           <Avatar>
             <img
