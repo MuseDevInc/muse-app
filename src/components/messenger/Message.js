@@ -1,18 +1,19 @@
 import React from 'react'
-import './message.css'
+import TimeAgo from 'react-timeago'
+import './Message.css'
 const Message = ({message, own, currentFriend}) => {
   return (
     <div className={own ? "message own" : "message otherPerson"}>
     <div className="messageTop">
-      <img
+      { !own && currentFriend && <img
         className="messageImg"
-        src={!own && currentFriend? currentFriend.favSongs[0].albumUrl : null}
-        alt={own ? "me" : currentFriend.favSongs[0].title}
+        src={currentFriend ? currentFriend.favSongs[0].albumUrl : null}
+        alt={currentFriend?.favSongs[0].title}
         key={`${message._id}${message.createdAt}`}
-      />
+      />}
       <p className="messageText">{message.text}</p>
     </div>
-    <div className="messageBottom">{message.createdAt}</div>
+    <TimeAgo date={message.createdAt} live={true} maxPeriod="30s"/>
   </div>
 )
 }

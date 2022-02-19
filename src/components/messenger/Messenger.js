@@ -3,11 +3,13 @@ import React, { useEffect, useState, useRef } from "react";
 import Conversation from "../conversations/Conversation";
 // import {format} from 'timeago.js'
 // {format(message.createdAt)}
-import "./messenger.css";
+import "./Messenger.css";
 import { io } from "socket.io-client";
 import { NavBar } from "../navbar/NavBar";
-import { TextField, Typography, Box } from "@mui/material";
+import { Typography, Box, Stack, Paper, Card } from "@mui/material";
 import Thread from "./Thread";
+import { GifBox } from "@mui/icons-material";
+import { FriendProfile } from "./FriendProfile";
 
 const Messenger = ({ currentUser }) => {
   const [conversations, setConversations] = useState([]);
@@ -19,6 +21,7 @@ const Messenger = ({ currentUser }) => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [openThread, setOpenThread] = useState(null);
   const [currentFriend, setCurrentFriend] = useState();
+  const [showFriendProfile, setShowFriendProfile] = useState(false);
   const scrollRef = useRef();
   // let userId = '6206e85dad4b62bf69b66099'
 
@@ -163,56 +166,101 @@ const Messenger = ({ currentUser }) => {
   };
 
   return (
-    // <div className={own ? "message own" : "message"}>
-    //If no currentChat is selected, send a p tag, else show the currentConversation selected
-    <div>
-      {/* <MessengingContainer></MessengingContainer> */}
+    <>
       <NavBar />
-      <div className="chatBox">
-        {/* MUSE BOX  */}
-        <Box>
-          <Typography>Muse Box</Typography>
+      <Box
+        sx={{
+          paddingBottom: "1rem",
+          width: "100vw",
+          justifyContent: "center",
+        }}
+      >
+        <Box className="titleContainer">
+          <Typography variant="h3">MuseBox</Typography>
         </Box>
-
-        <div className="chatBoxWrapper">
+        <Box
+          className="chatBoxWrapper"
+          sx={{
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            maxWidth: 500,
+            margin: "0 auto",
+          }}
+        >
           {/* When a conversation is clicked, set the current chat to be that conversation. */}
-          {/* This is the list component of ui */}
-          {conversations?.map((convo) => {
-            return (
-              // This is the current chat that it tied to the avatar.
-              <div
-              key={`${convo._id}div`}
-                onClick={() => {
-                  setOpenThread(true);
-                  setCurrentChat(convo);
-                }}
-              >
-                <Conversation key={`${convo._id}conversation`} conversation={convo} currentUser={currentUser} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+          {/* This is the inbox*/}
+          {conversations.length > 0 ? (
+            conversations?.map((convo) => {
+              return (
+                // This is the current chat that it tied to the avatar.
+                <Box
+                  key={`${convo._id}div`}
+                  onClick={() => {
+                    setOpenThread(true);
+                    setCurrentChat(convo);
+                  }}
+                >
+                  <Conversation
+                    key={`${convo._id}conversation`}
+                    conversation={convo}
+                    currentUser={currentUser}
+                  />
+                </Box>
+              );
+            })
+          ) : (
+            <Box
+              minHeight="80vh"
+              flexBasis="auto"
+              paddingLeft="2%"
+              paddingRight="2%"
+            >
+              <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    textAlign: "center",
+                    marginTop: "30vh",
+                    padding: "1rem",
+                  }}
+                >
+                  Explore and discover to meet your Muse!
+                </Typography>
+              </Paper>
+            </Box>
+          )}
+        </Box>
+      </Box>
 
-      {/* This is the thread that is displaying between two users in the window. */}
-      {/* When someone writes a message, run handleSubmit to submit that message */}
-      {currentChat ? (
-        <Thread
-          key={`${currentChat._id}+${currentUser.currentUserId}`}
-          openThread={openThread}
-          setOpenThread={setOpenThread}
-          newMessage={newMessage}
-          setNewMessage={setNewMessage}
-          handleSubmit={handleSubmit}
-          messages={messages}
-          scrollRef={scrollRef}
-          currentUser={currentUser}
-          currentFriend={currentFriend}
-        />
-      ) : (
-        <p className="noConvoOpened">Open a conversation to start chatting!</p>
+      {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
+      {currentChat && (
+        <>
+          <Thread
+            key={`${currentChat._id}+${currentUser.currentUserId}`}
+            openThread={openThread}
+            setOpenThread={setOpenThread}
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            handleSubmit={handleSubmit}
+            messages={messages}
+            scrollRef={scrollRef}
+            currentUser={currentUser}
+            currentFriend={currentFriend}
+            setShowFriendProfile={setShowFriendProfile}
+            sx={{ maxWidth: 500 }}
+          />
+          {currentFriend && (
+            <FriendProfile
+              showFriendProfile={showFriendProfile}
+              setShowFriendProfile={setShowFriendProfile}
+              currentFriend={currentFriend}
+            />
+          )}
+        </>
       )}
-    </div>
+    </>
   );
 };
 

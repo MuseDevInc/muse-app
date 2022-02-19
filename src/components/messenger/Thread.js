@@ -1,8 +1,6 @@
 import * as React from "react";
-import { useRef } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -14,7 +12,7 @@ import Message from "./Message";
 import { Avatar } from "@mui/material";
 import { Box } from "@mui/system";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
-import { Paper } from "@mui/material";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -29,6 +27,7 @@ export default function Thread({
   scrollRef,
   currentUser,
   currentFriend,
+  setShowFriendProfile
 }) {
   const handleClose = () => {
     setOpenThread(false);
@@ -46,13 +45,14 @@ export default function Thread({
       onClose={handleClose}
       TransitionComponent={Transition}
     >
-      <AppBar sx={{ position: "sticky", height: "8vh" }}>
+      <AppBar sx={{ position: "sticky", height: "7vh", background:"#00377C", display:"flex", justifyContent: "center"}}>
         <Toolbar>
           <Avatar>
             <img
               height="175%"
               src={currentFriend ? currentFriend.favSongs[0].albumUrl : null}
               alt={currentFriend ? currentFriend.favSongs[0].title : null}
+              onClick={() => setShowFriendProfile(true)}
             />
           </Avatar>
 
@@ -115,7 +115,7 @@ export default function Thread({
           sx={{ marginLeft: "1rem", height: "3.5rem", width: "6.8rem" }}
         >
           <ArrowCircleUpOutlinedIcon size="large" />
-          Send
+        Send
         </Button>
       
       </Box>

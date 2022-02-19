@@ -1,17 +1,13 @@
-.messageImg{
-    max-height: 100px;
+.messageImg {
+  max-height: 100px;
 }
 
-
-
-  .noConvoOpened {
-    display: flex;
+.noConvoOpened {
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-size: 4vh;
-  min-height: 100vh;
-    color: rgb(224, 220, 220);
-    cursor: default;
-  }
-  
+  color: rgb(224, 220, 220);
+  cursor: default;
+}
