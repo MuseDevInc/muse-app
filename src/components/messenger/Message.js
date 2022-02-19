@@ -1,5 +1,5 @@
 import React from 'react'
-import './message.css'
+import './Message.css'
 const Message = ({message, own, currentFriend}) => {
   return (
     <div className={own ? "message own" : "message otherPerson"}>

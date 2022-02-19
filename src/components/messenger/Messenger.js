@@ -3,10 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import Conversation from "../conversations/Conversation";
 // import {format} from 'timeago.js'
 // {format(message.createdAt)}
-import "./messenger.css";
+import "./Messenger.css";
 import { io } from "socket.io-client";
 import { NavBar } from "../navbar/NavBar";
-import { TextField, Typography, Box } from "@mui/material";
+import { Typography, Box , Paper} from "@mui/material";
 import Thread from "./Thread";
 
 const Messenger = ({ currentUser }) => {
@@ -169,11 +169,9 @@ const Messenger = ({ currentUser }) => {
       {/* <MessengingContainer></MessengingContainer> */}
       <NavBar />
       <div className="chatBox">
-        {/* MUSE BOX  */}
-        <Box>
-          <Typography>Muse Box</Typography>
+        <Box className="titleContainer">
+          <Typography variant="h3">MuseBox</Typography>
         </Box>
-
         <div className="chatBoxWrapper">
           {/* When a conversation is clicked, set the current chat to be that conversation. */}
           {/* This is the list component of ui */}
@@ -194,8 +192,7 @@ const Messenger = ({ currentUser }) => {
         </div>
       </div>
 
-      {/* This is the thread that is displaying between two users in the window. */}
-      {/* When someone writes a message, run handleSubmit to submit that message */}
+      {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
       {currentChat ? (
         <Thread
           key={`${currentChat._id}+${currentUser.currentUserId}`}
@@ -210,7 +207,16 @@ const Messenger = ({ currentUser }) => {
           currentFriend={currentFriend}
         />
       ) : (
-        <p className="noConvoOpened">Open a conversation to start chatting!</p>
+        <Box maxWidth="100vw" minHeight={"80vh"} flexBasis="auto" paddingLeft={"2%"} paddingRight={"2%"}>
+          <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
+            <Typography
+              variant="h6"
+              sx={{ textAlign: "center", marginTop: "30vh", padding: "1rem" }}
+            >
+              Explore and discover to meet your Muse!
+            </Typography>
+          </Paper>
+        </Box>
       )}
     </div>
   );
