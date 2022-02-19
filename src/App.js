@@ -36,7 +36,7 @@ export default function App() {
         maxHeight: "200vh",
         background: `${backGrad}`,
         backgroundAttachment: "fixed",
-        backgroundSize: "cover"
+        backgroundSize: "cover",
       }}
     >
       <Routes>
