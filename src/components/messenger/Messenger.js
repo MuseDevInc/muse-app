@@ -9,6 +9,7 @@ import { NavBar } from "../navbar/NavBar";
 import { Typography, Box, Stack, Paper, Card } from "@mui/material";
 import Thread from "./Thread";
 import { GifBox } from "@mui/icons-material";
+import { FriendProfile } from "./FriendProfile";
 
 const Messenger = ({ currentUser }) => {
   const [conversations, setConversations] = useState([]);
@@ -20,6 +21,7 @@ const Messenger = ({ currentUser }) => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [openThread, setOpenThread] = useState(null);
   const [currentFriend, setCurrentFriend] = useState();
+  const [showFriendProfile, setShowFriendProfile] = useState();
   const scrollRef = useRef();
   // let userId = '6206e85dad4b62bf69b66099'
 
@@ -212,6 +214,7 @@ const Messenger = ({ currentUser }) => {
 
       {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
       {currentChat ? (
+        <>
         <Thread
           key={`${currentChat._id}+${currentUser.currentUserId}`}
           openThread={openThread}
@@ -223,9 +226,11 @@ const Messenger = ({ currentUser }) => {
           scrollRef={scrollRef}
           currentUser={currentUser}
           currentFriend={currentFriend}
-
+          setShowFriendProfile={setShowFriendProfile}
           sx={{maxWidth: 500}}
         />
+        <FriendProfile showFriendProfile={showFriendProfile} setShowFriendProfile={setShowFriendProfile} currentFriend={currentFriend}/>
+        </>
       ) : (
         <Box
           minHeight="80vh"

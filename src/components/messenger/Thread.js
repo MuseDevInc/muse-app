@@ -27,6 +27,7 @@ export default function Thread({
   scrollRef,
   currentUser,
   currentFriend,
+  setShowFriendProfile
 }) {
   const handleClose = () => {
     setOpenThread(false);
@@ -51,6 +52,7 @@ export default function Thread({
               height="175%"
               src={currentFriend ? currentFriend.favSongs[0].albumUrl : null}
               alt={currentFriend ? currentFriend.favSongs[0].title : null}
+              onClick={() => setShowFriendProfile(true)}
             />
           </Avatar>
 
