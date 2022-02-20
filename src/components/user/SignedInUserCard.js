@@ -100,7 +100,7 @@ const SignedInUserCard = ({ username, displayProfile, handleNavToEdit }) => {
                 Favorite Genre
               </Divider>
               {displayProfile.favGenres.map((genre) => {
-                return <>{<Chip key={genre} label={genre} />}</>;
+                return <Chip key={genre} label={genre} />
               })}
               <Divider>Favorite Album of All Time</Divider>
             </Root>

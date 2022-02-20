@@ -52,7 +52,7 @@ export const FriendProfile = ({showFriendProfile, setShowFriendProfile, currentF
           <Typography variant="h6">Top Genres</Typography>
         </Divider >
         {currentFriend.favGenres?.map((genre) => {
-                return <>{<Chip key={genre} label={genre} />}</>;
+                return <Chip key={genre} label={genre} />
               })}
         <Divider sx={{padding: "5% 0"}}>
           <Typography variant="h6">Top Tracks</Typography>
