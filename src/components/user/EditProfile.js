@@ -22,7 +22,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import SongCardDisplay from "../formComponents/SongCardDisplay";
-
+import { NavBar } from "../navbar/NavBar";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -61,18 +61,18 @@ export default function EditProfile({ accessToken, currentUser }) {
           aboutMe: aboutMe,
           favGenres: favGenres,
           favAlbum: favAlbum,
-          favSongs: topSongs 
+          favSongs: topSongs,
         }),
         credentials: "include",
       }
     );
-      let updatedProfile = profileToEdit.json()
-      console.log(updatedProfile);
+    let updatedProfile = profileToEdit.json();
+    console.log(updatedProfile);
 
-      navigate("/userprofile");
+    navigate("/userprofile");
   };
 
-// Delete handler
+  // Delete handler
   let handleDeleteSubmit = async (e) => {
     e.preventDefault();
     navigate("/");
@@ -84,8 +84,8 @@ export default function EditProfile({ accessToken, currentUser }) {
         credentials: "include",
       }
     );
-      let deletedProfile = profileToDelete.json()
-      console.log(deletedProfile);
+    let deletedProfile = profileToDelete.json();
+    console.log(deletedProfile);
   };
 
   // let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
@@ -184,9 +184,20 @@ export default function EditProfile({ accessToken, currentUser }) {
   return (
     <>
       {/* console.log(displayProfile) */}
+      <NavBar />
 
-      <Stack alignItems={"center"}>
-        <Card sx={{ maxWidth: 345 }}>
+      <Stack
+        sx={{
+          alignItems: "center",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Card sx={{ 
+           maxWidth: 500,
+           padding: "2rem",
+           margin: "2rem",
+           position: "relative"
+          }}>
           <CardHeader
             avatar={
               <Avatar
@@ -330,12 +341,7 @@ export default function EditProfile({ accessToken, currentUser }) {
             </CardContent>
           </Collapse>
           <div style={{ padding: "1rem", justifyContent: "center" }}>
-            <Button
-              onClick={handleEditSubmit}
-              variant="outlined"
-              size="small"
-            >
-              
+            <Button onClick={handleEditSubmit} variant="outlined" size="small">
               Submit Changes
             </Button>
             <Button
