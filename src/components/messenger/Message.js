@@ -1,6 +1,6 @@
 import React from 'react'
 import TimeAgo from 'react-timeago'
-import './Message.css'
+import './message.css'
 const Message = ({message, own, currentFriend}) => {
   return (
     <div className={own ? "message own" : "message otherPerson"}>

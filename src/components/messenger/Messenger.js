@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Conversation from "../conversations/Conversation";
 // import {format} from 'timeago.js'
 // {format(message.createdAt)}
-import "./Messenger.css";
+import "./messenger.css";
 import { io } from "socket.io-client";
 import { NavBar } from "../navbar/NavBar";
 import { Typography, Box, Stack, Paper, Card } from "@mui/material";
