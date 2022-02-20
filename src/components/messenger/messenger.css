@@ -1,0 +1,13 @@
+.messageImg {
+  max-height: 100px;
+}
+
+.noConvoOpened {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 4vh;
+  color: rgb(224, 220, 220);
+  cursor: default;
+}
