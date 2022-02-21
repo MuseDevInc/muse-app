@@ -99,7 +99,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
             marginTop="2rem"
             sx={{ color: "black" }}
           >
-            {userQueue[qCounter.current].owner.username}
+            {userQueue[qCounter.current]?.owner?.username}
           </Typography>
           <MatchDialog
             match={match}
