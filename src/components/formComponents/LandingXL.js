@@ -38,7 +38,6 @@ export function LandingXL({ currentUser, setCurrentUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
-      mode: 'cors',
       credentials: "include",
     })
       .then((res) => res.json())

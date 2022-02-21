@@ -23,7 +23,6 @@ export function DiscoverUserGetter() {
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-        mode: 'cors',
         credentials: "include",
       }
     );

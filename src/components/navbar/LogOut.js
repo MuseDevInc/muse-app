@@ -27,7 +27,6 @@ export default function LogOutAlert() {
     fetch("http://localhost:4000/session/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: 'cors',
       credentials: 'include'
     }).then((res) => {
       console.log(res);

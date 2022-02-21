@@ -26,7 +26,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     fetch(process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/swipe", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      mode: 'cors',
       credentials: "include",
       body: JSON.stringify(payload),
     });
@@ -36,7 +35,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     fetch(process.env.REACT_APP_BACKEND_SERVER + "/conversation", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: 'cors',
       credentials: "include",
       body: JSON.stringify({ otherUserId: otherUserId }),
     });
@@ -50,7 +48,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     fetch(process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/checkmatch/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: 'cors',
       credentials: "include",
       body: JSON.stringify(payload),
     })

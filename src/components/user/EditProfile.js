@@ -63,7 +63,6 @@ export default function EditProfile({ accessToken, currentUser }) {
           favAlbum: favAlbum,
           favSongs: topSongs 
         }),
-        mode: 'cors',
         credentials: "include",
       }
     );
@@ -82,7 +81,6 @@ export default function EditProfile({ accessToken, currentUser }) {
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        mode: 'cors',
         credentials: "include",
       }
     );
@@ -113,7 +111,6 @@ export default function EditProfile({ accessToken, currentUser }) {
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-        mode: 'cors',
         credentials: "include",
       }
     );

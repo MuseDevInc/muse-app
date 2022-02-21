@@ -71,7 +71,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
           favAlbum: favAlbum,
           favSongs: topSongs,
         }),
-        mode: 'cors',
         credentials: "include"
       }
     );
