@@ -23,7 +23,7 @@ export function LandingXL({ currentUser, setCurrentUser }) {
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState(null)
   useEffect(() => {
     if (currentUser) {
       navigate("/main");
@@ -51,6 +51,10 @@ export function LandingXL({ currentUser, setCurrentUser }) {
             currentUsername: res.currentUsername,
             currentUserId: res.currentUserId,
           });
+          setErrorMessage(null)
+        }
+        else{
+          setErrorMessage(true)
         }
       });
   };
@@ -117,6 +121,9 @@ export function LandingXL({ currentUser, setCurrentUser }) {
                 {" "}
                 Log in{" "}
               </Button>
+              {errorMessage ? (
+                    <p style={{color:'red'}}>*Invalid username or password.</p>
+                  ): null}
               <p>
                 Don't have an account?{" "}
                 <Link href="/register">Click here to register</Link>
