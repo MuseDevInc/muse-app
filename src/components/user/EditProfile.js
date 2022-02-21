@@ -22,6 +22,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import SongCardDisplay from "../formComponents/SongCardDisplay";
+import { NavBar } from "../navbar/NavBar";
 
 
 const ExpandMore = styled((props) => {
@@ -184,9 +185,9 @@ export default function EditProfile({ accessToken, currentUser }) {
   return (
     <>
       {/* console.log(displayProfile) */}
-
-      <Stack alignItems={"center"}>
-        <Card sx={{ maxWidth: 345 }}>
+      <NavBar/>
+      <Stack alignItems={"center"} justifyContent="center">
+        <Card sx={{ maxWidth: 345, margin: "5vh 0" }}>
           <CardHeader
             avatar={
               <Avatar

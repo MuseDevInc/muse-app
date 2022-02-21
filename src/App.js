@@ -37,6 +37,7 @@ export default function App() {
         background: `${backGrad}`,
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
+  
       }}
     >
       <Routes>

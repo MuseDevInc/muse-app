@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, IconButton, Paper } from "@mui/material";
 import { MatchDialog } from "./MatchDialog";
-
+import { SwipeMotion } from "../motions/SwipeMotion";
+import { AnimatePresence, motion } from "framer-motion";
 export function DiscoverLayout({ userQueue, qCounter }) {
   const [count, setCount] = useState();
   const [match, setMatch] = useState();
@@ -19,6 +20,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function pushId(swipe) {
+    console.log("push id");
     let payload = {
       swipeDirection: swipe,
       swipedUser: userQueue[qCounter.current]._id,
@@ -40,6 +42,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     });
   }
   function checkMatch() {
+    console.log("check match!");
     //this will be to check other user's swiperight array for currentUser's id.
     //if match, set match to true --> alert --> render FAB or change styling or open FAB
     const payload = {
@@ -67,6 +70,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function advanceQ() {
+    console.log("advance!");
     //update ref
     qCounter.current = qCounter.current + 1;
     //update state to trigger and sync rerender w/ change of ref.current value
@@ -80,55 +84,73 @@ export function DiscoverLayout({ userQueue, qCounter }) {
 
   return (
     <>
-      {qCounter.current === userQueue.length ? (
-        <Box maxWidth="100vw" minHeight={"80vh"} flexBasis="auto">
-          <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
-            <Typography
-              variant="h6"
-              sx={{ textAlign: "center", marginTop: "30vh", padding: "1rem" }}
-            >
-              There is no one new to display.
-            </Typography>
-          </Paper>
-        </Box>
-      ) : (
-        <>
-          <Typography
-            variant="h3"
-            elevation={24}
-            marginTop="2rem"
-            sx={{ color: "black" }}
+      <AnimatePresence exitBeforeEnter>
+        {qCounter.current === userQueue.length ? (
+          <Box
+            maxWidth="100vw"
+            minHeight={"80vh"}
+            flexBasis="auto"
+            component={motion.div}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
           >
-            {userQueue[qCounter.current]?.owner?.username}
-          </Typography>
-          <MatchDialog
-            match={match}
-            setMatch={setMatch}
-            advanceQ={advanceQ}
-            userToMessage={userQueue[qCounter.current]}
-          />
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
+            <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
+              <Typography
+                variant="h6"
+                sx={{ textAlign: "center", marginTop: "30vh", padding: "1rem" }}
+              >
+                There is no one new to display.
+              </Typography>
+            </Paper>
+          </Box>
+        ) : (
+          <>
+            <Typography
+              key={userQueue[qCounter.current].owner.username}
+              component={motion.div}
+              variant="h3"
+              elevation={24}
+              marginTop="2rem"
+              sx={{ color: "black" }}
+              initial={{ opacity: 0, y: -50, scale: 0 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.5, duration: 2 }}
+            >
+              {userQueue[qCounter.current].owner.username}
+            </Typography>
+            <MatchDialog
+              match={match}
+              setMatch={setMatch}
+              advanceQ={advanceQ}
+              userToMessage={userQueue[qCounter.current]}
+            />
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              {/*         <IconButton
+            sx={{zIndex: "1000"}}
               onClick={() => {
                 handleSwipe("Left");
               }}
             >
               <ThumbDownOffAltRounded sx={{ fontSize: "2.5rem" }} />
-            </IconButton>
-            <DiscoverPaper
-              currentPosition={qCounter.current}
-              userQueue={userQueue}
-            />
-            <IconButton
+            </IconButton> */}
+              <DiscoverPaper
+                handleSwipe={handleSwipe}
+                currentPosition={qCounter.current}
+                userQueue={userQueue}
+              />
+              {/*       <IconButton
+            sx={{zIndex: "1000"}}
               onClick={() => {
                 handleSwipe("Right");
               }}
             >
               <ThumbUp sx={{ fontSize: "2.5rem" }} />
-            </IconButton>
-          </Box>
-        </>
-      )}
+            </IconButton> */}
+            </Box>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }
