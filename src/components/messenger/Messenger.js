@@ -74,6 +74,7 @@ const Messenger = ({ currentUser }) => {
 
   //on mount, get all conversations userId is a part of
   useEffect(() => {
+    console.log(process.env.REACT_APP_SOCKET)
     getConversations();
   }, []);
 
@@ -95,7 +96,10 @@ const Messenger = ({ currentUser }) => {
   //SOCKET STUFF
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    // socket.current = io("ws://localhost:8900");
+    console.log(process.env.REACT_APP_SOCKET);
+    socket.current = io(`${process.env.REACT_APP_SOCKET}`);
+    // socket.current = io(window.location.origin)
 
     //Syntax looks a bit different here because we're hitting database, which takes sender and text instead of senderId and text
     socket.current.on("getMessage", (data) => {
