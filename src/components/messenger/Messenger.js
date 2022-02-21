@@ -10,6 +10,7 @@ import { Typography, Box, Stack, Paper, Card } from "@mui/material";
 import Thread from "./Thread";
 import { GifBox } from "@mui/icons-material";
 import { FriendProfile } from "./FriendProfile";
+import ThreadTabs from "./ThreadTabs";
 
 const Messenger = ({ currentUser }) => {
   const [conversations, setConversations] = useState([]);
@@ -23,6 +24,8 @@ const Messenger = ({ currentUser }) => {
   const [currentFriend, setCurrentFriend] = useState();
   const [showFriendProfile, setShowFriendProfile] = useState(false);
   const scrollRef = useRef();
+  const tabRef = useRef();
+  let bottomAnchor = tabRef;
   // let userId = '6206e85dad4b62bf69b66099'
 
   //get the conversations our userId is a part of.
@@ -153,7 +156,7 @@ const Messenger = ({ currentUser }) => {
     socket.current.emit("sendMessage", {
       senderId: currentUser.currentUserId,
       receiverId: receiverId,
-      text: newMessage, 
+      text: newMessage,
     });
 
     // This is where we fetch each message.
@@ -172,71 +175,18 @@ const Messenger = ({ currentUser }) => {
   return (
     <>
       <NavBar />
-      <Box
-        sx={{
-          paddingBottom: "1rem",
-          width: "100vw",
-          justifyContent: "center",
-        }}
-      >
-        <Box className="titleContainer">
-          <Typography variant="h3">MuseBox</Typography>
-        </Box>
-        <Box
-          className="chatBoxWrapper"
-          sx={{
-            padding: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-            maxWidth: 500,
-            margin: "0 auto",
-          }}
-        >
-          {/* When a conversation is clicked, set the current chat to be that conversation. */}
-          {/* This is the inbox*/}
-          {conversations.length > 0 ? (
-            conversations?.map((convo) => {
-              return (
-                // This is the current chat that it tied to the avatar.
-                <Box
-                  key={`${convo._id}div`}
-                  onClick={() => {
-                    setOpenThread(true);
-                    setCurrentChat(convo);
-                  }}
-                >
-                  <Conversation
-                    key={`${convo._id}conversation`}
-                    conversation={convo}
-                    currentUser={currentUser}
-                  />
-                </Box>
-              );
-            })
-          ) : (
-            <Box
-              minHeight="80vh"
-              flexBasis="auto"
-              paddingLeft="2%"
-              paddingRight="2%"
-            >
-              <Paper elevation={8} sx={{ borderRadius: "8rem", opacity: ".6" }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    textAlign: "center",
-                    marginTop: "30vh",
-                    padding: "1rem",
-                  }}
-                >
-                  Explore and discover to meet your Muse!
-                </Typography>
-              </Paper>
-            </Box>
-          )}
-        </Box>
-      </Box>
+
+      {/* When a conversation is clicked, set the current chat to be that conversation. */}
+      {/* This is the inbox*/}
+      {conversations.length > 0 ? (
+        <ThreadTabs
+          ref={tabRef}
+          conversations={conversations}
+          setOpenThread={setOpenThread}
+          setCurrentChat={setCurrentChat}
+          currentUser={currentUser}
+        />
+      ) : null}
 
       {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
       {currentChat && (
