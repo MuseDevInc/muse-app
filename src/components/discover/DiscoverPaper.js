@@ -7,7 +7,7 @@ import {
   motion,
   useAnimation,
   useMotionValue,
-  useIsPresent,
+  useIsPresent
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -16,23 +16,23 @@ export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
   const [startX, setStartX] = useState();
   const controls = useAnimation();
   const [target, setTarget] = useState();
-  const isPresent = useIsPresent();
-  const [isShown, setIsShown] = useState(true);
+  const isPresent = useIsPresent()
+  const [isShown, setIsShown] = useState(true)
   /* 
   useEffect(() => {
     console.log(startX)
   }) */
 
-/*   useEffect(() => {
-    console.log(isPresent);
-    controls.start({
-      scale: 1,
-      transition: { delay: 2, duration: 2 },
-    });
-  }, [currentPosition]); */
+
+  useEffect(()=>{
+    console.log(isPresent)
+  controls.start({
+    scale: 1,
+    transition: {delay: 2, duration: 2}
+  })
+  }, [currentPosition])
 
   function swipePoint(swipeX) {
-    console.log("yeeeeeeeeet");
     let direction;
     if (swipeX / startX > 1.5) {
       direction = "Right";
@@ -79,26 +79,29 @@ export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
           }}
           /*  onDrag={(event, info) => console.log(info.point.x, info.point.y, positionRef.current.parentNode.offsetWidth, )} */
 
+     
+          
+    
           whileHover={{
             scale: 0.99,
           }}
         >
           <Paper
-            elevation={16}
-            sx={{
-              zIndex: "8000",
-              marginTop: "1.5rem",
-              marginX: "1rem",
-              maxWidth: "80vw",
-              flexBasis: "auto",
-            }}
-          >
+               elevation={16}
+               sx={{
+                zIndex: "8000",
+                 marginTop: "1.5rem",
+                 marginX: "1rem",
+                 maxWidth: "80vw",
+                 flexBasis: "auto"}}>
             <AlbumContainer
+          
               currentPosition={currentPosition}
               userQueue={userQueue}
             />
-          </Paper>
-        </motion.div>
+            </Paper>
+  </motion.div>
+
       </AnimatePresence>
     </>
   );
