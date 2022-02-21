@@ -26,6 +26,7 @@ export function Login({ currentUser, setCurrentUser }) {
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const [largeView, setLargeView] = useState();
   const xlScreen = useMediaQuery("(min-width:1400px)");
@@ -64,7 +65,11 @@ export function Login({ currentUser, setCurrentUser }) {
             currentUsername: res.currentUsername,
             currentUserId: res.currentUserId,
           });
+          setErrorMessage(null)
           navigate('/main')  
+        }
+        else{
+          setErrorMessage(true)
         }
       });
   };
@@ -154,6 +159,9 @@ export function Login({ currentUser, setCurrentUser }) {
                     {" "}
                     Log in{" "}
                   </Button>
+                  {errorMessage ? (
+                    <p style={{color:'red'}}>*Invalid username or password.</p>
+                  ): null}
                   <p>
                     Don't have an account?{" "}
                     <Link href="/register">Click here to register</Link>

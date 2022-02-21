@@ -28,6 +28,7 @@ export function RegisterSession({currentUser, setCurrentUser}) {
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
   const [largeView, setLargeView] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   //  navigate the createProfile once currentUser is defined
   useEffect(() => {
@@ -53,6 +54,10 @@ export function RegisterSession({currentUser, setCurrentUser}) {
         localStorage.setItem('currentUsername', res.currentUsername)
         localStorage.setItem('currentUserId', res.currentUserId)
       setCurrentUser({...currentUser, currentUsername: res.currentUsername, currentUserId: res.currentUserId })
+      setErrorMessage(null)
+    }
+    else{
+      setErrorMessage(true)
     }
     });
   };
@@ -136,6 +141,9 @@ export function RegisterSession({currentUser, setCurrentUser}) {
                     {" "}
                     Register{" "}
                   </Button>
+                  {errorMessage ? (
+                    <p style={{color:'red'}}>*Username already taken or passwords must match.</p>
+                  ): null}
                   <p>
                     Have an account already?{" "}
                     <Link href="/login">Click here to login</Link>
