@@ -61,7 +61,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
   let handleCreateSubmit = async (e) => {
     e.preventDefault();
     let profileToCreate = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage/"+currentUser.currentUserId,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
