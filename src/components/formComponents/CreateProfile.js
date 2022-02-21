@@ -137,7 +137,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
   return (
     <>
       <Stack alignItems={"center"}>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, margin: "5vh 0" }}>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] , alignItems: "center"}} aria-label="recipe">
