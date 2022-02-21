@@ -17,6 +17,7 @@ export const AlbumContainer = ({ currentPosition, userQueue }) => {
         alt="favorite album"
         image={userQueue[currentPosition].favSongs[0]?.albumUrl}
         draggable={false}
+        sx={{maxHeight: "60vh"}}
       />
       <IconButton onClick={handleShowMore}>
         <MoreVertIcon />
