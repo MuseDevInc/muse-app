@@ -19,6 +19,7 @@ import logo from "../alphabet.png";
 import { Grid } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { LandingXL } from "./LandingXL";
+import { motion } from "framer-motion";
 
 export function Login({ currentUser, setCurrentUser }) {
   let navigate = useNavigate();
@@ -84,15 +85,31 @@ export function Login({ currentUser, setCurrentUser }) {
           textAlign="center"
           justifyContent="space-between"
         >
+
           <Grid item sx={{ marginTop: "2.5rem" }}>
-            <img src={logo} style={{ maxHeight: "6.25rem" }} alt="logo" />
+
+            <motion.div
+             initial={{ opacity: 0}}
+             animate={{ opacity: 1 }}
+             transition={{duration: 3.5, ease: [.1, .25, .5, 1]}} >
+              <img
+            src={logo}
+             style={{ maxHeight: "6.25rem" }}
+              alt="logo"
+             />
+              
             <span style={{ fontSize: "5rem", color: "white" }}>use</span>
             <Typography variant="h5" sx={{ color: "whitesmoke" }}>
               Connect with people who share the same taste in music as you.
             </Typography>
+            </motion.div>
           </Grid>
 
           <Grid item sx={{zIndex: 'tooltip'}}>
+          <motion.div
+             initial={{ opacity: 0}}
+             animate={{ opacity: 1 }}
+             transition={{duration: 3.5, ease: [.1, .25, .5, 1]}} >
             <Paper elevation={4} sx={{ flexShrink: 1}}>
               <Box sx={{zIndex: 'tooltip'}}>
               <FormGroup>
@@ -145,6 +162,7 @@ export function Login({ currentUser, setCurrentUser }) {
               </FormGroup>
               </Box>
             </Paper>
+            </motion.div>
           </Grid>
 
           <Footer img={"../../pictures/wave.png"} />

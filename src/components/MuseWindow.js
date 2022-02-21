@@ -6,8 +6,6 @@ export function MuseWindow({ gradient }) {
   let backgroundGradient = gradient;
 
   return (
-    <Paper sx={{ minHeight: "93vh", background: `${backgroundGradient}` }}>
       <DiscoverUserGetter />
-    </Paper>
   );
 }
