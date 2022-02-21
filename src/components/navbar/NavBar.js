@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import { Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Switch from '@mui/material/Switch';
@@ -46,7 +47,6 @@ export function NavBar() {
       localStorage.removeItem('currentUsername')
       localStorage.removeItem('currentUserId')
       navigate('/')
-    
   }
 
   return (
@@ -65,12 +65,12 @@ export function NavBar() {
       </FormGroup> */}
       {/*we can do more positioning here, active sx override below right now, change flex property 
       We should establish breakpoints either in theme or inline*/}
-      <AppBar position="sticky" sx={{ alignItems: "center"}}>
+      <AppBar position="sticky" >
         <Toolbar variant="regular" >
           
          {/* auth condition !! */ }
           {auth && (
-            <div>
+            <Stack direction="row">
               {/*IconButton re: Discover feature...*/}
               <IconButton
                 href="/main"
@@ -80,16 +80,23 @@ export function NavBar() {
                 aria-haspopup="true"
                 /* onClick={} */
                 color="inherit"
+                sx={{
+                  position: "relative",
+                  left: "5"
+                }}
               >
                 <WhatshotIcon sx={{ fontSize: "2.75rem" }}/>
               </IconButton>
               {/*OpenChat is here. Decide if we want a Dialog modal or to use react router*/}
+         <Box sx={{position: "fixed", right: "0"}}>
               <IconButton
               href="/messenger"
               color="inherit"
               >
+
+              
               <OpenChat />
-               </IconButton>
+              </IconButton>
                {/* User Dropdown IconButton */}
                <IconButton
                 size="large"
@@ -124,7 +131,8 @@ export function NavBar() {
                 </Link>
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>
-            </div>
+              </Box>
+              </Stack>
           )}
         </Toolbar>
       </AppBar>
