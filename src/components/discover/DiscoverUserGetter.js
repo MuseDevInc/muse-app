@@ -19,7 +19,7 @@ export function DiscoverUserGetter() {
 
   const getUsers = async () => {
     let users = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/getQueue",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/getQueue/"+localStorage.getItem('currentUserId'),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
