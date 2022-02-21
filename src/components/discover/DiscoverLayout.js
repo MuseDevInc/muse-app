@@ -23,7 +23,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
       swipeDirection: swipe,
       swipedUser: userQueue[qCounter.current]._id,
     };
-    fetch(process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/swipe", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/swipe/"+localStorage.getItem('currentUserId'), {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -32,7 +32,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function createConversation(otherUserId) {
-    fetch(process.env.REACT_APP_BACKEND_SERVER + "/conversation", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER + "/conversation/"+localStorage.getItem('currentUserId'), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -45,7 +45,7 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     const payload = {
       swipedUser: userQueue[qCounter.current]._id,
     };
-    fetch(process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/checkmatch/", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER + "/muse/discover/checkmatch/"+localStorage.getItem('currentUserId'), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

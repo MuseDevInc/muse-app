@@ -53,7 +53,7 @@ export default function EditProfile({ accessToken, currentUser }) {
   let handleEditSubmit = async (e) => {
     e.preventDefault();
     let profileToEdit = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile/"+localStorage.getItem('currentUserId'),
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -77,7 +77,7 @@ export default function EditProfile({ accessToken, currentUser }) {
     e.preventDefault();
     navigate("/");
     let profileToDelete = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/"+localStorage.getItem('currentUserId'),
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -107,7 +107,7 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   let getProfile = async () => {
     let profileToGrab = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage/"+localStorage.getItem('currentUserId'),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },

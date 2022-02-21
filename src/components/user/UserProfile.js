@@ -52,7 +52,7 @@ const UserProfile = ({ currentUser }) => {
 
   let getProfile = async () => {
     let profileToGrab = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage",
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage/"+localStorage.getItem('currentUserId'),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
