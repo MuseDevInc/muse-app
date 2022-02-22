@@ -32,6 +32,10 @@ export function Login() {
   const xlScreen = useMediaQuery("(min-width:1400px)");
 
   useEffect(() => {
+    localStorage.clear()
+  }, [])
+
+  useEffect(() => {
     console.log(largeView);
     return setLargeView(xlScreen);
   }, [xlScreen]);

@@ -24,10 +24,15 @@ export function LandingXL() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null)
 
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password };
     console.log(form);
+
     fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
