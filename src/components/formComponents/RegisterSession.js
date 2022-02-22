@@ -30,16 +30,16 @@ export function RegisterSession() {
   const [largeView, setLargeView] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
+
   //  navigate the createProfile once currentUser is defined
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password, verifyPassword };
     console.log(form);
-    
-    useEffect(() => {
-      localStorage.clear()
-    }, [])
 
     fetch(process.env.REACT_APP_BACKEND_SERVER + "/session/register", {
       method: "POST",
