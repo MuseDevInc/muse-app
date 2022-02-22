@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,7 +24,7 @@ export default function LogOutAlert() {
 
 
   const handleLogOut = () => {
-    fetch("http://localhost:4000/session/logout", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: 'include'

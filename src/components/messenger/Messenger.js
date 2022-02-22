@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import Conversation from "../conversations/Conversation";
-// import {format} from 'timeago.js'
-// {format(message.createdAt)}
 import "./messenger.css";
 import { io } from "socket.io-client";
 import { NavBar } from "../navbar/NavBar";
@@ -15,7 +13,6 @@ const Messenger = ({ currentUser }) => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
-  // const [socket, setSocket] = useState(null)
   const [newMessage, setNewMessage] = useState("");
   const socket = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -23,7 +20,6 @@ const Messenger = ({ currentUser }) => {
   const [currentFriend, setCurrentFriend] = useState();
   const [showFriendProfile, setShowFriendProfile] = useState(false);
   const scrollRef = useRef();
-  // let userId = '6206e85dad4b62bf69b66099'
 
   //get the conversations our userId is a part of.
   const getConversations = async () => {
@@ -96,10 +92,7 @@ const Messenger = ({ currentUser }) => {
   //SOCKET STUFF
 
   useEffect(() => {
-    // socket.current = io("ws://localhost:8900");
-    console.log(process.env.REACT_APP_SOCKET);
     socket.current = io(`${process.env.REACT_APP_SOCKET}`);
-    // socket.current = io(window.location.origin)
 
     //Syntax looks a bit different here because we're hitting database, which takes sender and text instead of senderId and text
     socket.current.on("getMessage", (data) => {
@@ -117,13 +110,6 @@ const Messenger = ({ currentUser }) => {
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
-
-  // useEffect(() => {
-  //   //Whenever socket recieves welcome request, console.log message
-  //   socket?.on("welcome", message => {
-  //     console.log(message)
-  //   })
-  // },[socket])
 
   //Every time a user logs in, add that created user to socket and match socket id with user id
   useEffect(() => {

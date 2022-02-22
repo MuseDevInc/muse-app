@@ -57,8 +57,6 @@ export function NavBar() {
       {auth && (
         <Toolbar variant="regular" sx={{alignItems:'space-between', background:"#00377C"}}>
           {/* auth condition !! */}
-          
-              {/* <Box sx={{display: 'flex', justifyContent:'center', alignContent:'stretch'}}> */}
               <Box sx={{flexGrow: 1, alignContent: 'center'}}>
               <IconButton
                 href="/main"
@@ -113,7 +111,6 @@ export function NavBar() {
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>
               </Box>
-            {/* </Box> */}
       </Toolbar>
       )}
     </AppBar>
