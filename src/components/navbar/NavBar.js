@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,6 +20,7 @@ import Grid from '@mui/material/Grid';
 import GridContainer from '@mui/material/Grid';
 import logo from "../alphabet.png";
 import axios from "axios";
+import LogOutAlert from "./LogOut";
 
 //either above component or within, should only matter if there were multiple instances of the function component in the app. const dropDownPageArray = [ <ProfilePage/> , <LogOutButton/> ] ???
 // Pass UserID as props, store ID in a Ref (useRef hook)--get the page what it needs.
@@ -29,6 +30,8 @@ export function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const iconSizeBig = `sx={{ fontSize: "3.5rem" }}`;
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -41,15 +44,20 @@ export function NavBar() {
     setAnchorEl(null);
   };
 
-  const handleLogOut = async () => {
-    let destroySession = await axios.delete(
-      process.env.REACT_APP_BACKEND_SERVER + "/session/logout"
-    );
-    console.log(destroySession.data);
-    localStorage.removeItem("currentUsername");
-    localStorage.removeItem("currentUserId");
-    navigate("/");
+  const handleClickOpenLogoutDialog = () => {
+    setAnchorEl(null);
+    setOpenLogoutDialog(true);
   };
+
+  // const handleLogOut = async () => {
+  //   let destroySession = await axios.delete(
+  //     process.env.REACT_APP_BACKEND_SERVER + "/session/logout"
+  //   );
+  //   console.log(destroySession.data);
+  //   localStorage.removeItem("currentUsername");
+  //   localStorage.removeItem("currentUserId");
+  //   navigate("/");
+  // };
 
   return (
     <Box sx={{ alignContent: 'flex-start' }}>
@@ -105,11 +113,14 @@ export function NavBar() {
                 onClose={handleClose}
               >
                 {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */}
-                <Link to="/userprofile" sx={{textDecoration:'none'}}>
-                  <MenuItem onClick={handleClose}>View profile</MenuItem>
+                <Link to="/userprofile" >
+                  <MenuItem onClick={handleClose} sx={{textDecoration:'none'}}>View profile</MenuItem>
                 </Link>
-                <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                <MenuItem onClick={
+                  handleClickOpenLogoutDialog}
+                >Logout</MenuItem>
               </Menu>
+              <LogOutAlert openLogoutDialog={openLogoutDialog} setOpenLogoutDialog={setOpenLogoutDialog}/>
               </Box>
       </Toolbar>
       )}

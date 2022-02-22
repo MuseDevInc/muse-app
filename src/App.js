@@ -10,7 +10,7 @@ import { Paper } from "@mui/material";
 import Messenger from "./components/messenger/Messenger";
 import { RegisterSession } from "./components/formComponents/RegisterSession";
 import useSpotifyAuth from "./hooks/useSpotifyAuth";
-
+import LogOutAlert from "./components/navbar/LogOut";
 // const spotifyCode = new URLSearchParams(window.location.search).get('code')
 //stuff
 
@@ -71,6 +71,12 @@ export default function App() {
         <Route
           path="/messenger"
           element={<Messenger currentUser={localUser} />}
+        ></Route>
+          <Route
+          path="/logout"
+          element={
+            <LogOutAlert/>
+          }
         ></Route>
       </Routes>
     </Paper>

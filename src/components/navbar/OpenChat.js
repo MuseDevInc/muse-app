@@ -11,7 +11,6 @@ export function OpenChat() {
                 aria-label="open messages"
                 aria-controls="chat-appbar"
                 aria-haspopup="true"
-                /* onClick={} */
                 color="inherit"
               >
                 <ChatIcon sx={{ fontSize: "2.75rem" }}/>
