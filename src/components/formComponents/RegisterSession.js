@@ -20,7 +20,7 @@ import { Grid } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { LandingXL } from "./LandingXL";
 
-export function RegisterSession({currentUser, setCurrentUser}) {
+export function RegisterSession() {
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let navigate = useNavigate()
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
@@ -31,11 +31,6 @@ export function RegisterSession({currentUser, setCurrentUser}) {
   const [errorMessage, setErrorMessage] = useState(null)
 
   //  navigate the createProfile once currentUser is defined
-  useEffect(() => {
-      if (currentUser) {
-      navigate('/createprofile')
-    }
-  }, [currentUser, navigate])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,8 +48,9 @@ export function RegisterSession({currentUser, setCurrentUser}) {
       if (res.status === 200) {
         localStorage.setItem('currentUsername', res.currentUsername)
         localStorage.setItem('currentUserId', res.currentUserId)
-      setCurrentUser({...currentUser, currentUsername: res.currentUsername, currentUserId: res.currentUserId })
       setErrorMessage(null)
+      navigate('/createprofile')
+
     }
     else{
       setErrorMessage(true)
@@ -65,7 +61,7 @@ export function RegisterSession({currentUser, setCurrentUser}) {
   return (
     <Box>
       {largeView ? (
-        <LandingXL currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        <LandingXL/>
       ) : (
         <Grid
           container

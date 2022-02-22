@@ -3,7 +3,6 @@ import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, IconButton, Paper } from "@mui/material";
 import { MatchDialog } from "./MatchDialog";
-import { SwipeMotion } from "../motions/SwipeMotion";
 import { AnimatePresence, motion } from "framer-motion";
 export function DiscoverLayout({ userQueue, qCounter }) {
   const [count, setCount] = useState();
@@ -126,27 +125,11 @@ export function DiscoverLayout({ userQueue, qCounter }) {
               userToMessage={userQueue[qCounter.current]}
             />
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              {/*         <IconButton
-            sx={{zIndex: "1000"}}
-              onClick={() => {
-                handleSwipe("Left");
-              }}
-            >
-              <ThumbDownOffAltRounded sx={{ fontSize: "2.5rem" }} />
-            </IconButton> */}
               <DiscoverPaper
                 handleSwipe={handleSwipe}
                 currentPosition={qCounter.current}
                 userQueue={userQueue}
               />
-              {/*       <IconButton
-            sx={{zIndex: "1000"}}
-              onClick={() => {
-                handleSwipe("Right");
-              }}
-            >
-              <ThumbUp sx={{ fontSize: "2.5rem" }} />
-            </IconButton> */}
             </Box>
           </>
         )}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,41 +6,37 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { useNavigate } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function LogOutAlert() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function LogOutAlert({openLogoutDialog, setOpenLogoutDialog}) {
+  let navigate = useNavigate();
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenLogoutDialog(false);
   };
 
-
   const handleLogOut = () => {
-    fetch("http://localhost:4000/session/logout", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: 'include'
     }).then((res) => {
       console.log(res);
     });
-    setOpen(false);
+    setOpenLogoutDialog(false);
+    localStorage.removeItem("currentUsername");
+    localStorage.removeItem("currentUserId");
+    navigate("/");
   };
 
   return (
     <div>
-      <Button variant="text" onClick={handleClickOpen}>
-        Log Out
-      </Button>
       <Dialog
-        open={open}
+        open={openLogoutDialog}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}

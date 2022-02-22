@@ -35,105 +35,110 @@ const SignedInUserCard = ({ username, displayProfile, handleNavToEdit }) => {
 
   return (
     <>
-  
-        <Stack
+
+      <Stack
+        sx={{
+          alignItems: "center",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Card
           sx={{
-            alignItems: "center",
-            paddingBottom: "1rem",
+            maxWidth: 500,
+            padding: "2rem",
+            margin: "2rem",
+            position: "relative"
           }}
         >
-          <Card
-            sx={{
-              maxWidth: 500,
-              padding: "2rem",
-              margin: "2rem",
-              position: "relative"
-            }}
-          >
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  {username[0].toUpperCase()}
-                </Avatar>
-              }
-              action={
-                <IconButton
-                  onClick={handleNavToEdit}
-                  aria-label="upload picture"
-                  component="span"
-                >
-                  <EditIcon />
-                </IconButton>
-              }
-              title={username}
-              subheader="New York City, New York"
-            />
-            <CardMedia
-              component="img"
-              height="360"
-              image={
-                displayProfile.favSongs.length > 0
-                  ? displayProfile.favSongs[0].albumUrl
-                  : null
-              }
-              alt={
-                displayProfile.favSongs.length > 0
-                  ? displayProfile.favSongs[0].title
-                  : null
-              }
-            />
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                {username[0].toUpperCase()}
+              </Avatar>
+            }
+            action={
+              <IconButton
+                onClick={handleNavToEdit}
+                aria-label="upload picture"
+                component="span"
               >
-                <Typography>About Me</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{displayProfile.aboutMe}</Typography>
-              </AccordionDetails>
-            </Accordion>
-
-            <Root>
-              <Divider sx={{ padding: "1rem", textAlign: "center" }}>
-                Favorite Genre
-              </Divider>
-              {displayProfile.favGenres.map((genre) => {
-                return <Chip key={genre} label={genre} />
-              })}
-              <Divider>Favorite Album of All Time</Divider>
-            </Root>
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={1}
-              sx={{ margin: "1rem", alignItems: "space" }}
+                <EditIcon />
+              </IconButton>
+            }
+            title={username}
+            subheader="New York City, New York"
+          />
+          <CardMedia
+            component="img"
+            height="360"
+            image={
+              displayProfile.favSongs.length > 0
+                ? displayProfile.favSongs[0].albumUrl
+                : null
+            }
+            alt={
+              displayProfile.favSongs.length > 0
+                ? displayProfile.favSongs[0].title
+                : null
+            }
+          />
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              {displayProfile.favSongs.map((song) => {
-                return (
-                  <MusicPlayer
-                    key={song.uri}
-                    song={song}
-                    setCurrentPlayback={setCurrentPlayback}
-                  />
-                );
-              })}
-            </Stack>
-            <Stack>
-              {currentPlayback && (
-                <iframe
-                  title="Spotify"
-                  src={`https://embed.spotify.com/?uri=${currentPlayback}&theme=black`}
-                  height="90"
-                  frameBorder="0"
-                  allowtransparency="true"
+              <Typography>About Me</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>{displayProfile.aboutMe}</Typography>
+            </AccordionDetails>
+          </Accordion>
+          { displayProfile.favGenres &&
+            <> 
+            <Divider sx={{ textAlign: "center" }}>
+            Favorite Genre
+          </Divider>
+          {displayProfile.favGenres.map((genre) => {
+            return <Chip key={genre} label={genre} />
+          })}
+            </>
+          }
+          {displayProfile.favAlbum && <>
+            <Divider>Favorite Album of All Time</Divider>
+            <Typography>{displayProfile.favAlbum}</Typography>
+          </>}
+          <Divider>Top 3 Songs</Divider>
+          <Stack
+            direction="row"
+            divider={<Divider orientation="vertical" flexItem />}
+            spacing={1}
+            sx={{ margin: "1rem", alignItems: "space" }}
+          >
+            {displayProfile.favSongs.map((song) => {
+              return (
+                <MusicPlayer
+                  key={song.uri}
+                  song={song}
+                  setCurrentPlayback={setCurrentPlayback}
                 />
-              )}
-            </Stack>
-          </Card>
-        </Stack>
-     
+              );
+            })}
+          </Stack>
+          <Stack>
+            {currentPlayback && (
+              <iframe
+                title="Spotify"
+                src={`https://embed.spotify.com/?uri=${currentPlayback}&theme=black`}
+                height="90"
+                frameBorder="0"
+                allowtransparency="true"
+              />
+            )}
+          </Stack>
+        </Card>
+      </Stack>
+
     </>
   );
 };

@@ -14,16 +14,15 @@ import {
   Avatar,
   Stack,
   IconButton,
+  Typography,
   Button,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import SongCardDisplay from "../formComponents/SongCardDisplay";
 import { NavBar } from "../navbar/NavBar";
-
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -54,7 +53,7 @@ export default function EditProfile({ accessToken, currentUser }) {
   let handleEditSubmit = async (e) => {
     e.preventDefault();
     let profileToEdit = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile/"+localStorage.getItem('currentUserId'),
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile/" + localStorage.getItem('currentUserId'),
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -62,43 +61,40 @@ export default function EditProfile({ accessToken, currentUser }) {
           aboutMe: aboutMe,
           favGenres: favGenres,
           favAlbum: favAlbum,
-          favSongs: topSongs 
+          favSongs: topSongs,
         }),
         credentials: "include",
       }
     );
-      let updatedProfile = profileToEdit.json()
-      console.log(updatedProfile);
+    let updatedProfile = profileToEdit.json();
+    console.log(updatedProfile);
 
-      navigate("/userprofile");
+    navigate("/userprofile");
   };
 
-// Delete handler
+  // Delete handler
   let handleDeleteSubmit = async (e) => {
     e.preventDefault();
     navigate("/");
     let profileToDelete = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/"+localStorage.getItem('currentUserId'),
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/" + localStorage.getItem('currentUserId'),
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       }
     );
-      let deletedProfile = profileToDelete.json()
-      console.log(deletedProfile);
+    let deletedProfile = profileToDelete.json();
+    console.log(deletedProfile);
   };
 
-  // let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-
-  // const accessToken = useSpotifyAuth();
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [topSongs, setTopSongs] = useState([]);
   const [aboutMe, setAboutMe] = useState();
   const [favGenres, setFavGenres] = useState([]);
   const [favAlbum, setFavAlbum] = useState();
-  const genresOptions = ["Pop", "Rock", "Jazz", "Country"];
+  const genresOptions = ["Pop", "Rock", "Jazz", "Country", "Lo-fi Hip-hop", "Sludge", "Drone", "Post-Punk", "Grime", "Grindcore", "Emo", "R&B", "Soul", "Folk", "Blues", "Classical", "Hardcore", "Thrash", "Oldies", "IDM", "EDM", "House", "Techno", "Detroit Techno", "Gabber"];
   const [displayProfile, setDisplayProfile] = useState(null);
 
   let setProfile = (profile) => {
@@ -108,7 +104,7 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   let getProfile = async () => {
     let profileToGrab = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage/"+localStorage.getItem('currentUserId'),
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage/" + localStorage.getItem('currentUserId'),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -117,7 +113,6 @@ export default function EditProfile({ accessToken, currentUser }) {
     );
     let profileToDisplay = await profileToGrab.json();
     if (profileToDisplay) {
-      // setDisplayProfile(profileToDisplay)
       setProfile(profileToDisplay);
       setTopSongs(profileToDisplay.favSongs);
     }
@@ -184,10 +179,19 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   return (
     <>
-      {/* console.log(displayProfile) */}
-      <NavBar/>
-      <Stack alignItems={"center"} justifyContent="center">
-        <Card sx={{ maxWidth: 345, margin: "5vh 0" }}>
+      <NavBar />
+      <Stack
+        sx={{
+          alignItems: "center",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Card sx={{
+          maxWidth: 500,
+          padding: "2rem",
+          margin: "2rem",
+          position: "relative"
+        }}>
           <CardHeader
             avatar={
               <Avatar
@@ -197,17 +201,11 @@ export default function EditProfile({ accessToken, currentUser }) {
                 {currentUser && currentUser.currentUsername[0].toUpperCase()}
               </Avatar>
             }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={currentUser && currentUser.currentUsername.toUpperCase()}
+            title={currentUser && currentUser.currentUsername}
             subheader="New York City, NY"
           />
           <CardMedia
             component="img"
-            height="194"
             image={
               topSongs.length > 0
                 ? topSongs[0].albumUrl
@@ -216,17 +214,18 @@ export default function EditProfile({ accessToken, currentUser }) {
             alt="CLB"
           />
           <CardActions disableSpacing>
-            <CardContent sx={{ alignItems: "center" }}>
-              <h1>Tell the world what you listen to</h1>
-            </CardContent>
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
+            <Box onClick={handleExpandClick} sx={{ display: 'flex', justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="h5">
+                Tell the world what you listen to
+              </Typography>
+              <ExpandMore
+                expand={expanded}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </Box>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
@@ -259,8 +258,9 @@ export default function EditProfile({ accessToken, currentUser }) {
                   />
                 )}
                 margin="dense"
-                onChange={(e) =>
-                  setFavGenres(...favGenres, genresOptions[e.target.value])
+                defaultValue={displayProfile && displayProfile.favGenres}
+                onChange={(e, value) =>
+                  setFavGenres(value)
                 }
               />
               <TextField
@@ -300,15 +300,6 @@ export default function EditProfile({ accessToken, currentUser }) {
                 disabled={topSongs.length < 3 ? false : true}
                 onChange={(e) => setSearchTopOne(e.target.value)}
               />
-
-              {/* {searchResults?.map((track) => (
-                <SongResultContainer
-                  track={track}
-                  key={track.uri}
-                  chooseTrack={chooseTrack}
-                />
-              ))} */}
-
               {searchTopOne ? (
                 <Box>
                   <div
@@ -330,13 +321,8 @@ export default function EditProfile({ accessToken, currentUser }) {
               ) : null}
             </CardContent>
           </Collapse>
-          <div style={{ padding: "1rem", justifyContent: "center" }}>
-            <Button
-              onClick={handleEditSubmit}
-              variant="outlined"
-              size="small"
-            >
-              
+          <Box style={{ padding: "1rem", display: "flex", flexDirection: "column", alignItems: "space-between" }}>
+            <Button onClick={handleEditSubmit} variant="outlined" size="small">
               Submit Changes
             </Button>
             <Button
@@ -347,7 +333,7 @@ export default function EditProfile({ accessToken, currentUser }) {
             >
               Delete Account
             </Button>
-          </div>
+          </Box>
         </Card>
       </Stack>
     </>

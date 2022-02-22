@@ -92,12 +92,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
     }
   };
 
-  // run when access token refreshes
-  // useEffect(() => {
-  //   if (!accessToken) return;
-  //   spotifyApi.setAccessToken(accessToken);
-  // }, [accessToken]);
-
   // run everytime search params from users and spotify access token change
   useEffect(() => {
     if (!searchTopOne) return setSearchResults([]);
@@ -259,7 +253,6 @@ export default function CreateProfile({ accessToken, currentUser }) {
           </Collapse>
           <div style={{ padding: "1rem", justifyContent: "center" }}>
             <Button onClick={handleCreateSubmit} variant="outlined">
-              {" "}
               Create Profile
             </Button>
           </div>
