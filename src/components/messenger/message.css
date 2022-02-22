@@ -33,7 +33,11 @@
   }
   
   .message.otherPerson{
-      align-items: flex-end;
+      align-items: flex-start;
+  }
+
+  .message.own {
+    align-items: flex-end;
   }
   
   .message.own .messageText{
