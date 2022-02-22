@@ -97,7 +97,7 @@ export default function EditProfile({ accessToken, currentUser }) {
   const [aboutMe, setAboutMe] = useState();
   const [favGenres, setFavGenres] = useState([]);
   const [favAlbum, setFavAlbum] = useState();
-  const genresOptions = ["Pop", "Rock", "Jazz", "Country"];
+  const genresOptions = ["Pop", "Rock", "Jazz", "Country", "Lo-fi Hip-hop", "Sludge", "Drone", "Post-Punk", "Grime", "Grindcore", "Emo", "R&B", "Soul", "Folk", "Blues", "Classical", "Hardcore", "Thrash", "Oldies", "IDM", "EDM", "House", "Techno", "Detroit Techno", "Gabber"];
   const [displayProfile, setDisplayProfile] = useState(null);
 
   let setProfile = (profile) => {
@@ -207,17 +207,11 @@ export default function EditProfile({ accessToken, currentUser }) {
                 {currentUser && currentUser.currentUsername[0].toUpperCase()}
               </Avatar>
             }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={currentUser && currentUser.currentUsername.toUpperCase()}
+            title={currentUser && currentUser.currentUsername}
             subheader="New York City, NY"
           />
           <CardMedia
             component="img"
-            height="194"
             image={
               topSongs.length > 0
                 ? topSongs[0].albumUrl
@@ -269,8 +263,9 @@ export default function EditProfile({ accessToken, currentUser }) {
                   />
                 )}
                 margin="dense"
-                onChange={(e) =>
-                  setFavGenres(...favGenres, genresOptions[e.target.value])
+                defaultValue={displayProfile && displayProfile.favGenres}
+                onChange={(e, value) =>
+                  setFavGenres(value)
                 }
               />
               <TextField
