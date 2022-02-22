@@ -61,7 +61,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
   let handleCreateSubmit = async (e) => {
     e.preventDefault();
     let profileToCreate = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage/"+currentUser.currentUserId,
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userCreationPage/"+localStorage.getItem('currentUserId'),
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -135,7 +135,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] , alignItems: "center"}} aria-label="recipe">
-                {currentUser.currentUsername[0].toUpperCase()}
+                {localStorage.getItem('currentUsername')[0].toUpperCase()}
               </Avatar>
             }
             action={
@@ -143,7 +143,7 @@ export default function CreateProfile({ accessToken, currentUser }) {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={currentUser.currentUsername}
+            title={localStorage.getItem('currentUsername')}
             subheader="New York City, NY"
           />
           <CardMedia

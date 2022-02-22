@@ -24,7 +24,6 @@ export function RegisterSession() {
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let navigate = useNavigate()
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-  const [userSignedIn, setUserSignedIn] = useState()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
@@ -34,12 +33,6 @@ export function RegisterSession() {
   useEffect(() => {
     localStorage.clear()
   }, [])
-
-  useEffect(() => {
-    if(userSignedIn) {
-      navigate('/createprofile')
-    }
-  }, [userSignedIn])
 
   //  navigate the createProfile once currentUser is defined
 
@@ -60,8 +53,9 @@ export function RegisterSession() {
         if (res.status === 200) {
           localStorage.setItem('currentUsername', res.currentUsername)
           localStorage.setItem('currentUserId', res.currentUserId)
-          setUserSignedIn(true)
           setErrorMessage(null)
+          navigate('/createprofile')
+
         }
         else {
           setErrorMessage(true)
