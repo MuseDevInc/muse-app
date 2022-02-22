@@ -53,13 +53,16 @@ export function Login() {
         if (res.status === 200) {
           localStorage.setItem("currentUsername", res.currentUsername);
           localStorage.setItem("currentUserId", res.currentUserId);
-          setErrorMessage(null)
-          navigate('/main')  
         }
         else{
           setErrorMessage(true)
         }
-      });
+      })
+      .then(() => {
+        setErrorMessage(null)
+        navigate('/main')  
+      })
+
   };
 
   return (

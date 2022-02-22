@@ -48,14 +48,15 @@ export function RegisterSession() {
       if (res.status === 200) {
         localStorage.setItem('currentUsername', res.currentUsername)
         localStorage.setItem('currentUserId', res.currentUserId)
-      setErrorMessage(null)
-      navigate('/createprofile')
-
     }
     else{
       setErrorMessage(true)
     }
-    });
+    })
+    .then(() => {
+      setErrorMessage(null)
+      navigate('/createprofile')
+    })
   };
 
   return (
