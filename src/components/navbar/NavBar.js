@@ -53,26 +53,27 @@ export function NavBar() {
 
   return (
     <Box sx={{ alignContent: 'flex-start' }}>
-      <AppBar position="sticky">
-        <Toolbar variant="regular">
+      <AppBar position="sticky" >
+      {auth && (
+        <Toolbar variant="regular" sx={{alignItems:'space-between', background:"#00377C"}}>
           {/* auth condition !! */}
-          {auth && (
-            <Box>
+          
+              {/* <Box sx={{display: 'flex', justifyContent:'center', alignContent:'stretch'}}> */}
+              <Box sx={{flexGrow: 1, alignContent: 'center'}}>
               <IconButton
                 href="/main"
                 size="large"
                 aria-label="discover"
                 aria-controls="discover-appbar"
                 aria-haspopup="true"
-                /* onClick={} */
                 color="inherit"
-                sx={{ p: 0 }}
               >
-                <img src={logo} style={{ maxHeight: "2.25rem", }} alt="logo" />
+                <img src={logo} style={{ maxHeight: "2.25rem", }} alt="logo" />use
               </IconButton>
+              </Box>
 
               {/*OpenChat is here. Decide if we want a Dialog modal or to use react router*/}
-              <Box sx={{ display: 'inline-block', position: 'fixed', right: '0', marginTop: '0' }}>
+              <Box sx={{ display: 'flex', justifyContent:'flex-end',flexGrow:1}}>
                 <IconButton href="/messenger" color="inherit">
                   <EmailIcon sx={{ fontSize: "2.50rem" }} />
                 </IconButton>
@@ -85,12 +86,9 @@ export function NavBar() {
                   aria-haspopup="true"
                   onClick={handleMenu}
                   color="inherit"
-                  sx={{ p: 0 }}
                 >
                   <AccountCircle sx={{ fontSize: "2.50rem" }} />
                 </IconButton>
-              </Box>
-
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
@@ -109,13 +107,15 @@ export function NavBar() {
                 onClose={handleClose}
               >
                 {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */}
-                <Link to="/userprofile">
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <Link to="/userprofile" sx={{textDecoration:'none'}}>
+                  <MenuItem onClick={handleClose}>View profile</MenuItem>
                 </Link>
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>
-            </Box>)}
+              </Box>
+            {/* </Box> */}
       </Toolbar>
+      )}
     </AppBar>
     </Box >
   );
