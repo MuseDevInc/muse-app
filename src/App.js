@@ -72,12 +72,6 @@ export default function App() {
           path="/messenger"
           element={<Messenger currentUser={localUser} />}
         ></Route>
-          <Route
-          path="/logout"
-          element={
-            <LogOutAlert/>
-          }
-        ></Route>
       </Routes>
     </Paper>
   );

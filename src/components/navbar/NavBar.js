@@ -113,8 +113,8 @@ export function NavBar() {
                 onClose={handleClose}
               >
                 {/*Only here for placeholder / testing, should .map over a "userPages" with props that provide reference to (or provide data of) "currentUser.userId". FYI: icons in MenuItem are possible as well */}
-                <Link to="/userprofile" >
-                  <MenuItem onClick={handleClose} sx={{textDecoration:'none'}}>View profile</MenuItem>
+                <Link to="/userprofile" style={{ textDecoration: 'none', color: 'black' }}>
+                  <MenuItem onClick={handleClose}>View profile</MenuItem>
                 </Link>
                 <MenuItem onClick={
                   handleClickOpenLogoutDialog}
