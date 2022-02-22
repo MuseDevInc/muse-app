@@ -4,7 +4,8 @@ import {
   AnimatePresence,
   motion,
   useAnimation,
-  useIsPresent,
+  useMotionValue,
+  useIsPresent
 } from "framer-motion";
 import { useRef, useState } from "react";
 
@@ -17,7 +18,6 @@ export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
   const [isShown, setIsShown] = useState(true);
 
   function swipePoint(swipeX) {
-    console.log("yeeeeeeeeet");
     let direction;
     if (swipeX / startX > 1.5) {
       direction = "Right";
@@ -66,21 +66,21 @@ export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
           }}
         >
           <Paper
-            elevation={16}
-            sx={{
-              zIndex: "8000",
-              marginTop: "1.5rem",
-              marginX: "1rem",
-              maxWidth: "80vw",
-              flexBasis: "auto",
-            }}
-          >
+               elevation={16}
+               sx={{
+                zIndex: "8000",
+                 marginTop: "1.5rem",
+                 marginX: "1rem",
+                 maxWidth: "80vw",
+                 flexBasis: "auto"}}>
             <AlbumContainer
+          
               currentPosition={currentPosition}
               userQueue={userQueue}
             />
-          </Paper>
-        </motion.div>
+            </Paper>
+  </motion.div>
+
       </AnimatePresence>
     </>
   );
