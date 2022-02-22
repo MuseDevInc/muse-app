@@ -19,7 +19,6 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import SongCardDisplay from "../formComponents/SongCardDisplay";
@@ -54,7 +53,7 @@ export default function EditProfile({ accessToken, currentUser }) {
   let handleEditSubmit = async (e) => {
     e.preventDefault();
     let profileToEdit = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile/"+localStorage.getItem('currentUserId'),
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/EditProfile/" + localStorage.getItem('currentUserId'),
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -78,7 +77,7 @@ export default function EditProfile({ accessToken, currentUser }) {
     e.preventDefault();
     navigate("/");
     let profileToDelete = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/"+localStorage.getItem('currentUserId'),
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/deleteAccount/" + localStorage.getItem('currentUserId'),
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -89,9 +88,6 @@ export default function EditProfile({ accessToken, currentUser }) {
     console.log(deletedProfile);
   };
 
-  // let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
-
-  // const accessToken = useSpotifyAuth();
   const [searchTopOne, setSearchTopOne] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [topSongs, setTopSongs] = useState([]);
@@ -108,7 +104,7 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   let getProfile = async () => {
     let profileToGrab = await fetch(
-      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage/"+localStorage.getItem('currentUserId'),
+      process.env.REACT_APP_BACKEND_SERVER + "/muse/userPage/" + localStorage.getItem('currentUserId'),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -117,7 +113,6 @@ export default function EditProfile({ accessToken, currentUser }) {
     );
     let profileToDisplay = await profileToGrab.json();
     if (profileToDisplay) {
-      // setDisplayProfile(profileToDisplay)
       setProfile(profileToDisplay);
       setTopSongs(profileToDisplay.favSongs);
     }
@@ -184,21 +179,19 @@ export default function EditProfile({ accessToken, currentUser }) {
 
   return (
     <>
-      {/* console.log(displayProfile) */}
       <NavBar />
-
       <Stack
         sx={{
           alignItems: "center",
           paddingBottom: "1rem",
         }}
       >
-        <Card sx={{ 
-           maxWidth: 500,
-           padding: "2rem",
-           margin: "2rem",
-           position: "relative"
-          }}>
+        <Card sx={{
+          maxWidth: 500,
+          padding: "2rem",
+          margin: "2rem",
+          position: "relative"
+        }}>
           <CardHeader
             avatar={
               <Avatar
@@ -221,17 +214,17 @@ export default function EditProfile({ accessToken, currentUser }) {
             alt="CLB"
           />
           <CardActions disableSpacing>
-            <Box onClick={handleExpandClick} sx={{display: 'flex', justifyContent:"space-between", alignItems:"center"}}>
-            <Typography variant="h5">
-              Tell the world what you listen to
-            </Typography>
-            <ExpandMore
-              expand={expanded}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
+            <Box onClick={handleExpandClick} sx={{ display: 'flex', justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="h5">
+                Tell the world what you listen to
+              </Typography>
+              <ExpandMore
+                expand={expanded}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
             </Box>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -307,15 +300,6 @@ export default function EditProfile({ accessToken, currentUser }) {
                 disabled={topSongs.length < 3 ? false : true}
                 onChange={(e) => setSearchTopOne(e.target.value)}
               />
-
-              {/* {searchResults?.map((track) => (
-                <SongResultContainer
-                  track={track}
-                  key={track.uri}
-                  chooseTrack={chooseTrack}
-                />
-              ))} */}
-
               {searchTopOne ? (
                 <Box>
                   <div
@@ -337,7 +321,7 @@ export default function EditProfile({ accessToken, currentUser }) {
               ) : null}
             </CardContent>
           </Collapse>
-          <Box style={{ padding: "1rem", display: "flex", flexDirection: "column", alignItems:"space-between"}}>
+          <Box style={{ padding: "1rem", display: "flex", flexDirection: "column", alignItems: "space-between" }}>
             <Button onClick={handleEditSubmit} variant="outlined" size="small">
               Submit Changes
             </Button>

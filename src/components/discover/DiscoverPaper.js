@@ -1,15 +1,12 @@
 import { Paper } from "@mui/material";
 import { AlbumContainer } from "./AlbumContainer";
-import { SwipeMotion } from "../motions/SwipeMotion";
 import {
   AnimatePresence,
-  animationControls,
   motion,
   useAnimation,
-  useMotionValue,
   useIsPresent,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
   const albumRef = useRef();

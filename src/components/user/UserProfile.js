@@ -71,8 +71,6 @@ const UserProfile = ({ currentUser }) => {
   }, []);
 
 
-
-
   return (
     <>
       <NavBar />

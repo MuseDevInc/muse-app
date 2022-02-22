@@ -3,7 +3,6 @@ import { DiscoverPaper } from "./DiscoverPaper";
 import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, IconButton, Paper } from "@mui/material";
 import { MatchDialog } from "./MatchDialog";
-import { SwipeMotion } from "../motions/SwipeMotion";
 import { AnimatePresence, motion } from "framer-motion";
 export function DiscoverLayout({ userQueue, qCounter }) {
   const [count, setCount] = useState();
