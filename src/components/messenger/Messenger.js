@@ -179,8 +179,8 @@ const Messenger = ({ currentUser }) => {
           justifyContent: "center",
         }}
       >
-        <Box className="titleContainer">
-          <Typography variant="h3">MuseBox</Typography>
+        <Box className="titleContainer" sx={{textAlign:'center', padding:'1rem 0'}}>
+          <Typography variant="h5">MuseBox</Typography>
         </Box>
         <Box
           className="chatBoxWrapper"
