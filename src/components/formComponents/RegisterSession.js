@@ -46,10 +46,14 @@ export function RegisterSession() {
     .then((res) => {
       console.log(res);
       if (res.status === 200) {
+        localStorage.removeItem("currentUsername");
+        localStorage.removeItem("currentUserId");
         localStorage.setItem('currentUsername', res.currentUsername)
         localStorage.setItem('currentUserId', res.currentUserId)
     }
     else{
+      localStorage.removeItem("currentUsername");
+      localStorage.removeItem("currentUserId");
       setErrorMessage(true)
     }
     })
