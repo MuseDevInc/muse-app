@@ -21,7 +21,7 @@ import { useMediaQuery } from "@mui/material";
 import { LandingXL } from "./LandingXL";
 import { motion } from "framer-motion";
 
-export function Login({ currentUser, setCurrentUser }) {
+export function Login() {
   let navigate = useNavigate();
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
@@ -35,13 +35,6 @@ export function Login({ currentUser, setCurrentUser }) {
     console.log(largeView);
     return setLargeView(xlScreen);
   }, [xlScreen]);
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/main");
-    }
-  }, [currentUser, navigate]);
-
 
 
   const handleSubmit = (e) => {
@@ -60,11 +53,6 @@ export function Login({ currentUser, setCurrentUser }) {
         if (res.status === 200) {
           localStorage.setItem("currentUsername", res.currentUsername);
           localStorage.setItem("currentUserId", res.currentUserId);
-          setCurrentUser({
-            ...currentUser,
-            currentUsername: res.currentUsername,
-            currentUserId: res.currentUserId,
-          });
           setErrorMessage(null)
           navigate('/main')  
         }
@@ -77,7 +65,7 @@ export function Login({ currentUser, setCurrentUser }) {
   return (
     <Box>
       {largeView ? (
-        <LandingXL currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        <LandingXL/>
       ) : (
         <Grid
           container

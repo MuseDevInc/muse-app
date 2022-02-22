@@ -20,22 +20,17 @@ import { Grid } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
 
-export function LandingXL({ currentUser, setCurrentUser }) {
+export function LandingXL() {
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null)
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/main");
-    }
-  }, [currentUser, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password };
     console.log(form);
-    fetch("http://localhost:4000/session/login", {
+    fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -47,12 +42,8 @@ export function LandingXL({ currentUser, setCurrentUser }) {
         if (res.status === 200) {
           localStorage.setItem("currentUsername", res.currentUsername);
           localStorage.setItem("currentUserId", res.currentUserId);
-          setCurrentUser({
-            ...currentUser,
-            currentUsername: res.currentUsername,
-            currentUserId: res.currentUserId,
-          });
           setErrorMessage(null)
+          navigate("/main");
         }
         else{
           setErrorMessage(true)

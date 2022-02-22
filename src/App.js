@@ -37,20 +37,17 @@ export default function App() {
       }}
     >
       <Routes>
-        <Route path="/" element={<Login  currentUser={currentUser} setCurrentUser={setCurrentUser}/>} ></Route>
+        <Route path="/" element={<Login />} ></Route>
         <Route
           path="/login"
           element={
-            <Login currentUser={currentUser} setCurrentUser={setCurrentUser} />
+            <Login/>
           }
         ></Route>
         <Route
           path="/register"
           element={
-            <RegisterSession
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-            />
+            <RegisterSession/>
           }
         ></Route>
 
