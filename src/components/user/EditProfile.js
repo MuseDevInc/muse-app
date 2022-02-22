@@ -14,6 +14,7 @@ import {
   Avatar,
   Stack,
   IconButton,
+  Typography,
   Button,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
@@ -220,17 +221,18 @@ export default function EditProfile({ accessToken, currentUser }) {
             alt="CLB"
           />
           <CardActions disableSpacing>
-            <CardContent sx={{ alignItems: "center" }}>
-              <h1>Tell the world what you listen to</h1>
-            </CardContent>
+            <Box onClick={handleExpandClick} sx={{display: 'flex', justifyContent:"space-between", alignItems:"center"}}>
+            <Typography variant="h5">
+              Tell the world what you listen to
+            </Typography>
             <ExpandMore
               expand={expanded}
-              onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label="show more"
             >
               <ExpandMoreIcon />
             </ExpandMore>
+            </Box>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
@@ -335,7 +337,7 @@ export default function EditProfile({ accessToken, currentUser }) {
               ) : null}
             </CardContent>
           </Collapse>
-          <div style={{ padding: "1rem", justifyContent: "center" }}>
+          <Box style={{ padding: "1rem", display: "flex", flexDirection: "column", alignItems:"space-between"}}>
             <Button onClick={handleEditSubmit} variant="outlined" size="small">
               Submit Changes
             </Button>
@@ -347,7 +349,7 @@ export default function EditProfile({ accessToken, currentUser }) {
             >
               Delete Account
             </Button>
-          </div>
+          </Box>
         </Card>
       </Stack>
     </>

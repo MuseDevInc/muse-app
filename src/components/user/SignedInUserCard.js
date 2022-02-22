@@ -95,8 +95,8 @@ const SignedInUserCard = ({ username, displayProfile, handleNavToEdit }) => {
             </AccordionDetails>
           </Accordion>
           { displayProfile.favGenres &&
-            <>
-            <Divider sx={{ margin: "1rem", textAlign: "center" }}>
+            <> 
+            <Divider sx={{ textAlign: "center" }}>
             Favorite Genre
           </Divider>
           {displayProfile.favGenres.map((genre) => {
