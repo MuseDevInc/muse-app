@@ -24,16 +24,22 @@ import { motion } from "framer-motion";
 export function Login() {
   let navigate = useNavigate();
   let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
+  const [userSignedIn, setUserSignedIn] = useState()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null)
-
   const [largeView, setLargeView] = useState();
   const xlScreen = useMediaQuery("(min-width:1400px)");
 
   useEffect(() => {
     localStorage.clear()
   }, [])
+
+  useEffect(() => {
+    if(userSignedIn) {
+      navigate('/main')
+    }
+  }, [userSignedIn])
 
   useEffect(() => {
     console.log(largeView);
@@ -57,17 +63,12 @@ export function Login() {
         if (res.status === 200) {
           localStorage.setItem("currentUsername", res.currentUsername);
           localStorage.setItem("currentUserId", res.currentUserId);
-          res.currentUserId && navigate('/main')
-
+          setUserSignedIn(true)
         }
         else{
           setErrorMessage(true)
         }
       })
-      // .then(() => {
-      //   setErrorMessage(null)
-      //   navigate('/main')  
-      // })
 
   };
 

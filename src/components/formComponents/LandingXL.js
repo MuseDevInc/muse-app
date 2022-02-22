@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 
 export function LandingXL() {
   let navigate = useNavigate();
+  const [userSignedIn, setUserSignedIn] = useState()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null)
@@ -28,6 +29,12 @@ export function LandingXL() {
     localStorage.clear()
   }, [])
 
+  useEffect(() => {
+    if(userSignedIn) {
+      navigate('/main')
+    }
+  }, [userSignedIn])
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password };
@@ -45,7 +52,8 @@ export function LandingXL() {
         if (res.status === 200) {
           localStorage.setItem("currentUsername", res.currentUsername);
           localStorage.setItem("currentUserId", res.currentUserId);
-          res.currentUserId && navigate('/main')
+          setUserSignedIn(true)
+
         }
         else{
           setErrorMessage(true)
