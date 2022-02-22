@@ -126,27 +126,11 @@ export function DiscoverLayout({ userQueue, qCounter }) {
               userToMessage={userQueue[qCounter.current]}
             />
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              {/*         <IconButton
-            sx={{zIndex: "1000"}}
-              onClick={() => {
-                handleSwipe("Left");
-              }}
-            >
-              <ThumbDownOffAltRounded sx={{ fontSize: "2.5rem" }} />
-            </IconButton> */}
               <DiscoverPaper
                 handleSwipe={handleSwipe}
                 currentPosition={qCounter.current}
                 userQueue={userQueue}
               />
-              {/*       <IconButton
-            sx={{zIndex: "1000"}}
-              onClick={() => {
-                handleSwipe("Right");
-              }}
-            >
-              <ThumbUp sx={{ fontSize: "2.5rem" }} />
-            </IconButton> */}
             </Box>
           </>
         )}
