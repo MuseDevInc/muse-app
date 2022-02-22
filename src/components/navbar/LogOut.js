@@ -21,7 +21,7 @@ export default function LogOutAlert({openLogoutDialog, setOpenLogoutDialog}) {
 
   const handleLogOut = () => {
     fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/logout", {
-      method: "POST",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       credentials: 'include'
     }).then((res) => {
