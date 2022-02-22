@@ -21,8 +21,7 @@ export default function ThreadTabs({
     <Paper
       elevation={24}
       sx={{
-        zIndex: "1400",
-        position: "absolute",
+        position: "sticky",
         left: "0",
         bottom: "0",
         width: "100vw",

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import AppBar from "@mui/material/AppBar";
@@ -64,7 +64,6 @@ export default function Thread({
               onClick={() => setShowFriendProfile(true)}
             />
           </Avatar>
-
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
             {currentFriend?.owner.username}
           </Typography>
@@ -81,11 +80,13 @@ export default function Thread({
 
       <Box sx={{ height: "80vh", overflow: "scroll" }}>
         {messages?.map((m) => (
-          <motion.div key={`${m._id}1`}
-           ref={scrollRef}
-           initial={{opacity: 0, scale: 0}}
-           animate={{opacity: 1, scale: 1}}
-           transition={{duration: .75}}>
+          <motion.div
+            key={`${m._id}1`}
+            ref={scrollRef}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.75 }}
+          >
             <Message
               message={m}
               own={m.sender === currentUser.currentUserId}
@@ -98,11 +99,11 @@ export default function Thread({
 
       <Box
         sx={{
+          position: "absolute",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "stretch",
-          padding: ".5rem",
-          marginBottom: "80px",
+          bottom: "0px",
           height: "12vh",
           width: "100vw",
         }}

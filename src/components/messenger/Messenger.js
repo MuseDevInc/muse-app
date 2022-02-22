@@ -9,7 +9,7 @@ import Thread from "./Thread";
 import { GifBox } from "@mui/icons-material";
 import { FriendProfile } from "./FriendProfile";
 import ThreadTabs from "./ThreadTabs";
-
+import "../conversations/conversation.css"
 const Messenger = ({ currentUser }) => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
@@ -162,17 +162,7 @@ const Messenger = ({ currentUser }) => {
 
       {/* When a conversation is clicked, set the current chat to be that conversation. */}
       {/* This is the inbox*/}
-      {conversations.length > 0 ? (
-        <ThreadTabs
-          ref={tabRef}
-          conversations={conversations}
-          setOpenThread={setOpenThread}
-          setCurrentChat={setCurrentChat}
-          currentUser={currentUser}
-        />
-      ) : null}
-
-      {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
+      <Stack>
       {currentChat && (
         <>
           <Thread
@@ -198,6 +188,42 @@ const Messenger = ({ currentUser }) => {
           )}
         </>
       )}
+  
+      </Stack>
+      {conversations.length > 0 ? (
+        <ThreadTabs
+          conversations={conversations}
+          setOpenThread={setOpenThread}
+          setCurrentChat={setCurrentChat}
+          currentUser={currentUser}
+        />
+      ) : null}
+      {/* This is the thread that is displaying between two users in the window. . When someone writes a message, run handleSubmit to submit that message */}
+     {/*  {currentChat && (
+        <>
+          <Thread
+            key={`${currentChat._id}+${currentUser.currentUserId}`}
+            openThread={openThread}
+            setOpenThread={setOpenThread}
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            handleSubmit={handleSubmit}
+            messages={messages}
+            scrollRef={scrollRef}
+            currentUser={currentUser}
+            currentFriend={currentFriend}
+            setShowFriendProfile={setShowFriendProfile}
+            sx={{ maxWidth: 500 }}
+          />
+          {currentFriend && (
+            <FriendProfile
+              showFriendProfile={showFriendProfile}
+              setShowFriendProfile={setShowFriendProfile}
+              currentFriend={currentFriend}
+            />
+          )}
+        </>
+      )} */}
     </>
   );
 };
