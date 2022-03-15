@@ -1,77 +1,164 @@
-## Contents:
-1: Dev Readme
-2: Component Tree and File Structure
-3: Resources, Documentation, & Notes.
-3: Muse 
-4: Installation
-etc..
+<div id="top"></div>
 
-<<<<<<< HEAD
-## Dev Readme: FEATURE-NAVBAR
-=======
-## Dev Readme: FEATURE-NAVBAR:
->>>>>>> dev
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+<!-- PROJECT LOGO -->
+<br />
+<!-- <div align="center">
+  <a href="https://github.com/cdizon239/trip-bucket">
+    <img src="./public/images/favicon.png" alt="Logo" width="80" height="80">
+  </a> -->
 
-JW: [feature-navbar] As per conversation with Charm, goal of feature-navbar is to provide branch:dev with updated <NavBar/> (renamed from AppNav.js), without [Discover...] sibling component tree present in dev branch:layout-and-sizing, to be rendered on User login. Other features dependent on NavBar include [show-user-profile], [edit-user-profile], [open-chat-screen], [log-out]. 
+<h1 align="center">Muse</h1>
 
-Current conception of component tree includes <NavBar/> as sibling of <MuseWindow/>, which will provide a container/wrapper for rendering the component tree related to the [Discover-Feature], as well as be the element that profile view and chat functionality can be rendered within, or rendered "over" (z-index, elevation). <MuseWindow/> and components re: [Discover-Feature] will be provided by JW in upcoming feature branch. KS will be provided
-
-Additional considerations re: <NavBar/>,: 
-- if <App/> is a store of User information in state, whole NavBar may rerender when a) props re: User change from actions performed in siblings, b) CRUD operations re: User are performed in children of NavBar. Be on the lookout for children of NavBar not *immediately* reflecting updated state.
-<<<<<<< HEAD
-## JW: Notes
-=======
-
->>>>>>> dev
-Don't get sidetracked by this, but considerations and notes as we progress to and past MVP, in no particular order:
-- After testing MVP, it may be beneficial to determine if we should utilize Suspense *experimental* (upcoming in React18)or lazy loading in re: first paint after login, likely LCP. 
-- *quickly* Determine: For [show-user], [edit-user], [open-chat], mui modal vs mui portal vs react-router. Mostly, we want to avoid having to re-perform expensive operations re: user (... or object.assign helps if User info stored in parent state) and ESPECIALLY avoid re-performing expensive operations in <Discover...> sibling component tree. After MVP or if time permits, weigh benefits of memoization or useMemo. 
-- Also, weigh benefits of splitting User object from fetch return. After MVP: is cacheing info re: User, OtherUsers more performant?
-Resource: https://betterprogramming.pub/exploring-caching-techniques-in-react-d30bbb78d54d
-(Not mentioned, useReducer hook, )
-
-to do: cleanup CRA stock files
+  <p align="center">
+Connect with people who share the same taste in music as you.
+    <br />
+    <a href="https://muse-dev.herokuapp.com/"><strong>Explore the deployed app »</strong></a>
+    <br />
+    <!-- <br />
+    <a href="https://github.com/cdizon239/trip-bucket">View Demo</a>
+    ·
+    <a href="https://github.com/cdizon239/trip-bucket/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/cdizon239/trip-bucket/issues">Request Feature</a> -->
+  </p>
 
 
+<!-- TABLE OF CONTENTS -->
+<!-- <details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details> -->
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+Muse is an app that allows you to connect with people who have the same taste in music as you.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Built With
+- Mongoose
+- Express
+- React
+- Node.js
+
+### Also using
+- Material UI components
+- Socket for live messaging/chat
+- Spotify API for album covers and 30second song snippets
+- Framer-motion for swiping
 
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### Component Tree and File Structure
+<!-- GETTING STARTED -->
 
-## Resources, Documentation, & Notes
-Example use for IconButton, import individual button by copying import statement from https://mui.com/components/material-icons/ and put component in between IconButton wrapper. The IconButton wrapper is where you will handleclick, hover, etc. 
-<!-- <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton> -->
+## Getting Started
 
-MUI Install/Getting Started : https://mui.com/getting-started/installation/
-Please refer to the Components list on the sidebar.
+To get a local copy up and running follow these simple example steps.
 
-Emotion: https://emotion.sh/docs/introduction
-Emotion is the recommended (included) style engine for MUI V5. MUI V5 also supports the usage of styled-components, as well as the system API (( sx={{foo}} props ))
+### Prerequisites
 
-MUI System: https://mui.com/system/basics/
-The MUI System API provides utilities related to styling. Important for style-overrides, providing custom components access to theme vars/properties, and so on. See docs. 
+### Installation - Frontend
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/MuseDevInc/muse-app
+   ```
+
+2. install modules
+   ```sh
+   npm install
+   ```
+3. Create your `.env.local` variables
+   ```
+   REACT_APP_SPOTIFY_CLIENT_ID=<>
+   REACT_APP_SPOTIFY_REDIRECT_URI=<>
+   REACT_APP_SPOTIFY_SCOPE=<>
+   REACT_APP_BACKEND_SERVER=<>
+   ```
+4. Run npm start
+   ```sh
+   // cd into the frontend app directory
+   npm start
+   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-## Muse
-Muse description here
-
-## Installation
-Install instructions here
-
-## Usage
-usage instructions here
+<!-- CONTRIBUTING -->
 
 ## Contributing
-Instructions to contibute here
 
-## License 
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- CONTACT -->
+
+## Developers
+
+- Charmille Dizon
+- Christian Staubo
+- Jordan Walsh
+- Kahlil Sassa
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Heroku](https://dashboard.heroku.com/apps)
+- [Noun Project](https://thenounproject.com/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/MuseDevInc/muse-app.svg?style=for-the-badge
+[contributors-url]: https://github.com/MuseDevInc/muse-app/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/MuseDevInc/muse-app.svg?style=for-the-badge
+[forks-url]: https://github.com/MuseDevInc/muse-app/network/members
+[stars-shield]: https://img.shields.io/github/stars/MuseDevInc/muse-app.svg?style=for-the-badge
+[stars-url]: https://github.com/MuseDevInc/muse-app/stargazers
+[issues-shield]: https://img.shields.io/github/issues/MuseDevInc/muse-app.svg?style=for-the-badge
+[issues-url]: https://github.com/MuseDevInc/muse-app/issues
+
