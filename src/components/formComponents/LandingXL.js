@@ -31,7 +31,6 @@ export function LandingXL() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password };
-    console.log(form);
 
     fetch(process.env.REACT_APP_BACKEND_SERVER+"/session/login", {
       method: "POST",
@@ -41,7 +40,6 @@ export function LandingXL() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           localStorage.setItem("currentUsername", res.currentUsername);
           localStorage.setItem("currentUserId", res.currentUserId);

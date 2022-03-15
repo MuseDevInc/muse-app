@@ -49,16 +49,6 @@ export function NavBar() {
     setOpenLogoutDialog(true);
   };
 
-  // const handleLogOut = async () => {
-  //   let destroySession = await axios.delete(
-  //     process.env.REACT_APP_BACKEND_SERVER + "/session/logout"
-  //   );
-  //   console.log(destroySession.data);
-  //   localStorage.removeItem("currentUsername");
-  //   localStorage.removeItem("currentUserId");
-  //   navigate("/");
-  // };
-
   return (
     <Box sx={{ alignContent: 'flex-start' }}>
       <AppBar position="sticky" >

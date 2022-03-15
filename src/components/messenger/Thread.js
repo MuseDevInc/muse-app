@@ -34,10 +34,6 @@ export default function Thread({
     setOpenThread(false);
   };
 
-  React.useEffect(() => {
-    console.log(messages);
-  }, [messages]);
-
   return (
     <Dialog
       key={currentUser.currentUserId}
@@ -117,7 +113,6 @@ export default function Thread({
           autoComplete="off"
           value={newMessage}
           onChange={(e) => {
-            console.log(e.target.value);
             setNewMessage(e.target.value);
           }}
         ></TextField>

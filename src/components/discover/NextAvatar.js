@@ -6,9 +6,6 @@ export function NextAvatar() {
   return (
     <>
       <IconButton
-        onClick={(e) => {
-          console.log(e.target);
-        }}
       >
         <Avatar
           alt="user"

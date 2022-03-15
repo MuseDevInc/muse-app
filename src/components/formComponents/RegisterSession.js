@@ -1,6 +1,5 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import {
-  Card,
   FormGroup,
   TextField,
   Typography,
@@ -10,20 +9,17 @@ import {
   FormControl,
   Stack,
 } from "@mui/material";
-import { useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, color } from "@mui/system";
+import { Box } from "@mui/system";
 import Footer from "../footer/Footer";
 import logo from "../alphabet.png";
 import { Grid } from "@mui/material";
-import { useMediaQuery } from "@mui/material";
 import { LandingXL } from "./LandingXL";
 
 export function RegisterSession() {
   //handlers, will need state and setstate props. Can add popovers/helpers and additional validation/error handling feedback.
   let navigate = useNavigate()
-  let backGrad = "linear-gradient(1deg, #00377C 40%, #F5F5F5)";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
@@ -39,7 +35,6 @@ export function RegisterSession() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = { username, password, verifyPassword };
-    console.log(form);
 
     fetch(process.env.REACT_APP_BACKEND_SERVER + "/session/register", {
       method: "POST",
@@ -49,7 +44,6 @@ export function RegisterSession() {
     })
       .then((res => res.json()))
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           localStorage.setItem('currentUsername', res.currentUsername)
           localStorage.setItem('currentUserId', res.currentUserId)
@@ -141,14 +135,13 @@ export function RegisterSession() {
                         borderRadius: ".3rem"
                       }}
                     >
-                      {" "}
-                      Register{" "}
+                      Register
                     </Button>
                     {errorMessage ? (
                       <p style={{ color: 'red' }}>*Username already taken or passwords must match.</p>
                     ) : null}
                     <p>
-                      Have an account already?{" "}
+                      Have an account already?
                       <Link href="/login">Click here to login</Link>
                     </p>
                   </Stack>

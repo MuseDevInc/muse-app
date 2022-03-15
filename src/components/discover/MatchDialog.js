@@ -21,9 +21,6 @@ export function MatchDialog({ match, setMatch, advanceQ, userToMessage }) {
     setMatch(false);
     advanceQ();
   };
-  useEffect(() => {
-    console.log(userToMessage);
-  });
   return (
     <div>
       {match ? (

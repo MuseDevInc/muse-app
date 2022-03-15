@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DiscoverPaper } from "./DiscoverPaper";
-import { ThumbDownOffAltRounded, ThumbUp } from "@mui/icons-material";
 import { Box, Typography, IconButton, Paper } from "@mui/material";
 import { MatchDialog } from "./MatchDialog";
 import { AnimatePresence, motion } from "framer-motion";
@@ -19,7 +18,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function pushId(swipe) {
-    console.log("push id");
     let payload = {
       swipeDirection: swipe,
       swipedUser: userQueue[qCounter.current]._id,
@@ -41,7 +39,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
     });
   }
   function checkMatch() {
-    console.log("check match!");
     //this will be to check other user's swiperight array for currentUser's id.
     //if match, set match to true --> alert --> render FAB or change styling or open FAB
     const payload = {
@@ -69,7 +66,6 @@ export function DiscoverLayout({ userQueue, qCounter }) {
   }
 
   function advanceQ() {
-    console.log("advance!");
     //update ref
     qCounter.current = qCounter.current + 1;
     //update state to trigger and sync rerender w/ change of ref.current value

@@ -15,7 +15,6 @@ const Conversation = ({
   // let currentUser = '6206e85dad4b62bf69b66099' //This is the id of the current user, (christian)
 
   useEffect(() => {
-    console.log(conversation);
     //Two members in a conversation, the one that is not currentUser is the other member.
     const friendId = conversation.members.find(
       (m) => m !== currentUser.currentUserId
@@ -23,11 +22,9 @@ const Conversation = ({
     //get user profile, will add friend profiel as well later.
     const getUserProfile = async () => {
       try {
-        console.log(friendId);
         const res = await axios.get(
           process.env.REACT_APP_BACKEND_SERVER + "/muse/getUsers/" + friendId
         );
-        console.log(res.data);
         setUser(res.data);
       } catch (err) {
         console.log(err);

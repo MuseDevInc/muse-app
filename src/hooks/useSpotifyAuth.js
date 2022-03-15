@@ -8,7 +8,6 @@ const useSpotifyAuth = () => {
     axios
       .post(process.env.REACT_APP_BACKEND_SERVER+"/spot/spotifyLogin")
       .then((res) => {
-        console.log(res)
         setAccessToken(res.data.accessToken);
         window.history.pushState({}, null, "/");
 

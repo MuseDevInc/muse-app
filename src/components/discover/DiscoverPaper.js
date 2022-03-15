@@ -3,19 +3,11 @@ import { AlbumContainer } from "./AlbumContainer";
 import {
   AnimatePresence,
   motion,
-  useAnimation,
-  useMotionValue,
-  useIsPresent
 } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
-  const albumRef = useRef();
   const [startX, setStartX] = useState();
-  const controls = useAnimation();
-  const [target, setTarget] = useState();
-  const isPresent = useIsPresent();
-  const [isShown, setIsShown] = useState(true);
 
   function swipePoint(swipeX) {
     let direction;
@@ -29,7 +21,6 @@ export function DiscoverPaper({ handleSwipe, currentPosition, userQueue }) {
   }
 
   function leaveScreen(direction, startPoint) {
-    console.log(direction);
     handleSwipe(direction);
   }
 

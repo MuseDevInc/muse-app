@@ -25,13 +25,11 @@ const Messenger = ({ currentUser }) => {
   //get the conversations our userId is a part of.
   const getConversations = async () => {
     try {
-      console.log(currentUser);
       const res = await axios.get(
         process.env.REACT_APP_BACKEND_SERVER +
           "/conversation/" +
           currentUser.currentUserId
       );
-      console.log(res);
       setConversations(res.data);
     } catch (err) {
       console.log(err);
@@ -42,7 +40,6 @@ const Messenger = ({ currentUser }) => {
       const res = await axios.get(
         process.env.REACT_APP_BACKEND_SERVER + "/message/" + currentChat._id
       );
-      console.log(res);
       setMessages(res.data);
     } catch (err) {
       console.log(err);
@@ -53,7 +50,6 @@ const Messenger = ({ currentUser }) => {
     let friendId = currentChat?.members.find(
       (member) => member !== currentUser.currentUserId
     );
-    console.log(friendId);
     if (friendId) {
       try {
         const res = await axios.get(
@@ -71,13 +67,9 @@ const Messenger = ({ currentUser }) => {
 
   //on mount, get all conversations userId is a part of
   useEffect(() => {
-    console.log(process.env.REACT_APP_SOCKET)
     getConversations();
   }, []);
 
-  useEffect(() => {
-    console.log("These are the convos:", conversations);
-  }, [conversations]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -85,7 +77,6 @@ const Messenger = ({ currentUser }) => {
 
   //Whenever currentChat changes, get the messages from the new conversation clicked and set messages to be those messages
   useEffect(() => {
-    console.log(currentChat);
     getFriendProfile();
     getMessages();
   }, [currentChat]);
@@ -124,7 +115,6 @@ const Messenger = ({ currentUser }) => {
   //Clear newMessage field. (textarea)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newMessage);
     const message = {
       sender: currentUser.currentUserId,
       text: newMessage,
@@ -134,7 +124,6 @@ const Messenger = ({ currentUser }) => {
     const receiverId = currentChat.members.find(
       (member) => member !== currentUser.currentUserId
     );
-    console.log(receiverId);
 
     //sendMessage, this hits socket server and will send message to recieverId
     socket.current.emit("sendMessage", {

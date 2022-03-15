@@ -67,7 +67,6 @@ export default function EditProfile({ accessToken, currentUser }) {
       }
     );
     let updatedProfile = profileToEdit.json();
-    console.log(updatedProfile);
 
     navigate("/userprofile");
   };
@@ -84,8 +83,6 @@ export default function EditProfile({ accessToken, currentUser }) {
         credentials: "include",
       }
     );
-    let deletedProfile = profileToDelete.json();
-    console.log(deletedProfile);
   };
 
   const [searchTopOne, setSearchTopOne] = useState("");
@@ -98,7 +95,6 @@ export default function EditProfile({ accessToken, currentUser }) {
   const [displayProfile, setDisplayProfile] = useState(null);
 
   let setProfile = (profile) => {
-    console.log(profile);
     setDisplayProfile(profile);
   };
 
