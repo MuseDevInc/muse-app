@@ -18,40 +18,8 @@ Connect with people who share the same taste in music as you.
     <br />
     <a href="https://muse-dev.herokuapp.com/"><strong>Explore the deployed app »</strong></a>
     <br />
-    <!-- <br />
-    <a href="https://github.com/cdizon239/trip-bucket">View Demo</a>
-    ·
-    <a href="https://github.com/cdizon239/trip-bucket/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/cdizon239/trip-bucket/issues">Request Feature</a> -->
   </p>
 
-
-<!-- TABLE OF CONTENTS -->
-<!-- <details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details> -->
 
 <!-- ABOUT THE PROJECT -->
 
@@ -64,13 +32,13 @@ Muse is an app that allows you to connect with people who have the same taste in
 - Mongoose
 - Express
 - React
-- Node.js
+- Node.js - <a href="https://github.com/MuseDevInc/muse-api"><strong>Backend repo on github is found here »</strong></a>
 
 ### Also using
 - Material UI components
-- Socket for live messaging/chat
-- Spotify API for album covers and 30second song snippets
-- Framer-motion for swiping
+- Socket for live messaging/chat: <a href="https://github.com/MuseDevInc/socket"><strong>Repo for socket server »</strong></a>
+- Spotify API for album covers and 30-second song snippets
+- Framer-motion for swiping animation
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -106,8 +74,6 @@ To get a local copy up and running follow these simple example steps.
    // cd into the frontend app directory
    npm start
    ```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
